@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><title>KSTUDY — Plataforma de estudos</title>
+<style>
+:root{--bg:#10120f;--panel:#181b17;--panel2:#20241f;--line:#30362e;--text:#edf0e8;--muted:#9ba397;--accent:#c7d7b4;--accent2:#8fa77b;--red:#d58d82;--gold:#d6bd83;--blue:#91b6c7;--shadow:0 14px 40px #0005}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 75% -10%,#283025 0,transparent 36%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.sidebar{background:#121510;border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh;overflow:auto}.brand{display:flex;align-items:center;gap:12px;padding:4px 10px 28px}.brandmark{width:38px;height:38px;border:1px solid #64745b;border-radius:12px;display:grid;place-items:center;color:var(--accent);font-weight:800;box-shadow:inset 0 1px #ffffff22,0 5px 18px #0008}.brand strong{letter-spacing:.17em;font-size:15px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em}.navlabel{color:#70796d;font-size:10px;letter-spacing:.18em;padding:12px 12px 7px}.nav button{width:100%;border:0;background:transparent;color:#aeb5a8;text-align:left;padding:11px 12px;border-radius:10px;margin:2px 0;display:flex;gap:12px;align-items:center;transition:.2s}.nav button:hover,.nav button.active{background:linear-gradient(100deg,#293126,#1c211a);color:var(--accent);box-shadow:inset 3px 0 var(--accent2)}.nav .ico{width:20px;text-align:center;color:#91a087}.sidefoot{border-top:1px solid var(--line);margin-top:22px;padding:16px 10px;color:var(--muted);font-size:12px}.main{min-width:0}.topbar{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;background:#10120fdf;backdrop-filter:blur(16px);z-index:5}.crumb{color:var(--muted);font-size:13px}.topactions{display:flex;gap:8px}.wrap{max-width:1440px;margin:auto;padding:30px 34px 70px}.pagehead{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:24px}.eyebrow{font-size:10px;letter-spacing:.2em;color:var(--accent2);text-transform:uppercase}.pagehead h1{font-size:clamp(25px,3vw,36px);line-height:1.1;margin:6px 0 7px;letter-spacing:-.04em}.sub{color:var(--muted);margin:0}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:18px}.two{grid-template-columns:1.25fr .75fr}.three{grid-template-columns:repeat(3,1fr)}.card{background:linear-gradient(145deg,#1b1f19,#171a16);border:1px solid var(--line);border-radius:16px;padding:19px;box-shadow:var(--shadow);min-width:0}.card h3{font-size:14px;margin:0 0 14px;font-weight:650}.statlabel{color:var(--muted);font-size:12px}.statnum{font-size:28px;font-weight:700;letter-spacing:-.04em;margin:7px 0 2px}.statnote{font-size:11px;color:var(--accent2)}.sectiontitle{font-size:16px;margin:28px 0 13px}.btn{border:1px solid var(--line);border-radius:10px;background:#252b23;color:var(--text);padding:9px 13px;transition:.18s}.btn:hover{border-color:#718366;transform:translateY(-1px)}.btn.primary{background:var(--accent);color:#172014;border-color:var(--accent);font-weight:700}.btn.ghost{background:transparent}.btn.danger{color:var(--red)}.btn.small{padding:6px 9px;font-size:12px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;background:#111510;color:var(--text);border:1px solid #394136;border-radius:9px;padding:10px 11px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #9cb68a18}textarea{min-height:90px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.formgrid .wide{grid-column:1/-1}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.spread{display:flex;justify-content:space-between;align-items:center;gap:12px}.muted{color:var(--muted)}.tiny{font-size:11px;color:var(--muted)}.pill{font-size:10px;border:1px solid var(--line);border-radius:99px;padding:3px 8px;color:var(--muted)}.progress{height:7px;background:#30372e;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,#849c70,#c5d7ae);border-radius:99px}.list{display:flex;flex-direction:column;gap:8px}.item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid #30372e;border-radius:10px;background:#171b16}.item .meta{font-size:11px;color:var(--muted)}.item strong{font-size:13px}.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed #3a4237;border-radius:12px}.timer{font-size:clamp(38px,7vw,64px);font-variant-numeric:tabular-nums;letter-spacing:.04em;text-align:center;padding:22px 0}.chart{height:170px;display:flex;align-items:end;gap:8px;padding:10px 4px 0;border-bottom:1px solid var(--line)}.barcol{flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;height:100%;gap:6px;min-width:0}.bar{width:min(100%,34px);background:linear-gradient(180deg,#c6d7b2,#657b58);border-radius:6px 6px 2px 2px;min-height:3px}.barlabel{font-size:10px;color:var(--muted);white-space:nowrap}.barval{font-size:10px;color:var(--muted)}.checkrow{display:flex;align-items:center;gap:10px}.checkrow input{width:auto;accent-color:#a9c193}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:600}.hidden{display:none!important}.chatlog{height:310px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:10px;background:#111510;border:1px solid var(--line);border-radius:12px;margin-bottom:12px}.bubble{max-width:88%;padding:11px 13px;border-radius:12px;background:#252c22;font-size:13px;white-space:pre-wrap}.bubble.user{align-self:flex-end;background:#34412f}.bubble.bot{align-self:flex-start}.toast{position:fixed;bottom:20px;right:20px;background:#d3e0c3;color:#172014;padding:11px 16px;border-radius:10px;box-shadow:var(--shadow);z-index:20;font-weight:650}.mobilemenu{display:none}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:10;left:-280px;width:260px;transition:.25s;box-shadow:var(--shadow)}.sidebar.open{left:0}.mobilemenu{display:inline-flex}.topbar{padding:0 16px;height:62px}.wrap{padding:22px 15px 60px}.stats{grid-template-columns:repeat(2,1fr)}.three{grid-template-columns:1fr}.pagehead{align-items:start;flex-direction:column}.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.card{padding:16px}.topactions .desktop{display:none}}
+
+/* KSTUDY 1.2 — monochrome interface with vivid section colors */
+/* Nunito loaded in the document head. */
+
+:root{
+  --bg:#090909;
+  --panel:#111111;
+  --panel2:#181818;
+  --line:#292929;
+  --text:#f5f5f5;
+  --muted:#a1a1a1;
+  --accent:#f2f2f2;
+  --accent2:#c9c9c9;
+  --red:#ff7777;
+  --gold:#f0c36b;
+  --blue:#7db7ff;
+  --shadow:0 4px 14px #0005;
+}
+*{box-sizing:border-box}
+body{
+  background:#090909;
+  color:var(--text);
+  font-family:"Nunito","Trebuchet MS",ui-rounded,system-ui,sans-serif;
+  letter-spacing:.005em;
+}
+button,input,select,textarea{font-family:inherit}
+.sidebar{
+  background:#0d0d0d;
+  border-right:1px solid #292929;
+  box-shadow:none;
+}
+.brand{padding:8px 10px 26px}
+.brandmark{
+  border:1px solid #555;
+  border-radius:11px;
+  background:#f2f2f2;
+  color:#090909;
+  box-shadow:none;
+  font-weight:900;
+}
+.brand strong{font-weight:900;letter-spacing:.16em}
+.brand small{font-weight:800;color:#888}
+.navlabel{color:#777;font-weight:900;letter-spacing:.18em;padding:15px 12px 9px}
+.nav{display:flex;flex-direction:column;gap:7px}
+.nav button{
+  --nav-color:#777;
+  position:relative;
+  overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--nav-color) 48%,#222);
+  border-radius:9px;
+  padding:11px 12px;
+  margin:0;
+  color:#fff;
+  font-weight:800;
+  background:color-mix(in srgb,var(--nav-color) 27%,#111);
+  box-shadow:none;
+  transition:background .16s,border-color .16s,transform .16s;
+}
+.nav button::after{content:none}
+.nav button .ico{
+  width:25px;height:25px;display:grid;place-items:center;
+  border-radius:7px;
+  color:#fff;
+  background:color-mix(in srgb,var(--nav-color) 82%,#111);
+  box-shadow:none;
+  font-size:15px;font-weight:900;
+}
+.nav button:hover{
+  transform:translateX(2px);
+  border-color:var(--nav-color);
+  background:color-mix(in srgb,var(--nav-color) 39%,#111);
+}
+.nav button.active{
+  color:#fff;
+  border-color:var(--nav-color);
+  background:color-mix(in srgb,var(--nav-color) 48%,#111);
+  box-shadow:inset 3px 0 0 #fff;
+}
+.nav button.active .ico{background:#fff;color:#111}
+.nav button:nth-of-type(1){--nav-color:#347bd1}
+.nav button:nth-of-type(2){--nav-color:#168f7c}
+.nav button:nth-of-type(3){--nav-color:#7952b5}
+.nav button:nth-of-type(4){--nav-color:#bd7a22}
+.nav button:nth-of-type(5){--nav-color:#168da5}
+.nav button:nth-of-type(6){--nav-color:#438d45}
+.nav button:nth-of-type(7){--nav-color:#b34b68}
+.nav button:nth-of-type(8){--nav-color:#bd5732}
+.nav button:nth-of-type(9){--nav-color:#6558bd}
+.nav button:nth-of-type(10){--nav-color:#9b7923}
+.sidefoot{border-color:#292929;color:#888;font-weight:700}
+.topbar{
+  background:#090909;
+  border-color:#292929;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+.crumb{font-weight:700;color:#aaa}
+.pagehead h1{font-weight:900;letter-spacing:-.035em}
+.eyebrow{font-weight:900;color:#aaa}
+.card{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:12px;
+  box-shadow:none;
+}
+.card h3{font-weight:900;letter-spacing:.01em}
+.statnum{font-weight:900}
+.sectiontitle{font-weight:900}
+.btn{
+  border:1px solid #393939;
+  border-radius:8px;
+  background:#1a1a1a;
+  color:#f5f5f5;
+  box-shadow:none;
+  font-weight:800;
+}
+.btn:hover{border-color:#777;transform:none;background:#242424;box-shadow:none}
+.btn.primary{
+  color:#090909;
+  border-color:#f2f2f2;
+  background:#f2f2f2;
+  box-shadow:none;
+}
+.btn.danger{color:#ff8585}
+input,select,textarea{
+  background:#0b0b0b;
+  border:1px solid #393939;
+  border-radius:8px;
+  color:#f5f5f5;
+  box-shadow:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:#aaa;
+  box-shadow:0 0 0 2px #ffffff18;
+}
+.item{
+  background:#151515;
+  border:1px solid #303030;
+  border-radius:9px;
+  box-shadow:none;
+}
+.pill{border-color:#444;background:#1a1a1a;font-weight:800}
+.progress{background:#292929;box-shadow:none}
+.progress span{background:#e5e5e5}
+.bar{background:#e5e5e5;box-shadow:none}
+.chatlog{background:#0b0b0b;border-color:#303030;border-radius:10px}
+.bubble{border-radius:10px;font-weight:600}
+.bubble.user{background:#262626;border:1px solid #444}
+.bubble.bot{background:#151515;border:1px solid #303030}
+.toast{border-radius:9px;font-weight:900;background:#f2f2f2;color:#090909;box-shadow:var(--shadow)}
+.empty{border-color:#383838}
+th{font-weight:900}
+@media(max-width:760px){
+  .sidebar{background:#0d0d0d;border-right:1px solid #292929}
+  .topbar{background:#090909}
+}
+
+/* KSTUDY 1.3 — dark graphite, section color on selection only */
+:root{
+  --bg:#080808;
+  --panel:#111111;
+  --panel2:#181818;
+  --line:#292929;
+  --text:#f5f5f5;
+  --muted:#a5a5a5;
+  --accent:#f4f4f4;
+  --accent2:#d8d8d8;
+  --shadow:0 5px 18px #0008;
+}
+html,body{background:#080808}
+body{font-family:"Nunito","Trebuchet MS",ui-rounded,system-ui,sans-serif}
+button,input,select,textarea{font-family:inherit}
+.sidebar{background:#0c0c0c;border-right:1px solid #292929}
+.brandmark{background:#f4f4f4;color:#090909;border-color:#f4f4f4;box-shadow:0 3px 12px #ffffff20}
+.nav{display:flex;flex-direction:column;gap:7px}
+.nav button{
+  --nav-color:#ffffff;
+  border:1px solid transparent;
+  background:transparent;
+  color:#c9c9c9;
+  border-radius:11px;
+  padding:11px 12px;
+  margin:0;
+  font-weight:800;
+  box-shadow:none;
+  transition:background .18s,border-color .18s,color .18s,box-shadow .18s,transform .18s;
+}
+.nav button .ico{
+  width:27px;height:27px;display:grid;place-items:center;
+  border-radius:8px;background:#1c1c1c;color:#e8e8e8;
+  box-shadow:inset 0 1px 0 #ffffff18,0 2px 5px #0008;
+}
+.nav button:hover{
+  background:#171717;border-color:#343434;color:#fff;transform:translateX(2px);
+}
+.nav button.active{
+  color:#fff;
+  background:color-mix(in srgb,var(--nav-color) 17%,#101010);
+  border-color:color-mix(in srgb,var(--nav-color) 65%,#333);
+  box-shadow:inset 3px 0 0 var(--nav-color),0 3px 12px #0008;
+}
+.nav button.active .ico{
+  background:var(--nav-color);color:#080808;
+  box-shadow:0 0 12px color-mix(in srgb,var(--nav-color) 42%,transparent);
+}
+.nav button:nth-of-type(1){--nav-color:#ffffff}
+.nav button:nth-of-type(2){--nav-color:#65b9ff}
+.nav button:nth-of-type(3){--nav-color:#53d6b0}
+.nav button:nth-of-type(4){--nav-color:#b99aff}
+.nav button:nth-of-type(5){--nav-color:#f0bd68}
+.nav button:nth-of-type(6){--nav-color:#54c8d8}
+.nav button:nth-of-type(7){--nav-color:#8bd17c}
+.nav button:nth-of-type(8){--nav-color:#f08da8}
+.nav button:nth-of-type(9){--nav-color:#ff9a70}
+.nav button:nth-of-type(10){--nav-color:#a99cff}
+.navlabel{color:#777;font-weight:900}
+.topbar{background:#090909;border-color:#292929;box-shadow:none;backdrop-filter:blur(14px)}
+.crumb{color:#aaa;font-weight:700}
+.pagehead h1,.sectiontitle,.card h3{font-weight:900}
+.eyebrow{color:#aaa;font-weight:900}
+.card{background:linear-gradient(145deg,#141414,#101010);border:1px solid #292929;border-radius:15px;box-shadow:none}
+.btn{border:1px solid #393939;border-radius:10px;background:#1a1a1a;color:#f5f5f5;box-shadow:none;font-weight:800}
+.btn:hover{border-color:#777;background:#242424;transform:translateY(-1px)}
+.btn.primary{background:#f4f4f4;color:#090909;border-color:#f4f4f4}
+input,select,textarea{background:#0b0b0b;border:1px solid #393939;border-radius:10px;color:#f5f5f5}
+input:focus,select:focus,textarea:focus{border-color:#aaa;box-shadow:0 0 0 3px #ffffff18}
+.item{background:#151515;border:1px solid #303030;border-radius:11px}
+.pill{border-color:#444;background:#1a1a1a}
+.progress{background:#292929}
+.progress span{background:#ededed}
+.bar{background:#ededed}
+.chatlog{background:#0b0b0b;border-color:#303030}
+.bubble{border-radius:12px}
+.bubble.user{background:#262626;border:1px solid #444}
+.bubble.bot{background:#151515;border:1px solid #303030}
+.toast{background:#f2f2f2;color:#090909;border-radius:10px}
+.empty{border-color:#383838}
+
+/* A tela inicial recebe apenas um relevo branco discreto nos cards. */
+body.home-view .card{
+  border-color:#383838;
+  box-shadow:0 0 0 1px #ffffff08,0 5px 20px #ffffff0a,0 12px 30px #0009;
+}
+body.home-view .nav button.active{
+  background:#f1f1f1;color:#090909;border-color:#fff;
+  box-shadow:0 0 0 1px #ffffff70,0 0 18px #ffffff25;
+}
+body.home-view .nav button.active .ico{background:#090909;color:#fff;box-shadow:none}
+@media(max-width:760px){
+  .sidebar{background:#0c0c0c;border-right:1px solid #292929}
+  .topbar{background:#090909}
+  body.home-view .card{box-shadow:0 0 0 1px #ffffff08,0 5px 18px #ffffff0a,0 10px 24px #0009}
+}
+
+
+
+/* KSTUDY 1.4 — cada seção assume sua cor ao ser aberta */
+body[class*="section-"]{
+  --section-color:#65b9ff;
+  --section-soft:color-mix(in srgb,var(--section-color) 24%,#080808);
+}
+body.section-timer{--section-color:#65b9ff}
+body.section-routine{--section-color:#53d6b0}
+body.section-content{--section-color:#b99aff}
+body.section-reviews{--section-color:#f0bd68}
+body.section-questions{--section-color:#54c8d8}
+body.section-simulados{--section-color:#8bd17c}
+body.section-errors{--section-color:#f08da8}
+body.section-tools{--section-color:#ff9a70}
+body.section-mentor{--section-color:#a99cff}
+
+/* O fundo da área de trabalho fica visivelmente tingido pela cor da seção. */
+body[class*="section-"] .main{
+  background:
+    radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--section-color) 30%,transparent),transparent 62%),
+    #080808;
+}
+body[class*="section-"] .wrap{
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--section-color) 31%,#080808),
+    color-mix(in srgb,var(--section-color) 17%,#080808) 58%,
+    #0b0b0b);
+  border:1px solid color-mix(in srgb,var(--section-color) 62%,#252525);
+  border-top:3px solid var(--section-color);
+  border-radius:25px;
+  margin:22px auto 40px;
+  padding:30px 34px 70px;
+  box-shadow:0 12px 38px color-mix(in srgb,var(--section-color) 17%,transparent),0 18px 45px #0009;
+}
+body[class*="section-"] .pagehead{
+  background:linear-gradient(110deg,
+    color-mix(in srgb,var(--section-color) 43%,#101010),
+    color-mix(in srgb,var(--section-color) 23%,#101010));
+  border:1px solid color-mix(in srgb,var(--section-color) 75%,#333);
+  border-left:6px solid var(--section-color);
+  border-radius:20px;
+  padding:22px 24px;
+  margin-bottom:24px;
+  box-shadow:inset 0 1px 0 #ffffff20,0 8px 24px #0005;
+}
+body[class*="section-"] .eyebrow{color:var(--section-color)}
+body[class*="section-"] .card{
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--section-color) 24%,#151515),
+    color-mix(in srgb,var(--section-color) 12%,#101010));
+  border:1px solid color-mix(in srgb,var(--section-color) 58%,#303030);
+  border-radius:19px;
+  box-shadow:inset 0 1px 0 #ffffff16,0 8px 22px #0006;
+}
+body[class*="section-"] .item{
+  background:color-mix(in srgb,var(--section-color) 17%,#151515);
+  border-color:color-mix(in srgb,var(--section-color) 48%,#303030);
+  border-radius:14px;
+}
+body[class*="section-"] .btn.primary{
+  background:var(--section-color);
+  color:#080808;
+  border-color:var(--section-color);
+  box-shadow:0 4px 16px color-mix(in srgb,var(--section-color) 32%,transparent);
+}
+body[class*="section-"] .progress span,
+body[class*="section-"] .bar{
+  background:var(--section-color);
+}
+body[class*="section-"] input:focus,
+body[class*="section-"] select:focus,
+body[class*="section-"] textarea:focus{
+  border-color:var(--section-color);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--section-color) 25%,transparent);
+}
+body[class*="section-"] .nav button.active{
+  background:color-mix(in srgb,var(--section-color) 36%,#101010);
+  border-color:var(--section-color);
+  box-shadow:inset 4px 0 0 var(--section-color),0 0 18px color-mix(in srgb,var(--section-color) 20%,transparent);
+}
+body[class*="section-"] .nav button.active .ico{
+  background:var(--section-color);color:#080808;
+}
+@media(max-width:760px){
+  body[class*="section-"] .wrap{
+    margin:12px 9px 28px;
+    padding:20px 13px 48px;
+    border-radius:21px;
+  }
+  body[class*="section-"] .pagehead{padding:18px 16px;border-radius:17px}
+}
+
+
+/* KSTUDY 1.5 — acabamento premium e otimização para notebook */
+:root{
+  --line:#303030;
+  --surface:#111;
+  --surface-raised:#171717;
+  --surface-soft:#1c1c1c;
+  --glass:rgba(12,12,12,.94);
+}
+html{scroll-behavior:smooth}
+body{min-height:100vh;background:#080808}
+.app{grid-template-columns:248px minmax(0,1fr);max-width:1920px;margin:0 auto}
+.sidebar{
+  padding:25px 15px 20px;
+  background:linear-gradient(180deg,#101010 0%,#0a0a0a 100%);
+  border-right:1px solid #292929;
+  scrollbar-width:thin;scrollbar-color:#363636 transparent
+}
+.brand{padding:5px 10px 25px}
+.brandmark{width:40px;height:40px;border-radius:13px;font-size:18px}
+.brand strong{font-size:16px}
+.navlabel{font-size:9px;letter-spacing:.2em;margin-top:5px}
+.nav{gap:5px}
+.nav button{min-height:43px;border-radius:12px;padding:9px 11px;font-size:13px;letter-spacing:.005em}
+.nav button .ico{width:29px;height:29px;border-radius:9px;flex:0 0 29px}
+.nav button.active{box-shadow:inset 3px 0 var(--nav-color),0 5px 18px #0009}
+.telegram-links{display:grid;gap:7px;padding:3px 2px 8px}
+.telegram-links a{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  padding:10px 10px;border:1px solid #292929;border-radius:12px;
+  background:linear-gradient(135deg,#171717,#101010);
+  color:#f4f4f4;text-decoration:none;transition:.2s ease;
+}
+.telegram-links a:hover{border-color:#6688ad;background:#151b22;transform:translateX(2px)}
+.telegram-links a>span:nth-child(2){display:flex;flex-direction:column;min-width:0;flex:1}
+.telegram-links strong{font-size:11px;font-weight:900;line-height:1.3}
+.telegram-links small{font-size:10px;color:#929292;margin-top:2px}
+.tg-icon{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:9px;background:#19334a;color:#83caff;font-weight:900}
+.tg-arrow{color:#777;font-size:12px}
+.sidefoot{font-size:10px;line-height:1.7}
+.main{min-width:0;background:#080808}
+.topbar{
+  height:66px;padding:0 clamp(22px,2.5vw,42px);
+  background:rgba(8,8,8,.88);border-bottom:1px solid #252525;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+}
+.crumb{font-size:11px;letter-spacing:.09em}
+.topactions{gap:9px}
+.wrap{width:min(100%,1580px);max-width:1580px;padding:30px clamp(22px,2.5vw,42px) 64px}
+.pagehead{margin-bottom:22px}
+.pagehead h1{font-size:clamp(27px,2.25vw,38px);letter-spacing:-.045em}
+.sub{font-size:13px;max-width:760px;line-height:1.65}
+.eyebrow{font-size:9px;letter-spacing:.22em}
+.grid{gap:17px}
+.stats{gap:13px}
+.card{
+  padding:20px;border-radius:17px;
+  background:linear-gradient(145deg,#171717 0%,#101010 100%);
+  border-color:#2b2b2b;
+  box-shadow:0 8px 25px #0005,inset 0 1px 0 #ffffff08;
+  transition:border-color .2s,transform .2s,box-shadow .2s
+}
+.card:hover{border-color:#414141;box-shadow:0 12px 30px #0007,inset 0 1px 0 #ffffff0b}
+.card h3{font-size:13px;letter-spacing:.025em}
+.statlabel{font-size:11px;letter-spacing:.025em}
+.statnum{font-size:clamp(25px,2vw,32px)}
+.sectiontitle{font-size:15px;margin:27px 0 13px}
+.item{padding:12px 14px;border-radius:12px;background:linear-gradient(110deg,#171717,#121212);border-color:#2d2d2d}
+.item strong{font-size:12px}
+.btn{border-radius:10px;padding:9px 14px;font-size:12px;transition:all .18s ease}
+.btn.primary{box-shadow:0 4px 15px #ffffff12}
+.btn:focus-visible,.nav button:focus-visible,.telegram-links a:focus-visible{outline:2px solid #fff;outline-offset:3px}
+input,select,textarea{border-radius:10px;padding:11px 12px;font-size:12px}
+.field label{font-size:11px;font-weight:800;letter-spacing:.02em}
+.progress{height:8px}
+.pill{font-size:9px;letter-spacing:.03em}
+.chatlog{border-radius:14px}
+.bubble{line-height:1.6}
+.toast{border-radius:12px;padding:12px 17px}
+body[class*="section-"] .wrap{width:calc(100% - 44px);max-width:1580px}
+body[class*="section-"] .pagehead{padding:23px 26px}
+body[class*="section-"] .card{backdrop-filter:blur(5px)}
+/* Telas comuns de notebook: mais área útil sem comprimir os cartões. */
+@media(min-width:761px) and (max-width:1450px){
+  .app{grid-template-columns:226px minmax(0,1fr)}
+  .sidebar{padding-left:12px;padding-right:12px}
+  .wrap{padding-left:24px;padding-right:24px}
+  body[class*="section-"] .wrap{width:calc(100% - 32px);padding-left:23px;padding-right:23px}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .two{grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr)}
+  .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(min-width:761px) and (max-width:1050px){
+  .app{grid-template-columns:205px minmax(0,1fr)}
+  .sidebar{padding:20px 10px}
+  .brand{gap:9px;padding-left:6px}
+  .brand strong{font-size:14px}
+  .nav button{font-size:11px;gap:8px}
+  .telegram-links a{gap:7px;padding:9px 7px}
+  .telegram-links strong{font-size:10px}
+  .wrap{padding:24px 18px 55px}
+  body[class*="section-"] .wrap{width:calc(100% - 22px);padding:22px 15px 50px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two,.three{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .app{grid-template-columns:1fr}
+  .sidebar{padding:22px 15px}
+  .telegram-links{grid-template-columns:1fr}
+  .wrap{width:100%;padding:22px 15px 55px}
+  body[class*="section-"] .wrap{width:calc(100% - 18px)}
+}
+
+
+/* KSTUDY 1.6 — contraste tipográfico, ícones e modo claro */
+body:not(.light), body:not(.light) * { color-scheme: dark; }
+body:not(.light) .nav button,
+body:not(.light) .nav button .ico,
+body:not(.light) .telegram-links a,
+body:not(.light) .telegram-links .tg-icon,
+body:not(.light) .crumb,
+body:not(.light) .eyebrow,
+body:not(.light) .statlabel,
+body:not(.light) .statnote,
+body:not(.light) .tiny,
+body:not(.light) .muted,
+body:not(.light) .meta,
+body:not(.light) .field label,
+body:not(.light) th,
+body:not(.light) .pill,
+body:not(.light) .barlabel,
+body:not(.light) .barval,
+body:not(.light) .sidefoot,
+body:not(.light) .navlabel { color:#fff !important; }
+body:not(.light) .nav button .ico { color:#fff !important; }
+body:not(.light) .nav button.active .ico { color:#fff !important; background:color-mix(in srgb,var(--nav-color) 35%,#111) !important; }
+body:not(.light) .tg-icon {color:#fff !important;background:#242424}
+body:not(.light) .btn.primary {color:#080808 !important}
+body:not(.light) .toast {color:#090909 !important}
+body:not(.light) .brandmark {color:#090909 !important}
+body:not(.light) input::placeholder, body:not(.light) textarea::placeholder {color:#bdbdbd}
+body:not(.light) .nav button:hover, body:not(.light) .nav button.active {color:#fff !important}
+body:not(.light) .item *, body:not(.light) .card *, body:not(.light) .pagehead * {text-shadow:none}
+body.light {background:#eef1f5 !important;color:#202632 !important}
+body.light {--bg:#eef1f5;--panel:#fff;--panel2:#f6f8fb;--line:#d9e0e8;--text:#202632;--muted:#5d6878;--accent:#26364a;--accent2:#52677f;--shadow:0 8px 25px #26364a12;background:#eef1f5 !important;color:#202632 !important}
+body.light .sidebar {background:#fff !important;border-color:#dce2e9 !important;box-shadow:4px 0 20px #26364a08}
+body.light .main, body.light .wrap {background:#eef1f5 !important}
+body.light .topbar {background:#ffffffed !important;border-color:#dce2e9 !important}
+body.light .crumb, body.light .eyebrow, body.light .navlabel, body.light .sidefoot,
+body.light .statlabel, body.light .statnote, body.light .tiny, body.light .muted,
+body.light .meta, body.light .field label, body.light th, body.light .pill,
+body.light .barlabel, body.light .barval, body.light .sub {color:#586577 !important}
+body.light .pagehead h1, body.light .sectiontitle, body.light .card h3,
+body.light .statnum, body.light .item strong, body.light .brand strong {color:#182230 !important}
+body.light .brand small {color:#657286 !important}
+body.light .brandmark {background:#172334 !important;color:#fff !important;border-color:#172334 !important}
+body.light .nav button {color:#334155 !important;background:transparent !important;border-color:transparent !important}
+body.light .nav button .ico {background:#edf1f6 !important;color:#334155 !important;box-shadow:none}
+body.light .nav button:hover {background:#f0f3f8 !important;color:#172334 !important}
+body.light .nav button.active {background:#e7edf5 !important;color:#172334 !important;border-color:#b9c8da !important;box-shadow:inset 3px 0 var(--nav-color),0 3px 12px #24364b0c !important}
+body.light .nav button.active .ico {background:#172334 !important;color:#fff !important}
+body.light .card {background:#fff !important;border-color:#dce3eb !important;box-shadow:0 6px 22px #24364b0a !important}
+body.light .item {background:#f8fafc !important;border-color:#e0e6ed !important}
+body.light input, body.light select, body.light textarea {background:#fff !important;color:#202632 !important;border-color:#cbd5e1 !important}
+body.light input::placeholder, body.light textarea::placeholder {color:#8490a0 !important}
+body.light .btn {background:#f4f6f9 !important;color:#243247 !important;border-color:#d5dde7 !important}
+body.light .btn.primary {background:#202f43 !important;color:#fff !important;border-color:#202f43 !important}
+body.light .btn.danger {color:#b42332 !important}
+body.light .progress {background:#e4e9ef !important}
+body.light .progress span, body.light .bar {background:var(--section-color,#425f80) !important}
+body.light .chatlog {background:#f7f9fc !important;border-color:#dce3eb !important}
+body.light .bubble.bot {background:#fff !important;color:#263244 !important;border-color:#dce3eb !important}
+body.light .bubble.user {background:#e7edf5 !important;color:#263244 !important;border-color:#cbd6e3 !important}
+body.light .empty {color:#687587 !important;border-color:#cbd5e1 !important}
+body.light .toast {background:#202f43 !important;color:#fff !important}
+body.light .telegram-links a {background:#f7f9fc !important;color:#243247 !important;border-color:#dce3eb !important}
+body.light .telegram-links small {color:#657286 !important}
+body.light .tg-icon {background:#e5edf6 !important;color:#243247 !important}
+body.light[class*="section-"] .wrap {background:linear-gradient(145deg,color-mix(in srgb,var(--section-color) 12%,#fff),#fff 75%) !important;border-color:color-mix(in srgb,var(--section-color) 35%,#dce3eb) !important;box-shadow:0 10px 30px #24364b0a !important}
+body.light[class*="section-"] .pagehead {background:color-mix(in srgb,var(--section-color) 13%,#fff) !important}
+body.light[class*="section-"] .card {background:color-mix(in srgb,var(--section-color) 5%,#fff) !important}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Contraste consistente: texto branco em toda a interface escura. */
+body:not(.light) .sidebar *, body:not(.light) .topbar *, body:not(.light) .wrap * { color:#fff !important; }
+body:not(.light) .btn.primary, body:not(.light) .btn.primary *, body:not(.light) .brandmark,
+body:not(.light) .brandmark *, body:not(.light) .toast, body:not(.light) .toast * { color:#080808 !important; }
+body:not(.light) input, body:not(.light) select, body:not(.light) textarea { color:#fff !important; }
+body:not(.light) .nav button.active .ico { color:#fff !important; }
+</style></head>
+<body class="home-view"><div class="app">
+<aside class="sidebar" id="sidebar"><div class="brand"><div class="brandmark">K</div><div><strong>KSTUDY</strong><small>ACADEMIC SYSTEM · 2027</small></div></div>
+<div class="navlabel">CENTRAL</div><nav class="nav" id="nav">
+<button class="active" data-page="overview"><span class="ico">◈</span>Visão geral</button>
+<button data-page="timer"><span class="ico">◷</span>Cronômetro e horas</button>
+<button data-page="routine"><span class="ico">▤</span>Rotina e planejamento</button>
+<button data-page="content"><span class="ico">▧</span>Conteúdos</button>
+<button data-page="reviews"><span class="ico">↻</span>Revisões</button>
+<button data-page="questions"><span class="ico">▦</span>Banco de questões</button>
+<button data-page="simulados"><span class="ico">▣</span>Simulados</button>
+<button data-page="errors"><span class="ico">⌁</span>Erros e prioridades</button>
+<div class="navlabel">ESTUDO</div>
+<button data-page="tools"><span class="ico">⌘</span>Ferramentas de estudo</button>
+<button data-page="mentor"><span class="ico">✳</span>Kstudy IA · Mentor</button>
+<button data-page="account"><span class="ico">◎</span>Conta e sincronização</button>
+</nav>
+<div class="navlabel">CURSOS E MATERIAIS</div>
+<div class="telegram-links">
+  <a href="https://t.me/assadll22" target="_blank" rel="noopener noreferrer"><span class="tg-icon">↗</span><span><strong>Pedro Assad</strong><small>Curso geral</small></span><span class="tg-arrow">↗</span></a>
+  <a href="https://t.me/analeeo" target="_blank" rel="noopener noreferrer"><span class="tg-icon">↗</span><span><strong>Química Ferreto</strong><small>Curso de química</small></span><span class="tg-arrow">↗</span></a>
+  <a href="https://t.me/enemmateriais2027" target="_blank" rel="noopener noreferrer"><span class="tg-icon">↗</span><span><strong>Materiais 2027</strong><small>Materiais de estudo</small></span><span class="tg-arrow">↗</span></a>
+</div>
+<div class="sidefoot">KSTUDY 1.0<br><span>Seus dados ficam neste navegador.</span></div></aside>
+<main class="main"><header class="topbar"><div class="row"><button class="btn ghost mobilemenu" id="menuBtn">☰</button><span class="crumb">KSTUDY / <b id="crumb">VISÃO GERAL</b></span></div><div class="topactions"><button class="btn small desktop" id="exportBtn">↓ Backup</button><button class="btn small desktop" id="importBtn">↑ Importar</button><input id="importFile" type="file" accept="application/json" class="hidden"><button class="btn small" id="accountBtn">◎ Conta</button><button class="btn small" id="themeBtn">☼ Tema</button></div></header>
+<div class="wrap"><div id="page"></div></div></main></div><div id="toast" class="toast hidden"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='kstudy_1_0_data';
+const today=()=>new Date().toISOString().slice(0,10);
+const uid=()=>Math.random().toString(36).slice(2,10);
+const areas=['Linguagens','Humanas','Natureza','Matemática','Redação'];
+const subjects={
+'Linguagens':['Português','Literatura','Artes','Inglês/Espanhol'],
+'Humanas':['História','Geografia','Filosofia','Sociologia'],
+'Natureza':['Biologia','Química','Física'],
+'Matemática':['Matemática'],'Redação':['Redação']};
+const seeds=[
+['Linguagens','Português','Interpretação de textos'],['Linguagens','Português','Gêneros textuais e funções da linguagem'],['Linguagens','Literatura','Modernismo brasileiro'],['Linguagens','Artes','Vanguardas artísticas e arte contemporânea'],['Linguagens','Inglês/Espanhol','Leitura e interpretação'],
+['Humanas','História','Brasil Colônia, escravidão e economia'],['Humanas','História','Império, abolição e República'],['Humanas','História','Era Vargas e ditadura militar'],['Humanas','História','Revoluções, guerras e Guerra Fria'],['Humanas','Geografia','Urbanização e população'],['Humanas','Geografia','Globalização, indústria e trabalho'],['Humanas','Geografia','Agropecuária, energia e meio ambiente'],['Humanas','Filosofia','Ética, política e conhecimento'],['Humanas','Sociologia','Cultura, cidadania e desigualdade'],
+['Natureza','Biologia','Ecologia e impactos ambientais'],['Natureza','Biologia','Genética e biotecnologia'],['Natureza','Biologia','Fisiologia humana'],['Natureza','Química','Estequiometria e mol'],['Natureza','Química','Soluções e concentração'],['Natureza','Química','Termoquímica, cinética e equilíbrio'],['Natureza','Química','Eletroquímica'],['Natureza','Química','Química orgânica'],['Natureza','Física','Cinemática e dinâmica'],['Natureza','Física','Trabalho, energia e potência'],['Natureza','Física','Termologia e gases'],['Natureza','Física','Eletricidade e circuitos'],['Natureza','Física','Ondulatória e óptica'],
+['Matemática','Matemática','Razão, proporção e porcentagem'],['Matemática','Matemática','Frações, potências e unidades'],['Matemática','Matemática','Funções e gráficos'],['Matemática','Matemática','Geometria plana e espacial'],['Matemática','Matemática','Estatística e gráficos'],['Matemática','Matemática','Probabilidade e contagem'],
+['Redação','Redação','Competências C1 a C5'],['Redação','Redação','Tese, argumentos e repertório'],['Redação','Redação','Proposta de intervenção']];
+let data=load();
+function fresh(){return {sessions:[],tasks:{},base:[],contents:seeds.map(x=>({id:uid(),area:x[0],subject:x[1],name:x[2],status:'Não iniciado',date:'',notes:''})),reviews:[],questions:[],simulados:[],errors:[],essays:[],doubts:[],strategy:'',chat:[],theme:'dark'}}
+function load(){try{let d=JSON.parse(localStorage.getItem(KEY));return d&&typeof d==='object'?{...fresh(),...d}:fresh()}catch{return fresh()}}
+let cloudClient=null,cloudUser=null,cloudBusy=false,cloudTimer=null;
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(data));
+ if(cloudClient&&cloudUser){
+   clearTimeout(cloudTimer);
+   cloudTimer=setTimeout(async()=>{
+     try{cloudBusy=true;const {error}=await cloudClient.from('kstudy_progress').upsert({user_id:cloudUser.id,payload:data,updated_at:new Date().toISOString()},{onConflict:'user_id'});if(error)throw error;setCloudStatus('Sincronizado agora.');}
+     catch(e){setCloudStatus('Falha na sincronização: '+(e.message||'verifique a conexão.'))}
+     finally{cloudBusy=false}
+   },700);
+ }
+}
+function toast(t){let el=$('#toast');el.textContent=t;el.classList.remove('hidden');setTimeout(()=>el.classList.add('hidden'),2200)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtMin(m){return `${Math.floor(m/60)}h ${m%60}min`}
+function pct(a,b){return b?Math.round(a/b*100):0}
+function sum(a,k){return a.reduce((n,x)=>n+(Number(x[k])||0),0)}
+function card(title,body){return `<section class="card"><h3>${title}</h3>${body}</section>`}
+function empty(t='Nenhum registro por aqui ainda.'){return `<div class="empty">${t}</div>`}
+function options(arr,sel=''){return arr.map(x=>`<option ${x===sel?'selected':''}>${esc(x)}</option>`).join('')}
+function field(label,name,type='text',value='',extra=''){return `<div class="field"><label>${label}</label><input name="${name}" type="${type}" value="${esc(value)}" ${extra}></div>`}
+function selectField(label,name,arr,sel=''){return `<div class="field"><label>${label}</label><select name="${name}">${options(arr,sel)}</select></div>`}
+function form(id,inside,button='Salvar registro'){return `<form id="${id}">${inside}<div class="row"><button class="btn primary" type="submit">${button}</button></div></form>`}
+function pageHead(title,sub,tag='KSTUDY · 2027'){return `<div class="pagehead"><div><div class="eyebrow">${tag}</div><h1>${title}</h1><p class="sub">${sub}</p></div></div>`}
+function list(items,renderer){return items.length?`<div class="list">${items.map(renderer).join('')}</div>`:empty()}
+let current='overview';
+function go(p){current=p;document.body.classList.remove('section-timer','section-routine','section-content','section-reviews','section-questions','section-simulados','section-errors','section-tools','section-mentor');if(p!=='overview')document.body.classList.add('section-'+p);document.body.classList.toggle('home-view',p==='overview');$$('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('#crumb').textContent=({overview:'VISÃO GERAL',timer:'TEMPO E PRODUTIVIDADE',routine:'PLANEJAMENTO',content:'APRENDIZAGEM',reviews:'REVISÕES',questions:'PRÁTICA',simulados:'AVALIAÇÃO',errors:'DIAGNÓSTICO',tools:'FERRAMENTAS',mentor:'MENTORIA',account:'CONTA E SINCRONIZAÇÃO'})[p];$('#sidebar').classList.remove('open');render()}
+$('#nav').addEventListener('click',e=>{let b=e.target.closest('[data-page]');if(b)go(b.dataset.page)});$('#menuBtn').onclick=()=>$('#sidebar').classList.toggle('open');
+function render(){let root=$('#page');root.innerHTML=pages[current]();wire()}
+const pages={
+overview:()=>{let mins=sum(data.sessions,'minutes'),q=sum(data.questions,'total'),a=sum(data.questions,'correct'),done=data.contents.filter(x=>x.status!=='Não iniciado').length,pending=data.reviews.filter(x=>!x.done).length;
+let byArea=areas.map(ar=>{let qs=data.questions.filter(x=>x.area===ar);return {ar,n:sum(qs,'total'),p:pct(sum(qs,'correct'),sum(qs,'total'))}});
+let last=data.questions.slice(-7);let soon=data.reviews.filter(x=>!x.done).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,5);
+return pageHead('Visão geral','Uma leitura objetiva do seu ritmo, domínio e próximas prioridades.')+
+`<div class="grid stats">${[['Horas estudadas',fmtMin(mins),'tempo registrado'],['Questões resolvidas',q,'em '+data.questions.length+' blocos'],['Aproveitamento',pct(a,q)+'%','acertos / questões'],['Conteúdos estudados',done+'/'+data.contents.length,'itens iniciados'],['Revisões pendentes',pending,'pontuais e globais']].map(x=>`<div class="card"><div class="statlabel">${x[0]}</div><div class="statnum">${x[1]}</div><div class="statnote">${x[2]}</div></div>`).join('')}</div>
+<div class="grid two">${card('Domínio por área',byArea.map(x=>`<div style="margin:12px 0"><div class="spread"><span>${x.ar}</span><b>${x.p}%</b></div><div class="progress"><span style="width:${x.p}%"></span></div><div class="tiny">${x.n} questões</div></div>`).join(''))}${card('Próximas revisões',list(soon,x=>`<div class="item"><div><strong>${esc(x.name)}</strong><div class="meta">${x.type} · ${x.subject}</div></div><span class="pill">${x.date}</span></div>`))}</div>
+<h2 class="sectiontitle">Evolução recente</h2><div class="grid two">${card('Aproveitamento por bloco',last.length?`<div class="chart">${last.map(x=>`<div class="barcol"><span class="barval">${pct(x.correct,x.total)}%</span><div class="bar" style="height:${Math.max(4,pct(x.correct,x.total))}%"></div><span class="barlabel">${new Date(x.date+'T12:00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</span></div>`).join('')}</div>`:empty())}${card('Atalhos',`<div class="list"><button class="btn" data-go="content">＋ Adicionar conteúdo estudado</button><button class="btn" data-go="questions">＋ Registrar bloco de questões</button><button class="btn" data-go="timer">◷ Registrar sessão de estudo</button><button class="btn" data-go="errors">⌁ Registrar erro prioritário</button></div>`)}</div>
+<h2 class="sectiontitle">Ranking de matérias</h2>${ranking()}`},
+timer:()=>pageHead('Cronômetro e horas','Registre o tempo efetivo de estudo e acompanhe sua dedicação.')+
+`<div class="grid two">${card('Sessão de estudo',`<div class="field"><label>Disciplina</label><select id="timerSubject">${options([...new Set(Object.values(subjects).flat())])}</select></div><div class="timer" id="clock">00:00:00</div><div class="row" style="justify-content:center"><button class="btn primary" id="startTimer">Iniciar sessão</button><button class="btn" id="stopTimer" disabled>Finalizar e salvar</button></div><p class="tiny" style="text-align:center">O cronômetro continua enquanto você navega nesta página.</p>`)}${card('Resumo de dedicação',`<div class="statnum">${fmtMin(sum(data.sessions,'minutes'))}</div><div class="statlabel">Tempo total acumulado</div><div class="sectiontitle">Referência diária</div><div class="progress"><span style="width:${Math.min(100,sum(data.sessions.filter(x=>x.date===today()),'minutes')/540*100)}%"></span></div><p class="tiny">${fmtMin(sum(data.sessions.filter(x=>x.date===today()),'minutes'))} registrados hoje · referência de 9h</p>`)}</div>
+<h2 class="sectiontitle">Histórico de sessões</h2>${list([...data.sessions].reverse(),x=>`<div class="item"><div><strong>${esc(x.subject)}</strong><div class="meta">${x.date} · ${x.origin||'Cronômetro'}</div></div><b>${fmtMin(x.minutes)}</b><button class="btn small danger" data-del="sessions:${x.id}">Excluir</button></div>`)}` ,
+routine:()=>{let day=$('#routineDate')?.value||today(),tasks=data.tasks[day]||[],done=tasks.filter(x=>x.done).length;return pageHead('Rotina e planejamento','Planeje com intenção. Execute, ajuste e registre o que realmente aconteceu.')+
+`<div class="grid two">${card('Cronograma-base',form('baseForm',`<div class="formgrid">${field('Matéria ou atividade','name')}${field('Duração (minutos)','minutes','number','60')}${selectField('Prioridade','priority',['Alta','Média','Baixa'])}</div>`,'Adicionar ao cronograma')+list(data.base,x=>`<div class="item"><div><strong>${esc(x.name)}</strong><div class="meta">${x.minutes} min · ${x.priority}</div></div><button class="btn small danger" data-del="base:${x.id}">×</button></div>`))}${card('Reorganizar meu dia',`<div class="formgrid">${field('Tempo disponível (min)','available','number','360')}${field('Horário de início','start','time','08:00')}</div><button class="btn primary" id="reorganize">Reorganizar meu dia</button><div id="scheduleOut" class="list" style="margin-top:12px"></div>`)}</div>
+<h2 class="sectiontitle">Central de checklist</h2><div class="card"><div class="row spread"><div class="row"><button class="btn small" id="prevDay">←</button><input id="routineDate" type="date" value="${day}" style="width:auto"><button class="btn small" id="nextDay">→</button><button class="btn small" id="todayBtn">Hoje</button></div><span class="pill">${done}/${tasks.length} concluídas · ${pct(done,tasks.length)}%</span></div><div class="progress" style="margin:14px 0"><span style="width:${pct(done,tasks.length)}%"></span></div>
+${form('taskForm',`<div class="formgrid">${field('Nome da tarefa','name')}${field('Duração estimada (min)','minutes','number','60')}${selectField('Categoria','category',['Estudo profundo','Questões e correção','Revisão e memória','Simulados e redação','Organização','Saúde e pausas'])}${selectField('Prioridade','priority',['Alta','Média','Baixa'])}</div>`,'＋ Adicionar tarefa')}
+<div class="row" style="margin:14px 0"><select id="taskFilter" style="width:auto"><option value="all">Todas</option><option value="pending">Pendentes</option><option value="done">Concluídas</option><option value="high">Prioridade alta</option></select><button class="btn small" id="bulkDone">Marcar todas como concluídas</button><button class="btn small danger" id="resetDay">Reiniciar checklist</button></div><div id="taskList">${taskList(tasks)}</div></div>
+<h2 class="sectiontitle">Estratégia de estudos</h2>${card('Seu método de execução',`<textarea id="strategy" placeholder="Registre sua estratégia, prioridades e combinados consigo...">${esc(data.strategy||'')}</textarea><button class="btn primary" id="saveStrategy" style="margin-top:9px">Salvar estratégia</button>`)}`},
+content:()=>pageHead('Programa de conteúdos','Acompanhe o percurso do edital e registre o nível de aprendizagem de cada assunto.')+
+`<div class="grid two">${card('Adicionar conteúdo',form('contentForm',`<div class="formgrid">${selectField('Área','area',areas)}${selectField('Disciplina','subject',Object.values(subjects).flat())}${field('Nome do assunto','name')}${field('Data de estudo','date','date',today())}${selectField('Status de aprendizagem','status',['Não iniciado','Estudado','Domínio'])}<div class="field wide"><label>Observações</label><textarea name="notes"></textarea></div></div>`))}${card('Progresso do programa',`<div class="statnum">${data.contents.filter(x=>x.status!=='Não iniciado').length}/${data.contents.length}</div><div class="progress"><span style="width:${pct(data.contents.filter(x=>x.status!=='Não iniciado').length,data.contents.length)}%"></span></div><p class="tiny">Conteúdos estudados ou em domínio</p><div class="row"><span class="pill">Não iniciado</span><span class="pill">Estudado</span><span class="pill">Domínio</span></div>`)}</div>
+<div class="row" style="margin:22px 0 12px"><select id="contentFilter" style="max-width:220px"><option value="Todas">Todas as áreas</option>${options(areas)}</select><input id="contentSearch" placeholder="Buscar assunto..." style="max-width:280px"></div><div id="contentList">${contentList(data.contents)}</div>` ,
+reviews:()=>pageHead('Revisões espaçadas','Reative o conhecimento no momento certo e acompanhe suas pendências.')+
+`<div class="grid two">${card('Gerar revisão global',form('globalForm',`<div class="formgrid">${selectField('Área','area',areas)}${field('Nome da revisão','name')}${field('Data','date','date',today())}${selectField('Intervalo','type',['Global','D+7','D+30'])}</div>`,'Criar revisão'))}${card('Resumo',`<div class="statnum">${data.reviews.filter(x=>!x.done).length}</div><div class="statlabel">Revisões pendentes</div><p class="tiny">${data.reviews.filter(x=>x.done).length} concluídas · ${data.reviews.length} no total</p>`)}</div>
+<div class="row" style="margin:22px 0 12px"><button class="btn small" data-reviewfilter="all">Todas</button><button class="btn small" data-reviewfilter="pending">Pendentes</button><button class="btn small" data-reviewfilter="done">Concluídas</button></div><div id="reviewList">${reviewList(data.reviews)}</div>`,
+questions:()=>pageHead('Banco de questões','Transforme prática em evidência: registre blocos e acompanhe o aproveitamento.')+
+`<div class="grid two">${card('Registrar bloco',form('questionForm',`<div class="formgrid">${field('Data','date','date',today())}${selectField('Área','area',areas)}${selectField('Disciplina','subject',Object.values(subjects).flat())}${field('Conteúdo','content')}${field('Total de questões','total','number','10')}${field('Quantidade de acertos','correct','number','7')}${selectField('Dificuldade','difficulty',['Fácil','Média','Difícil'])}</div>`))}${card('Desempenho geral',`<div class="statnum">${pct(sum(data.questions,'correct'),sum(data.questions,'total'))}%</div><div class="statlabel">Aproveitamento acumulado</div><p class="tiny">${sum(data.questions,'correct')} acertos em ${sum(data.questions,'total')} questões</p><div class="progress"><span style="width:${pct(sum(data.questions,'correct'),sum(data.questions,'total'))}%"></span></div>`)}</div>
+<h2 class="sectiontitle">Histórico de blocos</h2>${list([...data.questions].reverse(),x=>`<div class="item"><div><strong>${esc(x.subject)} · ${esc(x.content||'Sem conteúdo')}</strong><div class="meta">${x.date} · ${x.area} · ${x.difficulty}</div></div><div style="text-align:right"><b>${x.correct}/${x.total} · ${pct(x.correct,x.total)}%</b><div><button class="btn small danger" data-del="questions:${x.id}">Excluir</button></div></div></div>`)}`,
+simulados:()=>pageHead('Simulados','Registre provas completas ou parciais e compare a evolução por área.')+
+`<div class="card">${form('simForm',`<div class="formgrid">${field('Nome do simulado','name')}${field('Data','date','date',today())}${field('Linguagens (0–45)','ling','number','0','min="0" max="45"')}${field('Ciências Humanas (0–45)','hum','number','0','min="0" max="45"')}${field('Ciências da Natureza (0–45)','nat','number','0','min="0" max="45"')}${field('Matemática (0–45)','mat','number','0','min="0" max="45"')}${field('Redação (0–1000)','essay','number','0','min="0" max="1000"')}</div>`,'Salvar simulado')}</div>
+<h2 class="sectiontitle">Histórico de simulados</h2>${list([...data.simulados].reverse(),x=>`<div class="item"><div><strong>${esc(x.name)}</strong><div class="meta">${x.date} · L ${x.ling} · H ${x.hum} · N ${x.nat} · M ${x.mat} · Redação ${x.essay}</div></div><div style="text-align:right"><b>${x.ling+x.hum+x.nat+x.mat}/180</b><div><button class="btn small danger" data-del="simulados:${x.id}">Excluir</button></div></div></div>`)}`,
+errors:()=>pageHead('Erros e prioridades','Identifique a origem do erro e transforme o diagnóstico em plano de correção.')+
+`<div class="grid two">${card('Registrar erro',form('errorForm',`<div class="formgrid">${selectField('Prioridade','priority',['Urgente','Alta','Média','Baixa'])}${field('Conteúdo','content')}${selectField('Causa do erro','cause',['Conteúdo','Interpretação','Cálculo','Atenção','Tempo','Estratégia'])}<div class="field wide"><label>Como corrigir / ação corretiva</label><textarea name="fix"></textarea></div></div>`))}${card('Diagnóstico',`<div class="statnum">${data.errors.filter(x=>!x.done).length}</div><div class="statlabel">Erros em aberto</div><p class="tiny">${data.errors.filter(x=>x.priority==='Urgente'&&!x.done).length} urgentes · ${data.errors.filter(x=>x.done).length} resolvidos</p>`)}</div>
+<h2 class="sectiontitle">Fila de correção</h2>${list([...data.errors].sort((a,b)=>['Urgente','Alta','Média','Baixa'].indexOf(a.priority)-['Urgente','Alta','Média','Baixa'].indexOf(b.priority)),x=>`<div class="item"><div><strong>${esc(x.content)}</strong><div class="meta">${x.cause} · ${x.priority} · ${x.done?'Resolvido':'Aberto'}<br>${esc(x.fix||'Sem ação corretiva registrada')}</div></div><div class="row"><button class="btn small" data-error="${x.id}">${x.done?'Reabrir':'Resolver'}</button><button class="btn small danger" data-del="errors:${x.id}">×</button></div></div>`)}`,
+tools:()=>pageHead('Ferramentas de estudo','Recursos independentes para acompanhar redações, dúvidas e aproveitamento.')+
+`<div class="grid two">${card('Redação ENEM · competências',form('essayForm',`<div class="field"><label>Tema da redação</label><input name="topic" required></div><div class="field"><label>Data</label><input name="date" type="date" value="${today()}"></div><div class="formgrid">${['C1 — Norma culta','C2 — Tema e repertório','C3 — Argumentação','C4 — Coesão','C5 — Intervenção'].map((x,i)=>`<div class="field"><label>${x}</label><select name="c${i+1}">${[0,40,80,120,160,200].map(v=>`<option value="${v}">${v}</option>`).join('')}</select></div>`).join('')}</div>`,'Registrar nota'))}${card('Calculadora de aproveitamento',`<div class="formgrid">${field('Quantidade de questões','calcTotal','number','20')}${field('Quantidade de acertos','calcCorrect','number','14')}</div><div class="statnum" id="calcResult">70%</div><div class="statlabel" id="calcAdvice">Identificar padrões de erro</div><div class="progress" style="margin-top:12px"><span id="calcBar" style="width:70%"></span></div><p class="tiny">Faixas organizacionais, não previsões de nota TRI.</p>`)}</div>
+<h2 class="sectiontitle">Histórico de redações</h2><div class="grid three"><div class="card"><div class="statlabel">Redações</div><div class="statnum">${data.essays.length}</div></div><div class="card"><div class="statlabel">Média</div><div class="statnum">${data.essays.length?Math.round(sum(data.essays,'score')/data.essays.length):'—'}</div></div><div class="card"><div class="statlabel">Maior nota</div><div class="statnum">${data.essays.length?Math.max(...data.essays.map(x=>x.score)):'—'}</div></div></div>
+${list([...data.essays].reverse(),x=>`<div class="item"><div><strong>${esc(x.topic)}</strong><div class="meta">${x.date} · C1 ${x.c1} · C2 ${x.c2} · C3 ${x.c3} · C4 ${x.c4} · C5 ${x.c5}</div></div><b>${x.score}/1000 <button class="btn small danger" data-del="essays:${x.id}">×</button></b></div>`)}
+<h2 class="sectiontitle">Caderno de dúvidas</h2><div class="grid two">${card('Nova dúvida',form('doubtForm',`<div class="formgrid">${selectField('Área','area',areas)}${field('Disciplina / assunto','subject')}</div><div class="field"><label>Minha dúvida</label><textarea name="question"></textarea></div><div class="field"><label>O que resolveu</label><textarea name="solution"></textarea></div>`))}${card('Fila de dúvidas',list([...data.doubts].reverse(),x=>`<div class="item"><div><strong>${esc(x.subject)}</strong><div class="meta">${x.area} · ${x.done?'Resolvida':'Pendente'}<br>${esc(x.question)}</div></div><button class="btn small" data-doubt="${x.id}">${x.done?'Reabrir':'Resolver'}</button></div>`))}</div>`,
+mentor:()=>pageHead('Kstudy IA · Mentor acadêmico','Mentor local baseado nos seus registros. Não é um modelo externo conectado.')+
+`<div class="grid two">${card('Conversa com o mentor',`<div class="chatlog" id="chatlog">${(data.chat.length?data.chat:[{role:'bot',text:'Olá. Sou seu mentor local. Posso analisar seus registros, ajudar a organizar prioridades e estruturar uma sessão. O que vamos trabalhar hoje?'}]).map(x=>`<div class="bubble ${x.role==='user'?'user':'bot'}">${esc(x.text)}</div>`).join('')}</div><form id="chatForm"><textarea name="message" placeholder="Escreva sua mensagem... (Enter envia · Shift + Enter quebra linha)" rows="3"></textarea><div class="row" style="justify-content:end"><button class="btn primary">Enviar mensagem</button></div></form>`)}${card('Atalhos de interação',`<div class="list">${['Analisar meu momento','Como estudar melhor?','Organizar revisões','Aprender do zero','Entender meus erros','Planejar próxima sessão','Testar compreensão'].map(x=>`<button class="btn" data-prompt="${x}">${x} →</button>`).join('')}</div>`)}</div>
+<h2 class="sectiontitle">Contexto acadêmico acompanhado</h2><div class="grid three">${[['Conteúdos estudados',data.contents.filter(x=>x.status!=='Não iniciado').length],['Questões registradas',sum(data.questions,'total')],['Revisões pendentes',data.reviews.filter(x=>!x.done).length],['Aproveitamento',pct(sum(data.questions,'correct'),sum(data.questions,'total'))+'%'],['Tempo registrado',fmtMin(sum(data.sessions,'minutes'))],['Erros em aberto',data.errors.filter(x=>!x.done).length]].map(x=>`<div class="card"><div class="statlabel">${x[0]}</div><div class="statnum">${x[1]}</div></div>`).join('')}</div>`
+}; 
+pages.account=()=>pageHead('Conta e sincronização','Acesse seus registros em outros celulares e computadores com a mesma conta.')+
+`<div class="grid two">
+${card('Conectar armazenamento seguro',`<p class="tiny">A sincronização entre dispositivos precisa de um banco de dados online. Esta plataforma usa Supabase (plano gratuito disponível), com autenticação por e-mail e senha.</p>
+<div class="field"><label>URL do projeto Supabase</label><input id="sbUrl" placeholder="https://seu-projeto.supabase.co"></div>
+<div class="field"><label>Chave pública (anon / publishable)</label><input id="sbKey" placeholder="Cole a chave pública do projeto"></div>
+<div class="row"><button class="btn primary" id="connectCloud">Conectar projeto</button><button class="btn" id="disconnectCloud">Desconectar</button></div>
+<p class="tiny" id="cloudStatus">Projeto ainda não conectado neste dispositivo.</p>`)}
+${card('Sua conta KSTUDY',`<div class="field"><label>E-mail</label><input id="authEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div>
+<div class="field"><label>Senha</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Mínimo de 8 caracteres"></div>
+<div class="row"><button class="btn primary" id="signIn">Entrar</button><button class="btn" id="signUp">Criar conta</button><button class="btn danger" id="signOut">Sair</button></div>
+<p class="tiny" id="authStatus">Entre com sua conta para carregar e sincronizar seus dados.</p>`)}
+</div>
+<div class="card" style="margin-top:17px"><h3>Como ativar em qualquer dispositivo</h3>
+<ol class="tiny" style="line-height:2"><li>Crie um projeto gratuito em <a href="https://supabase.com" target="_blank" rel="noopener" style="color:inherit">supabase.com</a>.</li><li>No painel, abra SQL Editor e execute o comando abaixo.</li><li>Em Project Settings → API, copie Project URL e a chave pública (anon/publishable) e conecte aqui.</li><li>Crie sua conta com o mesmo e-mail e senha em cada dispositivo. Os dados passam a sincronizar automaticamente.</li></ol>
+<pre style="white-space:pre-wrap;overflow-wrap:anywhere;background:var(--surface-soft);padding:14px;border-radius:10px;font-size:11px;color:inherit">create table public.kstudy_progress (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  payload jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table public.kstudy_progress enable row level security;
+create policy "Cada usuário acessa apenas seu progresso"
+on public.kstudy_progress for all
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);</pre>
+<p class="tiny">Importante: não use uma senha igual à de outros serviços. A chave pública pode ficar no navegador; nunca coloque a chave secreta (service_role) no HTML. Seus dados antigos permanecem neste dispositivo até você escolher sincronizá-los.</p>
+</div>`; 
+function ranking(){let m={};data.questions.forEach(x=>{let k=x.subject;m[k]??={a:0,t:0};m[k].a+=x.correct;m[k].t+=x.total});let arr=Object.entries(m).filter(([k,v])=>v.t>=5).sort((a,b)=>b[1].a/b[1].t-a[1].a/a[1].t);return arr.length?list(arr.slice(0,8),([k,v])=>`<div class="item"><strong>${esc(k)}</strong><b>${pct(v.a,v.t)}% <span class="meta">(${v.t} questões)</span></b></div>`):empty('Registre ao menos cinco questões por matéria para formar o ranking.')}
+function taskList(ts){return ts.length?`<div class="list">${ts.map(x=>`<div class="item"><label class="checkrow"><input type="checkbox" data-task="${x.id}" ${x.done?'checked':''}><span><strong style="${x.done?'text-decoration:line-through;color:#899184':''}">${esc(x.name)}</strong><div class="meta">${x.category} · ${x.minutes} min · ${x.priority}</div></span></label><button class="btn small danger" data-taskdel="${x.id}">×</button></div>`).join('')}</div>`:empty('Nenhuma tarefa cadastrada para esta data.')}
+function contentList(cs){return cs.length?`<div class="list">${cs.map(x=>`<div class="item"><div style="min-width:0"><strong>${esc(x.name)}</strong><div class="meta">${x.area} · ${x.subject} ${x.date?'· '+x.date:''}</div>${x.notes?`<div class="tiny">${esc(x.notes)}</div>`:''}</div><div class="row"><select data-status="${x.id}" style="width:auto;padding:7px">${options(['Não iniciado','Estudado','Domínio'],x.status)}</select><button class="btn small danger" data-contentdel="${x.id}">×</button></div></div>`).join('')}</div>`:empty()}
+function reviewList(rs){return rs.length?`<div class="list">${rs.map(x=>`<div class="item"><div><strong>${esc(x.name)}</strong><div class="meta">${x.area} · ${x.subject} · ${x.type} · ${x.date}</div></div><div class="row"><span class="pill">${x.done?'Concluída':'Pendente'}</span><button class="btn small" data-review="${x.id}">${x.done?'Desfazer':'Concluir'}</button></div></div>`).join('')}</div>`:empty('As revisões serão criadas automaticamente ao marcar um conteúdo como estudado.')}
+function addReviews(c){[1,7,30].forEach(n=>{let d=new Date((c.date||today())+'T12:00:00');d.setDate(d.getDate()+n);data.reviews.push({id:uid(),name:c.name,area:c.area,subject:c.subject,type:'D+'+n,date:d.toISOString().slice(0,10),done:false,contentId:c.id})})}
+function wire(){
+$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+if(current==='timer')timerWire();
+if(current==='routine')routineWire();
+if(current==='content')contentWire();
+if(current==='reviews')reviewWire();
+if(current==='questions')$('#questionForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));f.total=+f.total;f.correct=+f.correct;if(f.correct>f.total||f.total<1)return toast('Confira o total e os acertos.');data.questions.push({...f,id:uid()});save();render();toast('Bloco registrado.')};
+if(current==='simulados')$('#simForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));['ling','hum','nat','mat','essay'].forEach(k=>f[k]=+f[k]);if(['ling','hum','nat','mat'].some(k=>f[k]<0||f[k]>45)||f.essay<0||f.essay>1000)return toast('Confira os limites das pontuações.');data.simulados.push({...f,id:uid()});save();render();toast('Simulado salvo.')};
+if(current==='errors'){$('#errorForm').onsubmit=e=>{e.preventDefault();data.errors.push({...Object.fromEntries(new FormData(e.target)),id:uid(),done:false});save();render();toast('Erro registrado.')};$$('[data-error]').forEach(b=>b.onclick=()=>{let x=data.errors.find(x=>x.id===b.dataset.error);x.done=!x.done;save();render()})}
+if(current==='tools')toolsWire();
+if(current==='mentor')mentorWire();
+if(current==='account')accountWire();
+$$('[data-del]').forEach(b=>b.onclick=()=>{let [k,id]=b.dataset.del.split(':');if(confirm('Excluir este registro?')){data[k]=data[k].filter(x=>x.id!==id);save();render()}});
+}
+let tick=null,elapsed=0,started=0;
+function timerWire(){let running=false;const clock=$('#clock');function paint(){let n=elapsed+(running?Math.floor((Date.now()-started)/1000):0);clock.textContent=[Math.floor(n/3600),Math.floor(n%3600/60),n%60].map(v=>String(v).padStart(2,'0')).join(':')}
+$('#startTimer').onclick=()=>{if(running)return;running=true;started=Date.now();$('#startTimer').disabled=true;$('#stopTimer').disabled=false;tick=setInterval(paint,250)};
+$('#stopTimer').onclick=()=>{if(!running)return;elapsed+=Math.floor((Date.now()-started)/1000);clearInterval(tick);running=false;let mins=Math.max(1,Math.round(elapsed/60));data.sessions.push({id:uid(),date:today(),subject:$('#timerSubject').value,minutes:mins,origin:'Cronômetro'});save();elapsed=0;paint();$('#startTimer').disabled=false;$('#stopTimer').disabled=true;render();toast('Sessão salva no histórico.')}}
+function routineWire(){const date=$('#routineDate');function refresh(){let ts=data.tasks[date.value]||[];$('#taskList').innerHTML=taskList(ts);$$('[data-task]').forEach(c=>c.onchange=()=>{let x=ts.find(x=>x.id===c.dataset.task);x.done=c.checked;save();routineRefreshStats()});$$('[data-taskdel]').forEach(b=>b.onclick=()=>{data.tasks[date.value]=ts.filter(x=>x.id!==b.dataset.taskdel);save();render()});$('#taskFilter').onchange=()=>{let f=$('#taskFilter').value;$('#taskList').innerHTML=taskList(ts.filter(x=>f==='all'||(f==='pending'&&!x.done)||(f==='done'&&x.done)||(f==='high'&&x.priority==='Alta')));routineWireChecks(ts)}}
+function routineRefreshStats(){let ts=data.tasks[date.value]||[],d=ts.filter(x=>x.done).length;$('.pill').textContent=`${d}/${ts.length} concluídas · ${pct(d,ts.length)}%`;$('.progress span').style.width=pct(d,ts.length)+'%'}
+function routineWireChecks(ts){$$('[data-task]').forEach(c=>c.onchange=()=>{ts.find(x=>x.id===c.dataset.task).done=c.checked;save();render()})}
+$('#taskForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));(data.tasks[date.value]??=[]).push({...f,id:uid(),minutes:+f.minutes,done:false});save();render()};
+date.onchange=refresh;$('#prevDay').onclick=()=>{let d=new Date(date.value+'T12:00:00');d.setDate(d.getDate()-1);date.value=d.toISOString().slice(0,10);render()};$('#nextDay').onclick=()=>{let d=new Date(date.value+'T12:00:00');d.setDate(d.getDate()+1);date.value=d.toISOString().slice(0,10);render()};$('#todayBtn').onclick=()=>{date.value=today();render()};
+$('#bulkDone').onclick=()=>{(data.tasks[date.value]||[]).forEach(x=>x.done=true);save();render()};$('#resetDay').onclick=()=>{if(confirm('Reiniciar o checklist deste dia?')){(data.tasks[date.value]||[]).forEach(x=>x.done=false);save();render()}};
+$('#strategy').onchange=e=>{data.strategy=e.target.value;save()};$('#saveStrategy').onclick=()=>{data.strategy=$('#strategy').value;save();toast('Estratégia salva.')};
+$('#baseForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));f.minutes=+f.minutes;data.base.push({...f,id:uid()});save();render()};
+$('#reorganize').onclick=()=>{let available=+$('#available').value,start=$('#start').value||'08:00',items=[...data.base].sort((a,b)=>['Alta','Média','Baixa'].indexOf(a.priority)-['Alta','Média','Baixa'].indexOf(b.priority));let total=0,out=[];items.forEach(x=>{if(total<available){let [h,m]=start.split(':').map(Number),begin=h*60+m+total,end=begin+x.minutes;out.push(`<div class="item"><strong>${esc(x.name)}</strong><span class="meta">${String(Math.floor(begin/60)%24).padStart(2,'0')}:${String(begin%60).padStart(2,'0')} – ${String(Math.floor(end/60)%24).padStart(2,'0')}:${String(end%60).padStart(2,'0')} · ${x.priority}</span></div>`);total+=x.minutes}});$('#scheduleOut').innerHTML=out.join('')||empty('Adicione tarefas ao cronograma-base.');if(total>available)$('#scheduleOut').innerHTML+=`<p class="tiny">Tempo planejado: ${total} min. Foram distribuídas tarefas até o limite informado.</p>`}
+refresh()}
+function contentWire(){function filter(){let area=$('#contentFilter').value,s=$('#contentSearch').value.toLowerCase();$('#contentList').innerHTML=contentList(data.contents.filter(x=>(area==='Todas'||x.area===area)&&x.name.toLowerCase().includes(s)));$$('[data-status]').forEach(el=>el.onchange=()=>{let c=data.contents.find(x=>x.id===el.dataset.status),old=c.status;c.status=el.value;if(old==='Não iniciado'&&c.status!=='Não iniciado'){c.date=today();addReviews(c)}save();render();toast('Conteúdo e revisões atualizados.')});$$('[data-contentdel]').forEach(b=>b.onclick=()=>{if(confirm('Excluir conteúdo e suas revisões associadas?')){data.contents=data.contents.filter(x=>x.id!==b.dataset.contentdel);data.reviews=data.reviews.filter(x=>x.contentId!==b.dataset.contentdel);save();render()}})}
+$('#contentFilter').onchange=filter;$('#contentSearch').oninput=filter;
+$('#contentForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));let c={...f,id:uid()};data.contents.push(c);if(c.status!=='Não iniciado'){c.date=c.date||today();addReviews(c)}save();render();toast('Conteúdo cadastrado.')};filter()}
+function reviewWire(){function bind(){ $$('[data-review]').forEach(b=>b.onclick=()=>{let x=data.reviews.find(x=>x.id===b.dataset.review);x.done=!x.done;save();render()});$$('[data-reviewfilter]').forEach(b=>b.onclick=()=>{let f=b.dataset.reviewfilter;$('#reviewList').innerHTML=reviewList(data.reviews.filter(x=>f==='all'||(f==='pending'&&!x.done)||(f==='done'&&x.done)));bind()})}
+$('#globalForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));data.reviews.push({id:uid(),name:f.name,area:f.area,subject:'Revisão integrada',type:f.type,date:f.date,done:false});save();render()};bind()}
+function toolsWire(){$('#essayForm').onsubmit=e=>{e.preventDefault();let f=Object.fromEntries(new FormData(e.target));let score=0;for(let i=1;i<=5;i++){f['c'+i]=+f['c'+i];score+=f['c'+i]}data.essays.push({...f,id:uid(),score});save();render();toast('Nota de redação registrada.')};
+function calc(){let t=+$('#calcTotal').value,c=+$('#calcCorrect').value,p=t?pct(c,t):0;$('#calcResult').textContent=p+'%';$('#calcBar').style.width=p+'%';$('#calcAdvice').textContent=p<50?'Retomar conceitos fundamentais':p<70?'Identificar padrões de erro':p<85?'Consolidar com questões variadas':'Manter revisões e praticar'}
+$('#calcTotal').oninput=calc;$('#calcCorrect').oninput=calc;calc();
+$('#doubtForm').onsubmit=e=>{e.preventDefault();data.doubts.push({...Object.fromEntries(new FormData(e.target)),id:uid(),done:false});save();render()};$$('[data-doubt]').forEach(b=>b.onclick=()=>{let x=data.doubts.find(x=>x.id===b.dataset.doubt);x.done=!x.done;save();render()})}
+function mentorWire(){let log=$('#chatlog');log.scrollTop=log.scrollHeight;function respond(msg){let m=msg.toLowerCase(),q=sum(data.questions,'total'),a=sum(data.questions,'correct'),weak={};data.questions.forEach(x=>{weak[x.subject]??={a:0,t:0};weak[x.subject].a+=x.correct;weak[x.subject].t+=x.total});let low=Object.entries(weak).filter(([k,v])=>v.t>=5).sort((a,b)=>a[1].a/a[1].t-b[1].a/b[1].t)[0];let pending=data.reviews.filter(x=>!x.done).length,open=data.errors.filter(x=>!x.done).length;
+if(m.includes('momento')||m.includes('analisar'))return `Seu painel atual mostra ${fmtMin(sum(data.sessions,'minutes'))} de estudo registrado, ${q} questões com ${pct(a,q)}% de aproveitamento, ${pending} revisões pendentes e ${open} erros em aberto. ${low?`A matéria com menor aproveitamento na amostra (mínimo de 5 questões) é ${low[0]}: ${pct(low[1].a,low[1].t)}%.`:'Ainda não há amostra suficiente para apontar uma matéria prioritária.'} Minha orientação: escolha uma prioridade, pratique questões e registre a causa dos erros.`;
+if(m.includes('revis'))return `Você tem ${pending} revisões pendentes. Comece pelas vencidas e pelas que pertencem a conteúdos de maior dificuldade. Faça uma tentativa ativa antes de consultar o material e registre o que ainda não recuperou.`;
+if(m.includes('erro'))return `Há ${open} erros em aberto. Separe-os por causa: conteúdo pede retomada conceitual; interpretação pede leitura do comando e evidências do texto; cálculo pede reconstrução das etapas; atenção/tempo pede ajuste de estratégia. Transforme cada erro em uma ação verificável.`;
+if(m.includes('zero'))return 'Para aprender do zero: (1) identifique os pré-requisitos; (2) estude um bloco curto de teoria; (3) explique o conceito com suas palavras; (4) resolva questões fáceis; (5) corrija e avance gradualmente. Qual conceito específico você quer estudar?';
+if(m.includes('planejar')||m.includes('sessão')||m.includes('melhor'))return `Sugestão de sessão: 10 min para definir objetivo e recuperar o que já sabe; 35–45 min de estudo ativo; 20–30 min de questões; 15 min de correção; 5 min para registrar dúvidas e próxima ação. Ajuste o tamanho ao tempo e à energia disponíveis.`;
+if(m.includes('testar'))return 'Vamos testar compreensão: explique o assunto em 3 a 5 frases, sem consultar o material. Depois, eu posso ajudar a identificar lacunas na explicação.';
+return `Posso orientar com base nos seus registros. Hoje há ${data.contents.filter(x=>x.status!=='Não iniciado').length} conteúdos iniciados, ${q} questões registradas e ${pending} revisões pendentes. Diga qual matéria ou dificuldade quer trabalhar e vamos por etapas.`}
+function send(msg){if(!msg.trim())return;data.chat.push({role:'user',text:msg});let ans=respond(msg);data.chat.push({role:'bot',text:ans});save();render()}
+$('#chatForm').onsubmit=e=>{e.preventDefault();send(new FormData(e.target).get('message'))};$$('[data-prompt]').forEach(b=>b.onclick=()=>send(b.dataset.prompt));$('#chatForm textarea').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('#chatForm').requestSubmit()}}}
+
+function setCloudStatus(t){let el=$('#cloudStatus');if(el)el.textContent=t}
+function accountWire(){
+ const cfg=JSON.parse(localStorage.getItem('kstudy_supabase_config')||'{}');
+ $('#sbUrl').value=cfg.url||'';$('#sbKey').value=cfg.key||'';
+ $('#authStatus').textContent=cloudUser?'Conectado: '+cloudUser.email:'Nenhuma conta conectada.';
+ setCloudStatus(cloudClient?'Projeto conectado neste dispositivo.':'Projeto ainda não conectado neste dispositivo.');
+ $('#connectCloud').onclick=async()=>{
+  let url=$('#sbUrl').value.trim().replace(/\/+$/,''),key=$('#sbKey').value.trim();
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url))return setCloudStatus('URL inválida. Copie a Project URL completa, no formato https://seu-projeto.supabase.co');
+  if(!key)return setCloudStatus('Cole a chave pública (Publishable key ou anon). Não use Secret key.');
+  if(!window.supabase?.createClient)return setCloudStatus('A biblioteca do Supabase não carregou. Verifique a internet e recarregue a página.');
+  const button=$('#connectCloud');button.disabled=true;button.textContent='Testando conexão…';
+  try{
+   const testClient=window.supabase.createClient(url,key);
+   const {error}=await testClient.from('kstudy_progress').select('user_id').limit(1);
+   if(error)throw error;
+   cloudClient=testClient;
+   localStorage.setItem('kstudy_supabase_config',JSON.stringify({url,key}));
+   setCloudStatus('Conexão verificada! Agora entre ou crie sua conta KSTUDY.');
+   toast('Supabase conectado e testado.');
+  }catch(e){
+   cloudClient=null;
+   const msg=e?.message||'Erro desconhecido';
+   setCloudStatus('Falha no teste: '+msg+'. Confira a Project URL, a chave pública e se a tabela kstudy_progress foi criada no SQL Editor.');
+  }finally{button.disabled=false;button.textContent='Conectar projeto'}
+ };
+ $('#disconnectCloud').onclick=()=>{cloudClient=null;cloudUser=null;localStorage.removeItem('kstudy_supabase_config');setCloudStatus('Projeto desconectado neste dispositivo.');$('#authStatus').textContent='Entre com sua conta para sincronizar.';toast('Desconectado.')};
+ $('#signUp').onclick=async()=>{if(!cloudClient)return toast('Conecte primeiro seu projeto Supabase.');let email=$('#authEmail').value.trim(),password=$('#authPassword').value;if(!email||password.length<8)return toast('Informe e-mail e senha com pelo menos 8 caracteres.');const {data:d,error}=await cloudClient.auth.signUp({email,password});if(error)return $('#authStatus').textContent=error.message;cloudUser=d.user;if(d.session){$('#authStatus').textContent='Conta criada e conectada.';await cloudLoad(true)}else $('#authStatus').textContent='Conta criada. Confirme o e-mail enviado para ativá-la.'};
+ $('#signIn').onclick=async()=>{if(!cloudClient)return toast('Conecte primeiro seu projeto Supabase.');let email=$('#authEmail').value.trim(),password=$('#authPassword').value;if(!email||!password)return toast('Informe e-mail e senha.');const {data:d,error}=await cloudClient.auth.signInWithPassword({email,password});if(error)return $('#authStatus').textContent=error.message;cloudUser=d.user;$('#authStatus').textContent='Conectado como '+cloudUser.email;await cloudLoad(false)};
+ $('#signOut').onclick=async()=>{if(cloudClient)await cloudClient.auth.signOut();cloudUser=null;$('#authStatus').textContent='Sessão encerrada.';toast('Você saiu da conta.')};
+ async function cloudLoad(isNew){
+  if(!cloudClient||!cloudUser)return;
+  const {data:row,error}=await cloudClient.from('kstudy_progress').select('payload,updated_at').eq('user_id',cloudUser.id).maybeSingle();
+  if(error){$('#authStatus').textContent='Erro ao carregar dados: '+error.message;return}
+  if(row?.payload){
+   if(confirm('Encontramos um progresso salvo na nuvem ('+new Date(row.updated_at).toLocaleString('pt-BR')+'). Deseja carregar esse progresso e substituir os dados deste dispositivo?')){
+    data={...fresh(),...row.payload};localStorage.setItem(KEY,JSON.stringify(data));render();applyTheme();$('#authStatus').textContent='Progresso da nuvem carregado com sucesso.';setCloudStatus('Sincronizado com a nuvem.');
+   }else{$('#authStatus').textContent='Dados locais mantidos. Eles serão enviados à nuvem nas próximas alterações.';save()}
+  }else{await cloudClient.from('kstudy_progress').upsert({user_id:cloudUser.id,payload:data,updated_at:new Date().toISOString()},{onConflict:'user_id'});$('#authStatus').textContent='Conta conectada. Seu progresso local foi enviado à nuvem.';setCloudStatus('Sincronizado com a nuvem.')}
+ }
+}
+$('#exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='kstudy-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href);toast('Backup exportado.')};
+$('#importBtn').onclick=()=>$('#importFile').click();$('#importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!d||typeof d!=='object'||!Array.isArray(d.contents))throw Error();if(confirm('Importar backup e substituir os dados atuais deste navegador?')){data={...fresh(),...d};save();render();toast('Backup importado.')}}catch{toast('Arquivo de backup inválido.')}e.target.value=''};
+function applyTheme(){document.body.classList.toggle('light',data.theme==='light');$('#themeBtn').textContent=data.theme==='light'?'☾ Escuro':'☼ Claro'}
+$('#themeBtn').onclick=()=>{data.theme=data.theme==='light'?'dark':'light';applyTheme();save()};
+$('#accountBtn').onclick=()=>go('account');
+const savedCfg=JSON.parse(localStorage.getItem('kstudy_supabase_config')||'{}');
+if(savedCfg.url&&savedCfg.key&&window.supabase?.createClient){
+ try{cloudClient=window.supabase.createClient(savedCfg.url,savedCfg.key);cloudClient.auth.getSession().then(async({data:d})=>{if(d.session){cloudUser=d.session.user;const {data:row}=await cloudClient.from('kstudy_progress').select('payload').eq('user_id',cloudUser.id).maybeSingle();if(row?.payload){data={...fresh(),...row.payload};localStorage.setItem(KEY,JSON.stringify(data));if(current==='overview')render()}}})}catch(e){console.warn('Supabase:',e)}
+}
+applyTheme();save();render();
+</script></body></html>
