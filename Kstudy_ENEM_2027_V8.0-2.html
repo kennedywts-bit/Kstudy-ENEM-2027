@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kstudy - ENEM 2027 | V8.0</title>
+<style>
+:root{--bg:#050505;--panel:#101010;--panel2:#171717;--line:#303440;--text:#f4f5f8;--muted:#a0a5b2;--red:#ff5364;--yellow:#ffc857;--blue:#61a8ff;--green:#4ed6a0;--accent:var(--red);--shadow:0 12px 35px #0005}
+*{box-sizing:border-box}body{margin:0;background:#030509;color:var(--text);font:14px/1.5 Inter,system-ui,Segoe UI,sans-serif}
+header{height:76px;position:sticky;top:0;z-index:8;background:#080808f2;border-bottom:1px solid var(--line);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:39px;height:39px;border-radius:12px;background:#104bb8;display:grid;place-items:center;font-size:20px;font-weight:900;box-shadow:0 5px 20px #ff536433}.brand b{display:block;font-size:15px;letter-spacing:.02em}.brand small{color:var(--muted);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.header-right{display:flex;align-items:center;gap:10px}.pill{padding:7px 11px;border-radius:9px;background:#262934;border:1px solid var(--line);font-size:10px;color:#d8dbe2;font-weight:800}
+.shell{display:grid;grid-template-columns:238px 1fr;min-height:calc(100vh - 76px)}aside{padding:22px 14px;border-right:1px solid var(--line);background:#080808}.navlabel{font-size:9px;letter-spacing:.16em;color:#747b8a;font-weight:900;padding:10px 12px}.navbtn{width:100%;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid transparent;background:transparent;color:#aeb3bf;border-radius:10px;text-align:left;margin:3px 0;font-weight:700;cursor:pointer}.navbtn .ico{width:27px;height:27px;display:grid;place-items:center;background:#252833;border-radius:8px;font-size:14px}.navbtn.active{background:#104bb8;border-color:color-mix(in srgb,var(--accent) 55%,#303440);color:#fff}.navbtn.active .ico{background:var(--accent);color:#111}.sidefoot{margin-top:35px;padding:15px 12px;border:1px solid var(--line);border-radius:12px;background:#1a1c24;color:var(--muted);font-size:11px}
+main{padding:28px clamp(16px,3vw,38px) 60px;max-width:1600px;width:100%;margin:auto}.page{display:none}.page.active{display:block}.topline{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:3px 0 22px}.eyebrow{font-size:10px;letter-spacing:.17em;text-transform:uppercase;color:var(--accent);font-weight:900}.topline h1{font-size:29px;letter-spacing:-.05em;margin:5px 0 0}.sub{color:var(--muted);font-size:12px;margin:5px 0 0}
+.btn{border:0;background:var(--accent);color:#15151a;padding:10px 15px;border-radius:9px;font-weight:900;font-size:11px;cursor:pointer;box-shadow:0 5px 18px color-mix(in srgb,var(--accent) 22%,transparent)}.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.btn.ghost{background:#262a35;color:#e7e9ee;border:1px solid var(--line);box-shadow:none}.btn.danger{background:#38232a;color:#ff8792;box-shadow:none}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.cols2{grid-template-columns:1.2fr .8fr}.cols3{grid-template-columns:repeat(3,1fr)}
+.card{background:#0b111c;border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}.card.accent-red{border-top:3px solid var(--red)}.card.accent-yellow{border-top:3px solid var(--yellow)}.card.accent-blue{border-top:3px solid var(--blue)}.card.accent-green{border-top:3px solid var(--green)}.card h3{font-size:13px;margin:0 0 13px;font-weight:900}.klabel{color:var(--muted);font-size:9px;letter-spacing:.13em;font-weight:900}.knum{font-size:32px;font-weight:950;letter-spacing:-.06em;margin:5px 0}.knote{color:var(--muted);font-size:10px}
+.highlight{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;border-radius:14px;background:#0c1d3a;border:1px solid #59313e;margin-bottom:14px}.highlight b{font-size:14px}.highlight p{margin:3px 0 0;color:#c1bdc5;font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:11px}th{text-align:left;padding:11px 9px;color:#858c9b;font-size:9px;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:12px 9px;border-bottom:1px solid #2a2d37;vertical-align:middle}tr:last-child td{border:0}.tablewrap{overflow:auto}
+.tag{display:inline-block;padding:4px 8px;border-radius:6px;background:#2b2e39;color:#d2d6df;font-size:9px;font-weight:900}.tag.red{background:#46242d;color:#ff8996}.tag.yellow{background:#45391f;color:#ffd77c}.tag.blue{background:#20354c;color:#88c2ff}.tag.green{background:#1e4036;color:#75e8ba}
+.progress{height:8px;background:#303440;border-radius:20px;overflow:hidden}.progress span{display:block;height:100%;border-radius:20px;background:#1762e8}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:10px;color:#b7bdc9;font-weight:800}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.full{grid-column:1/-1}input,select,textarea{width:100%;background:#12141b;color:var(--text);border:1px solid #3a3e4b;border-radius:9px;padding:10px 11px;font:inherit;font-size:12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}textarea{min-height:75px;resize:vertical}
+.listitem{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid #2b2e38}.listitem:last-child{border:0}.listitem input{width:auto;accent-color:var(--green)}.listitem .grow{flex:1}.muted{color:var(--muted);font-size:10px}
+.reviewcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.review{padding:14px;border-radius:12px;background:#252833;border:1px solid var(--line)}.review h4{margin:7px 0 4px;font-size:13px}.review p{margin:0;color:var(--muted);font-size:10px}
+.flashgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.flash{min-height:170px;border:1px solid var(--line);border-radius:13px;padding:15px;background:#0e1a2b;display:flex;flex-direction:column;justify-content:space-between}.flash .q{font-weight:850;font-size:13px}.flash .a{color:#c5cad4;font-size:11px;margin-top:12px}.flash button{align-self:flex-start;margin-top:12px}
+.modal{position:fixed;inset:0;background:#05060bd9;z-index:20;display:none;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modalbox{width:min(680px,100%);max-height:90vh;overflow:auto;background:#1b1e27;border:1px solid #454957;border-radius:16px;padding:22px;box-shadow:0 30px 100px #000b}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modalhead h3{margin:0}.close{border:0;background:#303440;color:white;border-radius:8px;padding:7px 11px;cursor:pointer}
+.empty{padding:26px;text-align:center;color:#838a99;font-size:11px}.swatches{display:flex;gap:7px}.swatch{width:20px;height:20px;border-radius:50%;border:2px solid #ffffff66;cursor:pointer}.swatch.active{outline:2px solid white;outline-offset:3px}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:900px){.shell{grid-template-columns:1fr}aside{position:sticky;top:76px;z-index:7;display:flex;overflow:auto;padding:8px;border-right:0;border-bottom:1px solid var(--line)}.navlabel,.sidefoot{display:none}.navbtn{min-width:max-content;width:auto;padding:8px 10px;font-size:10px;margin:0}.navbtn .ico{width:22px;height:22px}main{padding-top:20px}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header{padding:0 13px}.brand b{font-size:13px}.brand small{font-size:8px}.pill{font-size:9px;padding:6px}.topline{align-items:flex-start;flex-direction:column}.topline h1{font-size:25px}.cols2,.cols3{grid-template-columns:1fr}.reviewcards,.flashgrid{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:14px}.knum{font-size:27px}}
+
+/* KSTUDY 2027 — navegação, cores por módulo e painéis */
+:root{--navw:250px;--section:#61a8ff}
+body{background:#030509}
+.shell{grid-template-columns:var(--navw) minmax(0,1fr);transition:grid-template-columns .25s ease}
+body.nav-collapsed .shell{grid-template-columns:0 minmax(0,1fr)}
+aside{min-width:0;overflow:hidden;transition:padding .25s ease,opacity .2s ease}
+body.nav-collapsed aside{padding-left:0;padding-right:0;opacity:0;pointer-events:none;border:0}
+.navbtn{white-space:nowrap}
+.navbtn.active{border-left:3px solid var(--section);background:color-mix(in srgb,var(--section) 15%,#17191f)}
+.navbtn.active .ico{background:var(--section)}
+.navbtn[data-page="flashcards"]{--section:#61a8ff}
+.navbtn[data-page="mocks"]{--section:#4ed6a0}
+.navbtn[data-page="study"]{--section:#ff6474}
+.navbtn[data-page="questions"]{--section:#ffc857}
+.navbtn[data-page="reviews"]{--section:#b99aff}
+.navbtn[data-page="time"]{--section:#54d5d0}
+.navbtn[data-page="errors"]{--section:#ff9d64}
+.navbtn[data-page="routine"]{--section:#e69bd2}
+.navbtn[data-page="kstudy"]{--section:#a8d879}
+.navbtn[data-page="dashboard"]{--section:#d5d8e2}
+.page{--accent:var(--section)}
+.page#flashcards{--section:#61a8ff}.page#mocks{--section:#4ed6a0}.page#study{--section:#ff6474}
+.page#questions{--section:#ffc857}.page#reviews{--section:#b99aff}.page#time{--section:#54d5d0}
+.page#errors{--section:#ff9d64}.page#routine{--section:#e69bd2}.page#kstudy{--section:#a8d879}
+.page.active{--accent:var(--section)}
+.page.active .eyebrow{color:var(--section)}
+.page.active .btn:not(.ghost):not(.danger){background:var(--section);color:#101116}
+.nav-toggle{display:inline-flex;align-items:center;gap:8px;background:#20232d;color:#f5f5f7;border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-weight:800;cursor:pointer}
+.brand{min-width:0}
+.chartbox{height:230px;position:relative}.chartbox canvas{width:100%;height:100%;display:block}
+.strategy-board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.strategy-item{background:#1e222d;border:1px solid #373d4c;border-left:3px solid #b99aff;border-radius:10px;padding:12px}
+.strategy-item b{font-size:12px}.strategy-item p{margin:5px 0 0;color:#bdc3d0;font-size:11px;white-space:pre-wrap}
+.plan-slot{display:grid;grid-template-columns:75px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px;border-bottom:1px solid var(--line)}
+.plan-slot:last-child{border:0}.plan-time{font-variant-numeric:tabular-nums;color:#e69bd2;font-weight:900}
+.mastery-row{display:grid;grid-template-columns:minmax(100px,1fr) 2fr 42px;gap:10px;align-items:center;margin:12px 0;font-size:11px}
+.mastery-track{height:9px;background:#303440;border-radius:20px;overflow:hidden}.mastery-track span{display:block;height:100%;border-radius:20px;background:#1762e8}
+@media(max-width:900px){.shell{grid-template-columns:1fr}body.nav-collapsed .shell{grid-template-columns:1fr}aside{position:sticky;top:76px;z-index:7;display:flex;overflow:auto;padding:8px;border-right:0;border-bottom:1px solid var(--line);opacity:1!important;pointer-events:auto!important}body.nav-collapsed aside{display:none}.nav-toggle{padding:7px 9px}.strategy-board{grid-template-columns:1fr}}
+@media(max-width:600px){.header-right{gap:5px}.header-right .pill{display:none}.brand{gap:7px}.logo{width:33px;height:33px}.plan-slot{grid-template-columns:60px minmax(0,1fr);}.plan-slot .tag{grid-column:2}.mastery-row{grid-template-columns:90px 1fr 36px}}
+
+/* KSTUDY — refined dark / graphite / subtle dimensional surfaces */
+:root{--bg:#090a0c;--panel:#111317;--panel2:#171a20;--line:#292e37;--text:#f1f3f6;--muted:#929aa8;--shadow:0 18px 42px rgba(0,0,0,.38);--navw:258px}
+html{background:#090a0c;scroll-behavior:smooth}
+body{background:#090a0c!important;color:var(--text)}
+header{background:#0b0d10;border-bottom:1px solid #252a32;backdrop-filter:none;box-shadow:0 8px 24px rgba(0,0,0,.28)}
+.logo{background:#242a34;border:1px solid #3a4350;color:#f4f6fa;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 7px 18px rgba(0,0,0,.35)}
+.shell{grid-template-columns:var(--navw) minmax(0,1fr)}
+aside{background:#0d0f12;border-right:1px solid #252a32;padding:22px 13px;box-shadow:12px 0 28px rgba(0,0,0,.16);display:flex;flex-direction:column;gap:3px;min-height:calc(100vh - 76px);position:sticky;top:76px;height:calc(100vh - 76px);overflow-y:auto}
+.navlabel{font-size:9px;letter-spacing:.17em;color:#687180;font-weight:900;padding:15px 12px 5px}
+.navbtn{background:transparent;color:#aeb6c3;border:1px solid transparent;border-radius:10px;padding:10px 11px;margin:1px 0;min-height:44px;transition:background .18s,border-color .18s,transform .18s}
+.navbtn:hover{background:#171b22;border-color:#303743;color:#f4f6f9;transform:translateX(2px)}
+.navbtn .ico{background:#1b2028;border:1px solid #2b323d;color:#b8c2d1;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.navbtn.active{background:#1a1f27;border-color:#343c48;border-left:3px solid var(--section);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 5px 14px rgba(0,0,0,.18)}
+.navbtn.active .ico{background:color-mix(in srgb,var(--section) 18%,#1b2028);border-color:color-mix(in srgb,var(--section) 38%,#303743);color:var(--section)}
+.sidefoot{margin-top:auto;background:#14181e;border:1px solid #2a303a;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 10px 24px rgba(0,0,0,.22)}
+main{padding:30px clamp(16px,3vw,40px) 64px}
+.card,.flash,.review,.modalbox,.strategy-item{background:#14171c!important;border:1px solid #2b313b;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 12px 28px rgba(0,0,0,.24)}
+.card{border-radius:15px}
+.card:hover{border-color:#3a4350}
+.highlight{background:#171b22;border:1px solid #303743;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 10px 24px rgba(0,0,0,.2)}
+.btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 5px 14px rgba(0,0,0,.22);transition:transform .16s,filter .16s}
+.btn.ghost{background:#20252d;border:1px solid #353d49;color:#e7ebf1;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 5px 12px rgba(0,0,0,.18)}
+input,select,textarea{background:#0e1116;border:1px solid #303743;box-shadow:inset 0 2px 5px rgba(0,0,0,.22)}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent),inset 0 2px 5px rgba(0,0,0,.2)}
+.progress,.mastery-track{background:#272d36}
+.progress span,.mastery-track span{background:var(--section,#7d9bbf)}
+.tag{background:#242a33;border:1px solid #353d49}
+.tag.red{background:#302126}.tag.yellow{background:#302b1e}.tag.blue{background:#1e2937}.tag.green{background:#1d2c27}
+.review{background:#171b22!important}
+.flash{background:#151a21!important}
+.modalbox{background:#14181e!important;border-color:#39414d}
+.nav-toggle{background:#171b22;border-color:#343c48;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+body.nav-collapsed .shell{grid-template-columns:0 minmax(0,1fr)}
+body.nav-collapsed aside{padding-left:0;padding-right:0;opacity:0;pointer-events:none;border:0}
+@media(max-width:900px){
+ .shell,body.nav-collapsed .shell{grid-template-columns:1fr}
+ aside{position:sticky;top:76px;height:auto;min-height:0;display:flex;flex-direction:row;align-items:center;gap:5px;overflow-x:auto;overflow-y:hidden;padding:8px;background:#0d0f12;z-index:7;border-right:0;border-bottom:1px solid #252a32}
+ .navlabel,.sidefoot{display:none}
+ .navbtn{min-width:max-content;width:auto;padding:8px 10px;min-height:38px}
+ body.nav-collapsed aside{display:none}
+}
+@media(max-width:600px){main{padding:18px 12px 42px}.card{padding:14px}.topline h1{font-size:24px}}
+
+
+/* KSTUDY COBALT — identidade sólida, contraste alto e relevo discreto */
+:root{--bg:#030509;--panel:#0b101a;--panel2:#101827;--line:#1e2a3d;--text:#f4f7ff;--muted:#9aa9bf;--accent:#145bdb;--cobalt:#145bdb;--navy:#071a38;--shadow:0 14px 30px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.035)}
+html,body{background:#030509!important;background-image:none!important}
+body{background:#030509!important;color:#f4f7ff}
+header{background:#050a14;border-bottom:1px solid #1b2d4a;box-shadow:0 5px 20px #0008;backdrop-filter:none}
+.logo{background:#104bb8!important;color:#fff;box-shadow:0 5px 0 #08285f,0 10px 22px #0047ab55;border:1px solid #3978e8}
+.nav-toggle{background:#0b1b36!important;border:1px solid #23477d!important;color:#eaf2ff}
+aside{background:#060b14!important;border-right:1px solid #172844}
+.navlabel{color:#7188aa}
+.navbtn{color:#aebbd0;border:1px solid transparent;border-radius:10px;transition:transform .16s ease,background .16s ease,border-color .16s ease}
+.navbtn:hover{background:#101d31;transform:translateX(2px)}
+.navbtn .ico{border-radius:8px;box-shadow:inset 0 2px 0 #ffffff22,0 3px 0 #0008}
+.navbtn.active{background:#104bb8!important;border:1px solid #3677e8!important;border-left:4px solid #8db8ff!important;color:#fff!important;box-shadow:0 5px 0 #082c69,0 9px 18px #001b4380}
+.navbtn.active .ico{background:#d9e7ff!important;color:#07337b!important}
+.sidefoot{background:#0a1930;border-color:#1e3d6e;color:#9fb5d7}
+.btn{background:#145bdb!important;color:#fff!important;border:1px solid #3679eb!important;border-radius:9px;box-shadow:0 4px 0 #082f79,0 8px 16px #001b4380!important;transition:transform .14s ease,filter .14s ease}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #082f79!important}
+.btn.ghost{background:#101d31!important;color:#dce8ff!important;border:1px solid #29446d!important;box-shadow:0 3px 0 #070e19!important}
+.btn.danger{background:#4a1d2b!important;color:#ffdce3!important;border-color:#8d344e!important;box-shadow:0 3px 0 #250c14!important}
+.card,.modalbox{background:#0b111c!important;border:1px solid #1d2b40!important;border-radius:14px;box-shadow:0 5px 0 #05080e,0 15px 28px #0009,inset 0 1px 0 #ffffff08!important}
+.card h3{color:#f0f5ff}
+.highlight{background:#0c1d3a!important;border:1px solid #1c4b91!important;box-shadow:0 4px 0 #06152d,0 12px 22px #0008}
+.progress{background:#1b2a40}.progress span{background:#1762e8!important}
+.tag.blue{background:#123d82;color:#d8e8ff}.tag.green{background:#14523e;color:#c8ffeb}.tag.red{background:#692437;color:#ffe0e7}.tag.yellow{background:#705312;color:#fff0b6}
+input,select,textarea{background:#070d17;border-color:#253650;color:#f3f7ff}
+input:focus,select:focus,textarea:focus{border-color:#397cf0;box-shadow:0 0 0 3px #145bdb33}
+.review,.flash{background:#0e1a2b!important;border:1px solid #243b5c!important;box-shadow:0 4px 0 #060b13,0 9px 18px #0007}
+.flash .a{color:#c9d9f1}
+.page{--accent:#145bdb}
+.page .eyebrow{color:#6fa3ff!important}
+/* Solid section identity blocks — no gradients */
+.navbtn[data-page="dashboard"] .ico{background:#1d355b;color:#dceaff}
+.navbtn[data-page="time"] .ico{background:#087f91;color:white}
+.navbtn[data-page="routine"] .ico{background:#a13d80;color:white}
+.navbtn[data-page="study"] .ico{background:#b52c43;color:white}
+.navbtn[data-page="reviews"] .ico{background:#6845ad;color:white}
+.navbtn[data-page="flashcards"] .ico{background:#145bdb;color:white}
+.navbtn[data-page="questions"] .ico{background:#a8790b;color:white}
+.navbtn[data-page="mocks"] .ico{background:#16845d;color:white}
+.navbtn[data-page="errors"] .ico{background:#b85b23;color:white}
+.navbtn[data-page="kstudy"] .ico{background:#567b2e;color:white}
+.page#flashcards{--section:#145bdb}.page#mocks{--section:#16845d}.page#study{--section:#b52c43}.page#questions{--section:#a8790b}.page#reviews{--section:#6845ad}.page#time{--section:#087f91}.page#errors{--section:#b85b23}.page#routine{--section:#a13d80}.page#kstudy{--section:#567b2e}
+.chartbox{height:220px;position:relative}.chartbox canvas{width:100%!important;height:100%!important}
+/* Checklist premium */
+.checklist-panel{border-color:#23416e!important;background:#091321!important}
+.check-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}
+.check-head h3{font-size:19px;margin:4px 0}.check-date{background:#0d2b5b;border:1px solid #285da8;color:#dbe9ff;padding:9px 12px;border-radius:9px;font-size:11px;font-weight:850;box-shadow:0 3px 0 #061a3b;white-space:nowrap}
+.check-overview{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;padding:16px;background:#07101e;border:1px solid #1b3151;border-radius:12px;margin-bottom:16px}
+.check-ring-wrap{display:grid;place-items:center}.check-ring{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#1b65e8 0deg,#1b65e8 0deg,#1b2638 0deg 360deg);position:relative;box-shadow:0 5px 0 #03070e,0 8px 20px #0008}
+.check-ring:before{content:"";position:absolute;inset:9px;border-radius:50%;background:#08111f;border:1px solid #1d3557}.check-ring>div{position:relative;text-align:center}.check-ring b{display:block;font-size:24px;line-height:1.1}.check-ring small{font-size:9px;color:#9db1d0;text-transform:uppercase;letter-spacing:.1em}
+.check-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.check-metrics>div{padding:12px;background:#0d1a2c;border:1px solid #1c3455;border-radius:9px;box-shadow:0 3px 0 #050a12}.check-metrics b{display:block;font-size:22px;color:#eaf2ff}.check-metrics span{font-size:10px;color:#9aacc6}
+.check-toolbar{display:grid;grid-template-columns:1.5fr 1fr auto;gap:10px;align-items:end;padding:14px;background:#0c1829;border:1px solid #1e3453;border-radius:11px;margin-bottom:16px}.check-add{height:38px;white-space:nowrap}
+.check-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.check-group{background:#0a1422;border:1px solid #1b2d47;border-radius:11px;overflow:hidden;box-shadow:0 3px 0 #050910}.check-group-head{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;background:#10213a;border-bottom:1px solid #203b61}.check-group-head b{font-size:11px;letter-spacing:.02em}.check-group-head span{font-size:10px;color:#a9c2e8}.check-task{display:flex;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid #17263a;font-size:11px}.check-task:last-child{border:0}.check-task input{width:17px;height:17px;accent-color:#1b65e8;flex:none}.check-task.done .check-task-name{color:#71839d;text-decoration:line-through}.check-task-name{flex:1}.check-delete{border:0;background:transparent;color:#7587a2;cursor:pointer;font-size:16px;padding:2px 6px}.check-delete:hover{color:#ff8799}
+.week-progress{margin-top:18px;padding:14px;background:#07101d;border:1px solid #1a2c45;border-radius:11px}.week-title{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:11px}.week-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end}.week-day{text-align:center}.week-bar-track{height:56px;background:#142238;border-radius:6px;display:flex;align-items:flex-end;overflow:hidden;margin-bottom:6px}.week-bar-fill{width:100%;background:#145bdb;border-radius:5px 5px 0 0;min-height:2px}.week-day b{font-size:9px;color:#cbd9ef}.week-day small{display:block;color:#8296b5;font-size:9px}
+.check-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px}
+@media(max-width:700px){.check-head{flex-direction:column}.check-overview{grid-template-columns:1fr}.check-metrics{grid-template-columns:repeat(3,1fr)}.check-toolbar{grid-template-columns:1fr}.check-add{width:100%}.check-groups{grid-template-columns:1fr}.check-footer{align-items:flex-start;flex-direction:column}.week-title{flex-direction:column;gap:3px}}
+
+
+/* KSTUDY 2027 — solid cobalt system + upgraded checklist */
+:root{
+ --bg:#000000;--navy:#06142b;--cobalt:#145bdb;--cobalt2:#236ff0;
+ --line:#1b2c46;--panel:#0a1220;--text:#f4f7ff;--muted:#9aabc4;
+ --mod-blue:#145bdb;--mod-green:#087a50;--mod-red:#b52c43;
+ --mod-yellow:#9a7000;--mod-purple:#6740a8;--mod-teal:#087f91;
+ --mod-orange:#b85b23;--mod-pink:#a13d80;--mod-lime:#567b2e;
+}
+html,body{background:#000!important}
+header{background:#030914!important;border-bottom:1px solid #18345d!important}
+.logo{background:#145bdb!important;border:1px solid #5590ff!important}
+aside{background:#050b15!important;border-right:1px solid #172b49!important}
+.navbtn.active{background:#104bb8!important;border-color:#3979e8!important}
+.page .eyebrow{color:#75a8ff!important}
+.card,.modalbox{background:#0a1220!important;border-color:#1c304d!important}
+.highlight{background:#0b2044!important;border-color:#2457a0!important}
+.btn:not(.ghost):not(.danger){background:#145bdb!important;color:#fff!important;border-color:#3979e8!important}
+.progress span,.mastery-track span{background:#236ff0!important}
+.navbtn[data-page="flashcards"] .ico{background:#145bdb!important;color:white}
+.navbtn[data-page="mocks"] .ico{background:#087a50!important;color:white}
+.navbtn[data-page="study"] .ico{background:#b52c43!important;color:white}
+.navbtn[data-page="questions"] .ico{background:#9a7000!important;color:white}
+.navbtn[data-page="reviews"] .ico{background:#6740a8!important;color:white}
+.navbtn[data-page="time"] .ico{background:#087f91!important;color:white}
+.navbtn[data-page="errors"] .ico{background:#b85b23!important;color:white}
+.navbtn[data-page="routine"] .ico{background:#a13d80!important;color:white}
+.navbtn[data-page="kstudy"] .ico{background:#567b2e!important;color:white}
+.page#flashcards .card{border-top:4px solid #145bdb!important}
+.page#mocks .card{border-top:4px solid #087a50!important}
+.page#study .card{border-top:4px solid #b52c43!important}
+.page#questions .card{border-top:4px solid #b58a12!important}
+.page#reviews .card{border-top:4px solid #8058c5!important}
+.page#time .card{border-top:4px solid #087f91!important}
+.page#errors .card{border-top:4px solid #b85b23!important}
+.page#routine .card{border-top:4px solid #a13d80!important}
+.page#kstudy .card{border-top:4px solid #648f38!important}
+/* Checklist dashboard */
+.checklist-panel{background:#07101e!important;border:1px solid #244675!important;box-shadow:0 6px 0 #02060c,0 18px 38px #000b!important;padding:20px!important}
+.check-head{align-items:center!important}
+.check-head h3{font-size:21px!important;letter-spacing:-.03em}
+.check-date{background:#145bdb!important;border:1px solid #5790f4!important;color:#fff!important;box-shadow:0 4px 0 #082f79!important}
+.check-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.check-nav button,.check-nav input{min-height:36px}
+.check-nav button{border:1px solid #2b4c78;background:#102442;color:#e4eeff;border-radius:8px;padding:7px 11px;font-weight:800;cursor:pointer}
+.check-nav button:hover{background:#17417c}
+.check-nav input{width:auto;max-width:155px}
+.check-overview{background:#08172b!important;border:1px solid #244675!important}
+.check-ring{background:conic-gradient(#2878ff 0deg,#2878ff 0deg,#172944 0deg 360deg)!important}
+.check-ring:before{background:#071326!important;border-color:#254574!important}
+.check-metrics>div{background:#102442!important;border-color:#2a4b78!important}
+.check-metrics b{font-size:24px!important}
+.check-toolbar{background:#0b1b31!important;border-color:#24436b!important;grid-template-columns:1.5fr 1fr 1fr 1fr auto!important}
+.check-groups{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.check-group{background:#081525!important;border-color:#263d5d!important}
+.check-group-head{background:#145bdb!important;border:0!important;color:white!important;padding:13px 14px!important}
+.check-group-head span{color:#e0ebff!important}
+.check-task{padding:13px 14px!important;min-height:48px;font-size:12px!important}
+.check-task input{width:18px!important;height:18px!important;accent-color:#2878ff!important}
+.check-task:hover{background:#10233c}
+.check-task.done{background:#0b211d}
+.check-task.done .check-task-name{color:#718f88!important}
+.check-meta{display:flex;gap:6px;align-items:center}
+.check-priority{font-size:9px;font-weight:900;padding:3px 7px;border-radius:5px;text-transform:uppercase}
+.check-priority.alta{background:#632336;color:#ffdce5}
+.check-priority.media{background:#594313;color:#ffedb3}
+.check-priority.baixa{background:#173c5c;color:#c5e5ff}
+.check-minutes{font-size:10px;color:#8fa8ca;white-space:nowrap}
+.check-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+.check-filters button{background:#10223a;color:#c7d8f1;border:1px solid #29466d;border-radius:7px;padding:7px 10px;font-size:10px;font-weight:800;cursor:pointer}
+.check-filters button.active{background:#145bdb;color:white;border-color:#5590ff}
+.check-group[data-cat="Estudo profundo"] .check-group-head{background:#145bdb!important}
+.check-group[data-cat="Questões e correção"] .check-group-head{background:#a65318!important}
+.check-group[data-cat="Revisão e memória"] .check-group-head{background:#6740a8!important}
+.check-group[data-cat="Simulados e redação"] .check-group-head{background:#087a50!important}
+.check-group[data-cat="Organização"] .check-group-head{background:#087f91!important}
+.check-group[data-cat="Saúde e pausas"] .check-group-head{background:#a13d80!important}
+.check-add{height:40px!important}
+.check-template-row{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+.check-template-row button{background:#102442;border:1px solid #2b4c78;color:#dceaff;border-radius:8px;padding:8px 10px;font-size:10px;font-weight:800;cursor:pointer}
+.check-template-row button:hover{background:#17417c}
+.check-empty{padding:22px;text-align:center;color:#8da4c5;border:1px dashed #2a4569;border-radius:10px}
+.check-week{padding:15px!important;background:#08172b!important;border-color:#24436b!important}
+.week-bar-fill{background:#2878ff!important}
+.check-footer{border-top:1px solid #1e3452;padding-top:12px}
+.check-export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.check-export-row button{background:#102442;border:1px solid #29466d;color:#dceaff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:800;cursor:pointer}
+@media(max-width:700px){.check-toolbar{grid-template-columns:1fr!important}.check-groups{grid-template-columns:1fr!important}.check-overview{grid-template-columns:1fr!important}.check-metrics{grid-template-columns:repeat(3,1fr)!important}.check-toolbar{grid-template-columns:1fr!important}.check-nav{align-items:stretch}.check-nav input{max-width:none;flex:1}}
+
+
+/* KSTUDY 2027 — solid cobalt system + upgraded checklist */
+:root{
+ --bg:#000000;--navy:#06142b;--cobalt:#145bdb;--cobalt2:#236ff0;
+ --line:#1b2c46;--panel:#0a1220;--text:#f4f7ff;--muted:#9aabc4;
+ --mod-blue:#145bdb;--mod-green:#087a50;--mod-red:#b52c43;
+ --mod-yellow:#9a7000;--mod-purple:#6740a8;--mod-teal:#087f91;
+ --mod-orange:#b85b23;--mod-pink:#a13d80;--mod-lime:#567b2e;
+}
+html,body{background:#000!important}
+header{background:#030914!important;border-bottom:1px solid #18345d!important}
+.logo{background:#145bdb!important;border:1px solid #5590ff!important}
+aside{background:#050b15!important;border-right:1px solid #172b49!important}
+.navbtn.active{background:#104bb8!important;border-color:#3979e8!important}
+.page .eyebrow{color:#75a8ff!important}
+.card,.modalbox{background:#0a1220!important;border-color:#1c304d!important}
+.highlight{background:#0b2044!important;border-color:#2457a0!important}
+.btn:not(.ghost):not(.danger){background:#145bdb!important;color:#fff!important;border-color:#3979e8!important}
+.progress span,.mastery-track span{background:#236ff0!important}
+.navbtn[data-page="flashcards"] .ico{background:#145bdb!important;color:white}
+.navbtn[data-page="mocks"] .ico{background:#087a50!important;color:white}
+.navbtn[data-page="study"] .ico{background:#b52c43!important;color:white}
+.navbtn[data-page="questions"] .ico{background:#9a7000!important;color:white}
+.navbtn[data-page="reviews"] .ico{background:#6740a8!important;color:white}
+.navbtn[data-page="time"] .ico{background:#087f91!important;color:white}
+.navbtn[data-page="errors"] .ico{background:#b85b23!important;color:white}
+.navbtn[data-page="routine"] .ico{background:#a13d80!important;color:white}
+.navbtn[data-page="kstudy"] .ico{background:#567b2e!important;color:white}
+.page#flashcards .card{border-top:4px solid #145bdb!important}
+.page#mocks .card{border-top:4px solid #087a50!important}
+.page#study .card{border-top:4px solid #b52c43!important}
+.page#questions .card{border-top:4px solid #b58a12!important}
+.page#reviews .card{border-top:4px solid #8058c5!important}
+.page#time .card{border-top:4px solid #087f91!important}
+.page#errors .card{border-top:4px solid #b85b23!important}
+.page#routine .card{border-top:4px solid #a13d80!important}
+.page#kstudy .card{border-top:4px solid #648f38!important}
+/* Checklist dashboard */
+.checklist-panel{background:#07101e!important;border:1px solid #244675!important;box-shadow:0 6px 0 #02060c,0 18px 38px #000b!important;padding:20px!important}
+.check-head{align-items:center!important}
+.check-head h3{font-size:21px!important;letter-spacing:-.03em}
+.check-date{background:#145bdb!important;border:1px solid #5790f4!important;color:#fff!important;box-shadow:0 4px 0 #082f79!important}
+.check-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.check-nav button,.check-nav input{min-height:36px}
+.check-nav button{border:1px solid #2b4c78;background:#102442;color:#e4eeff;border-radius:8px;padding:7px 11px;font-weight:800;cursor:pointer}
+.check-nav button:hover{background:#17417c}
+.check-nav input{width:auto;max-width:155px}
+.check-overview{background:#08172b!important;border:1px solid #244675!important}
+.check-ring{background:conic-gradient(#2878ff 0deg,#2878ff 0deg,#172944 0deg 360deg)!important}
+.check-ring:before{background:#071326!important;border-color:#254574!important}
+.check-metrics>div{background:#102442!important;border-color:#2a4b78!important}
+.check-metrics b{font-size:24px!important}
+.check-toolbar{background:#0b1b31!important;border-color:#24436b!important;grid-template-columns:1.5fr 1fr 1fr 1fr auto!important}
+.check-groups{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.check-group{background:#081525!important;border-color:#263d5d!important}
+.check-group-head{background:#145bdb!important;border:0!important;color:white!important;padding:13px 14px!important}
+.check-group-head span{color:#e0ebff!important}
+.check-task{padding:13px 14px!important;min-height:48px;font-size:12px!important}
+.check-task input{width:18px!important;height:18px!important;accent-color:#2878ff!important}
+.check-task:hover{background:#10233c}
+.check-task.done{background:#0b211d}
+.check-task.done .check-task-name{color:#718f88!important}
+.check-meta{display:flex;gap:6px;align-items:center}
+.check-priority{font-size:9px;font-weight:900;padding:3px 7px;border-radius:5px;text-transform:uppercase}
+.check-priority.alta{background:#632336;color:#ffdce5}
+.check-priority.media{background:#594313;color:#ffedb3}
+.check-priority.baixa{background:#173c5c;color:#c5e5ff}
+.check-minutes{font-size:10px;color:#8fa8ca;white-space:nowrap}
+.check-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+.check-filters button{background:#10223a;color:#c7d8f1;border:1px solid #29466d;border-radius:7px;padding:7px 10px;font-size:10px;font-weight:800;cursor:pointer}
+.check-filters button.active{background:#145bdb;color:white;border-color:#5590ff}
+.check-group[data-cat="Estudo profundo"] .check-group-head{background:#145bdb!important}
+.check-group[data-cat="Questões e correção"] .check-group-head{background:#a65318!important}
+.check-group[data-cat="Revisão e memória"] .check-group-head{background:#6740a8!important}
+.check-group[data-cat="Simulados e redação"] .check-group-head{background:#087a50!important}
+.check-group[data-cat="Organização"] .check-group-head{background:#087f91!important}
+.check-group[data-cat="Saúde e pausas"] .check-group-head{background:#a13d80!important}
+.check-add{height:40px!important}
+.check-template-row{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}
+.check-template-row button{background:#102442;border:1px solid #2b4c78;color:#dceaff;border-radius:8px;padding:8px 10px;font-size:10px;font-weight:800;cursor:pointer}
+.check-template-row button:hover{background:#17417c}
+.check-empty{padding:22px;text-align:center;color:#8da4c5;border:1px dashed #2a4569;border-radius:10px}
+.check-week{padding:15px!important;background:#08172b!important;border-color:#24436b!important}
+.week-bar-fill{background:#2878ff!important}
+.check-footer{border-top:1px solid #1e3452;padding-top:12px}
+.check-export-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.check-export-row button{background:#102442;border:1px solid #29466d;color:#dceaff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:800;cursor:pointer}
+@media(max-width:700px){.check-toolbar{grid-template-columns:1fr!important}.check-groups{grid-template-columns:1fr!important}.check-overview{grid-template-columns:1fr!important}.check-metrics{grid-template-columns:repeat(3,1fr)!important}.check-toolbar{grid-template-columns:1fr!important}.check-nav{align-items:stretch}.check-nav input{max-width:none;flex:1}}
+
+
+/* KSTUDY — identidade visual editorial, cores sólidas por módulo */
+:root{--bg:#08090b;--panel:#111316;--panel2:#191c20;--line:#30343a;--text:#f4f5f7;--muted:#a5aab2;--brand:#145bdb;--module:#145bdb;--module-soft:#15233b}
+body{background:var(--bg);color:var(--text)}header,aside{background:var(--bg);border-color:var(--line)}
+.card,.review,.flash,.modalbox,.sidefoot{background:var(--panel);border-color:var(--line);box-shadow:none}
+.highlight{background:#111820;border:1px solid #263b56;border-left:4px solid #2878ff}
+.navbtn.active{background:var(--panel2);border-color:var(--line);border-left:4px solid var(--section);color:var(--text)}
+.navbtn.active .ico{background:var(--section)!important;color:#08090b!important}
+.page{padding:0 0 22px;border-radius:14px;--module:#145bdb;--module-soft:#15233b}
+.page#dashboard{--module:#2878ff;--module-soft:#14223a}
+.page#time{--module:#168ca0;--module-soft:#10262a}
+.page#routine{--module:#c05296;--module-soft:#2a1725}
+.page#study{--module:#d94355;--module-soft:#2c171b}
+.page#reviews{--module:#8a63d2;--module-soft:#211a30}
+.page#flashcards{--module:#2469e8;--module-soft:#15213b}
+.page#questions{--module:#f08a24;--module-soft:#302012}
+.page#mocks{--module:#159767;--module-soft:#10271f}
+.page#errors{--module:#dc6233;--module-soft:#2c1b14}
+.page#kstudy{--module:#789d36;--module-soft:#202817}
+.page.active .topline{background:var(--module);color:#fff;border-radius:12px;padding:20px 22px;margin:0 0 18px;align-items:center}
+.page.active .topline .eyebrow,.page.active .topline .sub{color:#fff;opacity:.88}
+.page.active .topline h1{color:#fff}
+.page.active .topline .tag{background:#08090b;color:#fff;border:1px solid #ffffff30}
+.page.active .btn:not(.ghost):not(.danger){background:var(--module);color:#08090b;box-shadow:none}
+.page.active .card{border-top:3px solid var(--module);background:var(--panel)}
+.page.active .card h3{color:var(--text)}
+.page#questions.active .card{border:1px solid #8e4d17;border-top:4px solid #f08a24;background:#11100e}
+.page#questions.active .tablewrap{background:#17120d;border-radius:9px;padding:4px}
+.page#questions.active th{color:#f0a75e;border-color:#49301b}
+.page#questions.active td{border-color:#302319}
+.page#questions.active .btn:not(.ghost):not(.danger){background:#f08a24;color:#111}
+.page#questions.active .eyebrow{color:#fff}
+.page#questions.active .topline{background:#f08a24;color:#111}
+.page#questions.active .topline h1,.page#questions.active .topline .eyebrow,.page#questions.active .topline .sub{color:#111;opacity:1}
+.page#questions.active .topline .tag{background:#111;color:#f08a24}
+.page#flashcards.active .flash{background:#101b30;border-color:#244b8e}
+.page#mocks.active .tablewrap{background:#101b17;border-radius:9px}
+.page#study.active .card{border-color:#5c252d}
+.page#reviews.active .review{background:#1b1724;border-color:#46335f}
+.page#time.active .timer-card{background:#101d20;border-color:#176170}
+.theme-toggle{border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:9px;padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+/* Modo claro: branco limpo, azul institucional e módulos coloridos */
+body[data-theme="light"]{--bg:#f3f6fb;--panel:#fff;--panel2:#edf2f8;--line:#d8e0eb;--text:#172235;--muted:#64748b;background:var(--bg);color:var(--text)}
+body[data-theme="light"] header,body[data-theme="light"] aside{background:#fff;border-color:var(--line)}
+body[data-theme="light"] .card,body[data-theme="light"] .review,body[data-theme="light"] .flash,body[data-theme="light"] .modalbox,body[data-theme="light"] .sidefoot{background:#fff;border-color:var(--line);color:var(--text)}
+body[data-theme="light"] .navbtn{color:#526176}body[data-theme="light"] .navbtn.active{background:#eaf1fc;color:#123d80;border-color:#d5e2f5}
+body[data-theme="light"] .navbtn .ico{background:#edf2f8;color:#31445e}
+body[data-theme="light"] .highlight{background:#eaf2ff;border-color:#c9dcfa;color:#173b70}
+body[data-theme="light"] .highlight p,body[data-theme="light"] .muted,body[data-theme="light"] .sub{color:#64748b}
+body[data-theme="light"] input,body[data-theme="light"] select,body[data-theme="light"] textarea{background:#fff;color:#172235;border-color:#cbd5e1}
+body[data-theme="light"] .btn.ghost{background:#edf2f8;color:#26364c;border-color:#d5deea}
+body[data-theme="light"] td{border-color:#e4eaf2}body[data-theme="light"] th{color:#64748b;border-color:#d8e0eb}
+body[data-theme="light"] .page.active .card{background:#fff}
+body[data-theme="light"] .page#questions.active .card{background:#fffaf4;border-color:#efc18f}
+body[data-theme="light"] .page#questions.active .tablewrap{background:#fff4e8}
+body[data-theme="light"] .page#questions.active th{color:#9b5517}
+body[data-theme="light"] .page#questions.active td{border-color:#f2dfca}
+body[data-theme="light"] .page#flashcards.active .flash{background:#f0f5ff;border-color:#c6d8fa}
+body[data-theme="light"] .page#reviews.active .review{background:#f6f1ff;border-color:#ded0fa}
+body[data-theme="light"] .page#time.active .timer-card{background:#effbfc;border-color:#b8e5e9}
+body[data-theme="light"] .page#mocks.active .tablewrap{background:#f0faf5}
+body[data-theme="light"] .check-week{background:#f3f7ff!important;border-color:#d6e3f8!important}
+body[data-theme="light"] .check-empty{color:#64748b;border-color:#cbd5e1}
+body[data-theme="light"] .check-export-row button{background:#eaf1fc;color:#21477f;border-color:#cbdaf0}
+@media(max-width:600px){.header-right{gap:5px}.theme-toggle{padding:7px 8px;font-size:10px}.page.active .topline{padding:16px}}
+
+
+/* Final specificity pass: neutral base, module colors only where they belong */
+html,body{background:var(--bg)!important;color:var(--text)!important}
+header,aside{background:var(--bg)!important;border-color:var(--line)!important}
+.card,.modalbox{background:var(--panel)!important;border-color:var(--line)!important}
+.page.active .card{background:var(--panel)!important;border-color:var(--line)!important;border-top:3px solid var(--module)!important}
+.page.active .eyebrow{color:var(--module)!important}
+.page.active .btn:not(.ghost):not(.danger){background:var(--module)!important;color:#08090b!important;border-color:var(--module)!important}
+.page#questions.active .card{background:#11100e!important;border:1px solid #8e4d17!important;border-top:4px solid #f08a24!important}
+.page#questions.active .topline .eyebrow,.page#questions.active .topline h1,.page#questions.active .topline .sub{color:#111!important}
+.page#questions.active .topline .tag{background:#111!important;color:#f08a24!important}
+.checklist-panel{background:#111316!important;border-color:#30343a!important}
+.check-nav button,.check-filters button,.check-template-row button,.check-export-row button{background:#1c2025!important;border-color:#3a414a!important;color:#e8ebef!important}
+.check-overview,.check-toolbar,.check-group,.check-week{background:#171a1e!important;border-color:#353b43!important}
+.check-ring{background:conic-gradient(#7b8797 0deg,#7b8797 0deg,#30363d 0deg 360deg)!important}
+.check-ring:before{background:#111316!important;border-color:#424952!important}
+.check-metrics>div{background:#20252b!important;border-color:#3b424b!important}
+.check-group-head{background:#303840!important;color:#fff!important}
+.check-group[data-cat="Estudo profundo"] .check-group-head{background:#145bdb!important}
+.check-group[data-cat="Questões e correção"] .check-group-head{background:#b85b23!important}
+.check-group[data-cat="Revisão e memória"] .check-group-head{background:#6740a8!important}
+.check-group[data-cat="Simulados e redação"] .check-group-head{background:#087a50!important}
+.check-group[data-cat="Organização"] .check-group-head{background:#087f91!important}
+.check-group[data-cat="Saúde e pausas"] .check-group-head{background:#a13d80!important}
+.week-bar-fill{background:#64748b!important}
+body[data-theme="light"] html,body[data-theme="light"]{background:#f3f6fb!important;color:#172235!important}
+body[data-theme="light"] header,body[data-theme="light"] aside{background:#fff!important;border-color:#d8e0eb!important}
+body[data-theme="light"] .card,body[data-theme="light"] .modalbox,body[data-theme="light"] .page.active .card{background:#fff!important;border-color:#d8e0eb!important}
+body[data-theme="light"] .page#questions.active .card{background:#fffaf4!important;border-color:#efc18f!important}
+body[data-theme="light"] .checklist-panel,body[data-theme="light"] .check-overview,body[data-theme="light"] .check-toolbar,body[data-theme="light"] .check-group,body[data-theme="light"] .check-week{background:#fff!important;border-color:#d8e0eb!important}
+body[data-theme="light"] .check-metrics>div,body[data-theme="light"] .check-nav button,body[data-theme="light"] .check-filters button,body[data-theme="light"] .check-template-row button,body[data-theme="light"] .check-export-row button{background:#edf2f8!important;border-color:#d8e0eb!important;color:#26364c!important}
+body[data-theme="light"] .check-group-head{background:#e9eef5!important;color:#26364c!important}
+body[data-theme="light"] .check-ring:before{background:#fff!important;border-color:#d8e0eb!important}
+body[data-theme="light"] .page#questions.active .tablewrap{background:#fff4e8!important}
+body[data-theme="light"] .page#questions.active th{color:#9b5517!important}
+body[data-theme="light"] .page#questions.active td{border-color:#f2dfca!important}
+
+
+/* ===== KSTUDY FINAL DESIGN SYSTEM — clean black + independent module colors ===== */
+:root{
+  color-scheme:dark;
+  --bg:#000; --panel:#101113; --panel2:#17191c; --line:#292c31;
+  --text:#f2f2f2; --muted:#a0a3aa; --brand:#174fc4;
+  --module:#c7cbd1; --module-soft:#202226;
+}
+html,body{background:#000!important;color:#f2f2f2!important}
+body{background:#000!important}
+header,aside{background:#050505!important;border-color:#242424!important}
+header{box-shadow:0 5px 22px #000!important}
+aside{box-shadow:10px 0 26px #0008!important}
+.logo{background:#17191d!important;border:1px solid #363a42!important;color:#fff!important;box-shadow:none!important}
+.nav-toggle{background:#15171a!important;border:1px solid #30343a!important;color:#eee!important;box-shadow:none!important}
+.navbtn{background:transparent!important;border:1px solid transparent!important;color:#aeb0b6!important;box-shadow:none!important}
+.navbtn:hover{background:#151515!important;border-color:#303030!important;transform:translateX(2px)}
+.navbtn .ico{width:30px;height:30px;background:#17191c!important;border:1px solid #303238!important;color:#bfc2c8!important;box-shadow:none!important;border-radius:8px}
+.navbtn .ico svg{width:16px;height:16px;stroke-width:1.8}
+.navbtn.active{background:color-mix(in srgb,var(--section) 15%,#101010)!important;border:1px solid color-mix(in srgb,var(--section) 45%,#292929)!important;border-left:4px solid var(--section)!important;color:#fff!important;box-shadow:none!important}
+.navbtn.active .ico{background:var(--section)!important;border-color:var(--section)!important;color:#080808!important}
+.navbtn[data-page="dashboard"]{--section:#c7cbd1}
+.navbtn[data-page="time"]{--section:#24a6b2}
+.navbtn[data-page="routine"]{--section:#cf70aa}
+.navbtn[data-page="study"]{--section:#df5264}
+.navbtn[data-page="reviews"]{--section:#9a78d6}
+.navbtn[data-page="flashcards"]{--section:#3979e8}
+.navbtn[data-page="questions"]{--section:#e49a36}
+.navbtn[data-page="mocks"]{--section:#26a879}
+.navbtn[data-page="errors"]{--section:#dc7540}
+.navbtn[data-page="kstudy"]{--section:#91b85b}
+.page{--module:#c7cbd1;--module-soft:#202226;--accent:var(--module)}
+.page#dashboard{--module:#c7cbd1;--module-soft:#202226}
+.page#time{--module:#24a6b2;--module-soft:#10272a}
+.page#routine{--module:#cf70aa;--module-soft:#2a1724}
+.page#study{--module:#df5264;--module-soft:#2b151a}
+.page#reviews{--module:#9a78d6;--module-soft:#211a2c}
+.page#flashcards{--module:#3979e8;--module-soft:#14213a}
+.page#questions{--module:#e49a36;--module-soft:#2b1e10}
+.page#mocks{--module:#26a879;--module-soft:#10271f}
+.page#errors{--module:#dc7540;--module-soft:#2b1b13}
+.page#kstudy{--module:#91b85b;--module-soft:#202817}
+.page.active .topline{background:var(--module)!important;color:#080808!important;border-radius:12px;padding:18px 21px!important}
+.page.active .topline h1,.page.active .topline .eyebrow,.page.active .topline .sub{color:#080808!important;opacity:1!important}
+.page.active .topline .tag{background:#080808!important;color:var(--module)!important;border-color:#080808!important}
+.page.active .eyebrow{color:var(--module)!important}
+.page.active .btn:not(.ghost):not(.danger){background:var(--module)!important;color:#080808!important;border:1px solid var(--module)!important;box-shadow:none!important}
+.page.active .card{background:#101113!important;border:1px solid #292c31!important;border-top:3px solid var(--module)!important;box-shadow:0 12px 26px #0006!important}
+.page.active .card h3{color:#f2f2f2!important}
+.page.active .highlight{background:var(--module-soft)!important;border:1px solid color-mix(in srgb,var(--module) 50%,#292929)!important;border-left:4px solid var(--module)!important}
+.page.active .progress span,.page.active .mastery-track span{background:var(--module)!important}
+.page.active .flash,.page.active .review,.page.active .strategy-item{background:var(--module-soft)!important;border-color:color-mix(in srgb,var(--module) 35%,#292929)!important}
+.page.active .tag.blue{background:#24272b!important;color:#d7d9dd!important}
+.page.active input:focus,.page.active select:focus,.page.active textarea:focus{border-color:var(--module)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--module) 18%,transparent)!important}
+.card,.modalbox,.flash,.review,.sidefoot{background:#101113!important;border-color:#292c31!important;box-shadow:none!important}
+.highlight{background:#151515!important;border-color:#303030!important}
+input,select,textarea{background:#090909!important;color:#f2f2f2!important;border-color:#343434!important}
+.btn.ghost{background:#1b1d20!important;color:#eee!important;border:1px solid #393c42!important;box-shadow:none!important}
+.btn.danger{background:#351b21!important;color:#ffb8c1!important;border-color:#63313b!important;box-shadow:none!important}
+.progress,.mastery-track{background:#292c31!important}
+.tag{background:#25272b!important;color:#ddd!important;border-color:#383b40!important}
+.tablewrap{background:transparent!important}
+td{border-color:#292c31!important}
+th{border-color:#343434!important;color:#999!important}
+/* Checklist inherits its page/module; no global cobalt surfaces */
+.checklist-panel,.check-overview,.check-toolbar,.check-group,.check-week{background:#101113!important;border-color:#303238!important;box-shadow:none!important}
+.check-date{background:var(--module)!important;color:#080808!important;border-color:var(--module)!important;box-shadow:none!important}
+.check-ring{background:conic-gradient(var(--module) 0deg,var(--module) 0deg,#292c31 0deg 360deg)!important;box-shadow:none!important}
+.check-ring:before{background:#101113!important;border-color:#3a3d43!important}
+.check-metrics>div{background:#191b1f!important;border-color:#30343a!important;box-shadow:none!important}
+.check-group-head{background:var(--module)!important;color:#080808!important;border:0!important}
+.check-group-head span{color:#171717!important}
+.check-task{border-color:#292c31!important}
+.check-task input{accent-color:var(--module)!important}
+.check-task:hover{background:var(--module-soft)!important}
+.check-task.done{background:#142019!important}
+.check-nav button,.check-filters button,.check-template-row button,.check-export-row button{background:#1b1d20!important;border-color:#383c43!important;color:#e5e5e5!important}
+.check-nav button:hover,.check-template-row button:hover{background:var(--module-soft)!important}
+.check-filters button.active{background:var(--module)!important;border-color:var(--module)!important;color:#080808!important}
+.check-group[data-cat="Estudo profundo"] .check-group-head{background:#3979e8!important;color:#080808!important}
+.check-group[data-cat="Questões e correção"] .check-group-head{background:#dc7540!important;color:#080808!important}
+.check-group[data-cat="Revisão e memória"] .check-group-head{background:#9a78d6!important;color:#080808!important}
+.check-group[data-cat="Simulados e redação"] .check-group-head{background:#26a879!important;color:#080808!important}
+.check-group[data-cat="Organização"] .check-group-head{background:#24a6b2!important;color:#080808!important}
+.check-group[data-cat="Saúde e pausas"] .check-group-head{background:#cf70aa!important;color:#080808!important}
+.week-bar-track{background:#292c31!important}
+.week-bar-fill{background:var(--module)!important}
+.check-priority.baixa{background:#24272b!important;color:#ddd!important}
+/* Real light theme: all surfaces, text, fields, overlays and checklist are reset */
+html:has(body[data-theme="light"]),body[data-theme="light"]{color-scheme:light;background:#f4f5f7!important;color:#202329!important}
+body[data-theme="light"]{--bg:#f4f5f7;--panel:#fff;--panel2:#eef0f3;--line:#d9dce2;--text:#202329;--muted:#646a74;background:#f4f5f7!important;color:#202329!important}
+body[data-theme="light"] header,body[data-theme="light"] aside{background:#fff!important;border-color:#dfe2e7!important;box-shadow:0 3px 14px #1720330b!important}
+body[data-theme="light"] .brand,body[data-theme="light"] .brand b{color:#202329!important}
+body[data-theme="light"] .brand small,body[data-theme="light"] .navlabel{color:#737984!important}
+body[data-theme="light"] .logo{background:#202329!important;color:#fff!important;border-color:#202329!important}
+body[data-theme="light"] .navbtn{color:#555d68!important}
+body[data-theme="light"] .navbtn:hover{background:#f0f1f3!important}
+body[data-theme="light"] .navbtn.active{background:color-mix(in srgb,var(--section) 14%,white)!important;color:#202329!important;border-color:color-mix(in srgb,var(--section) 48%,white)!important}
+body[data-theme="light"] .navbtn .ico{background:#f0f1f3!important;color:#555d68!important;border-color:#dfe2e7!important}
+body[data-theme="light"] .navbtn.active .ico{background:var(--section)!important;color:#111!important;border-color:var(--section)!important}
+body[data-theme="light"] .page.active .topline{background:var(--module)!important;color:#111!important}
+body[data-theme="light"] .page.active .topline h1,body[data-theme="light"] .page.active .topline .eyebrow,body[data-theme="light"] .page.active .topline .sub{color:#111!important}
+body[data-theme="light"] .card,body[data-theme="light"] .modalbox,body[data-theme="light"] .flash,body[data-theme="light"] .review,body[data-theme="light"] .sidefoot,body[data-theme="light"] .page.active .card{background:#fff!important;color:#202329!important;border-color:#dfe2e7!important;box-shadow:0 4px 16px #1720330a!important}
+body[data-theme="light"] .page.active .card{border-top:3px solid var(--module)!important}
+body[data-theme="light"] .card h3,body[data-theme="light"] .page.active .card h3,body[data-theme="light"] .listitem,body[data-theme="light"] td{color:#202329!important}
+body[data-theme="light"] .muted,body[data-theme="light"] .sub,body[data-theme="light"] .knote,body[data-theme="light"] .klabel{color:#68707c!important}
+body[data-theme="light"] .highlight{background:var(--module-soft)!important;color:#202329!important;border-color:color-mix(in srgb,var(--module) 38%,#dfe2e7)!important}
+body[data-theme="light"] .highlight p{color:#505762!important}
+body[data-theme="light"] input,body[data-theme="light"] select,body[data-theme="light"] textarea{background:#fff!important;color:#202329!important;border-color:#cbd0d8!important;box-shadow:none!important}
+body[data-theme="light"] input::placeholder,body[data-theme="light"] textarea::placeholder{color:#858b95!important}
+body[data-theme="light"] .btn.ghost{background:#f0f1f3!important;color:#343a43!important;border-color:#d5d9df!important}
+body[data-theme="light"] .btn.danger{background:#fbecef!important;color:#9c3042!important;border-color:#edcbd1!important}
+body[data-theme="light"] .tag{background:#f0f1f3!important;color:#414751!important;border-color:#dfe2e7!important}
+body[data-theme="light"] th{color:#68707c!important;border-color:#dfe2e7!important}
+body[data-theme="light"] td{border-color:#e7e9ed!important}
+body[data-theme="light"] .progress,body[data-theme="light"] .mastery-track,body[data-theme="light"] .week-bar-track{background:#e7e9ed!important}
+body[data-theme="light"] .checklist-panel,body[data-theme="light"] .check-overview,body[data-theme="light"] .check-toolbar,body[data-theme="light"] .check-group,body[data-theme="light"] .check-week{background:#fff!important;border-color:#dfe2e7!important}
+body[data-theme="light"] .check-date{background:var(--module)!important;color:#111!important}
+body[data-theme="light"] .check-ring:before{background:#fff!important;border-color:#dfe2e7!important}
+body[data-theme="light"] .check-metrics>div{background:#f4f5f7!important;border-color:#e0e3e8!important}
+body[data-theme="light"] .check-group-head{background:var(--module)!important;color:#111!important}
+body[data-theme="light"] .check-group-head span{color:#222!important}
+body[data-theme="light"] .check-task{color:#303640!important;border-color:#e7e9ed!important}
+body[data-theme="light"] .check-task:hover{background:color-mix(in srgb,var(--module) 9%,white)!important}
+body[data-theme="light"] .check-nav button,body[data-theme="light"] .check-filters button,body[data-theme="light"] .check-template-row button,body[data-theme="light"] .check-export-row button{background:#f0f1f3!important;color:#343a43!important;border-color:#d8dce2!important}
+body[data-theme="light"] .check-filters button.active{background:var(--module)!important;color:#111!important;border-color:var(--module)!important}
+body[data-theme="light"] .check-empty{color:#68707c!important;border-color:#cbd0d8!important}
+body[data-theme="light"] .modal{background:#20232980!important}
+body[data-theme="light"] .modalbox{background:#fff!important;color:#202329!important}
+body[data-theme="light"] .nav-toggle,body[data-theme="light"] .theme-toggle{background:#f0f1f3!important;color:#303640!important;border-color:#d8dce2!important}
+@media(max-width:900px){body[data-theme="light"] aside{background:#fff!important}}
+
+
+/* ===== ICONS + DEPTH REFINEMENT ===== */
+.navbtn .ico{
+  display:grid!important;place-items:center!important;
+  width:32px!important;height:32px!important;flex:0 0 32px!important;
+  border-radius:9px!important;background:#111316!important;
+  border:1px solid #30343b!important;color:#c7cbd2!important;
+  box-shadow:inset 0 1px 0 #ffffff0a,0 2px 7px #0008!important;
+}
+.navbtn .ico svg{width:18px!important;height:18px!important;stroke-width:2.1!important;display:block!important}
+.navbtn[data-page="errors"] .ico{color:#ff646e!important;background:#211316!important;border-color:#51252c!important}
+.navbtn.active[data-page="errors"] .ico{background:#dc3545!important;color:#fff!important;border-color:#dc3545!important}
+.navbtn.active .ico{box-shadow:0 3px 10px color-mix(in srgb,var(--section) 35%,transparent),inset 0 1px 0 #ffffff30!important}
+/* Subtle elevation: layered surfaces, not a heavy glow */
+.shell{filter:drop-shadow(0 14px 28px #0008)}
+header{box-shadow:0 5px 20px #0009,0 1px 0 #ffffff08!important}
+aside{box-shadow:8px 0 24px #0007!important}
+main{position:relative}
+.page.active .topline{box-shadow:0 8px 22px color-mix(in srgb,var(--module) 12%,#000)!important}
+.page.active .card{box-shadow:0 9px 24px #0009,0 1px 0 #ffffff08 inset!important}
+.page.active .highlight,.page.active .flash,.page.active .review,.page.active .strategy-item{box-shadow:0 5px 14px #0005!important}
+.btn:not(.ghost):not(.danger){box-shadow:0 4px 12px color-mix(in srgb,var(--module) 22%,transparent)!important}
+body[data-theme="light"] .shell{filter:drop-shadow(0 12px 24px #18223518)}
+body[data-theme="light"] .page.active .topline{box-shadow:0 7px 18px color-mix(in srgb,var(--module) 16%,#ffffff)!important}
+body[data-theme="light"] .page.active .card{box-shadow:0 7px 20px #18223512,0 1px 0 #ffffff inset!important}
+body[data-theme="light"] .navbtn .ico{background:#f1f2f5!important;color:#59616d!important;border-color:#dfe2e8!important;box-shadow:0 2px 5px #18223512!important}
+body[data-theme="light"] .navbtn[data-page="errors"] .ico{background:#fff0f1!important;color:#d93646!important;border-color:#f1c8cd!important}
+
+
+
+/* KSTUDY PATCH — ícones estáveis, legíveis e profundidade discreta */
+.navbtn{display:flex!important;align-items:center!important;gap:13px!important;min-height:48px!important;padding:9px 13px!important;border-radius:11px!important;letter-spacing:.005em!important;font-size:12px!important;font-weight:650!important;transition:background .18s ease,border-color .18s ease,transform .18s ease,color .18s ease!important}
+.navbtn .ico{width:32px!important;height:32px!important;min-width:32px!important;display:grid!important;place-items:center!important;background:transparent!important;border:0!important;border-radius:8px!important;color:var(--section)!important;box-shadow:none!important;font-size:0!important}
+.navbtn .ico svg{display:block!important;width:21px!important;height:21px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;overflow:visible!important}
+.navbtn.active{background:color-mix(in srgb,var(--section) 13%,#0b0c0e)!important;border:1px solid color-mix(in srgb,var(--section) 35%,#25272b)!important;border-left:3px solid var(--section)!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff08,0 5px 15px #0005!important}
+.navbtn.active .ico{background:transparent!important;color:var(--section)!important}
+.navbtn[data-page="errors"] .ico{color:#ff626e!important}
+.navbtn[data-page="mocks"] .ico{color:#42c995!important}
+.navbtn:hover .ico{transform:scale(1.06)}
+/* Main app surfaces: subtle elevation, no neon or heavy bevels */
+.shell{filter:drop-shadow(0 18px 32px rgba(0,0,0,.22))}
+main{position:relative;isolation:isolate}
+.page.active .card,.page.active .review,.page.active .flash,.page.active .checklist-panel,.page.active .modalbox{box-shadow:0 2px 5px rgba(0,0,0,.22),0 14px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035)!important}
+.page.active .card:hover,.page.active .review:hover,.page.active .flash:hover{box-shadow:0 5px 12px rgba(0,0,0,.26),0 18px 34px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.045)!important}
+header{box-shadow:0 8px 24px rgba(0,0,0,.32)!important}
+aside{box-shadow:8px 0 26px rgba(0,0,0,.22)!important}
+.nav-toggle,.theme-toggle{box-shadow:0 4px 14px rgba(0,0,0,.22)!important}
+body[data-theme="light"] .navbtn .ico{color:var(--section)!important}
+body[data-theme="light"] .navbtn.active .ico{color:var(--section)!important}
+@media(max-width:900px){.navbtn{min-height:42px!important;padding:7px 10px!important}.navbtn .ico{width:26px!important;height:26px!important;min-width:26px!important}.navbtn .ico svg{width:19px!important;height:19px!important}}
+
+
+/* KSTUDY — ferramentas complementares */
+.tools-intro{padding:16px 18px;border:1px solid var(--line);border-left:4px solid #2878ff;border-radius:12px;background:var(--panel);margin-bottom:14px}
+.tools-intro b{font-size:13px}.tools-intro p{margin:5px 0 0;color:var(--muted);font-size:11px}
+.tool-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 14px}.tool-tabs button{border:1px solid var(--line);background:var(--panel2);color:var(--text);padding:8px 11px;border-radius:8px;font-size:10px;font-weight:800;cursor:pointer}.tool-tabs button.active{background:#145bdb;border-color:#3979e8;color:white}
+.tool-panel{display:none}.tool-panel.active{display:block}.tool-stat{padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}.tool-stat small{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.tool-stat strong{display:block;font-size:25px;margin-top:4px}
+.tool-record{padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);margin:8px 0}.tool-record-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.tool-record p{font-size:11px;color:var(--muted);white-space:pre-wrap;margin:7px 0 0}.tool-delete{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:5px 8px;cursor:pointer}.tool-result{padding:12px;border:1px solid #28518c;background:#0c1d35;border-radius:10px;margin-top:12px}.tool-result strong{font-size:23px}.tool-note{font-size:10px;color:var(--muted);line-height:1.5}
+body[data-theme="light"] .tools-intro,body[data-theme="light"] .tool-stat,body[data-theme="light"] .tool-record{background:#fff}body[data-theme="light"] .tool-tabs button{background:#edf2f8;color:#26364c}body[data-theme="light"] .tool-tabs button.active{background:#145bdb;color:#fff}body[data-theme="light"] .tool-result{background:#eaf2ff;color:#173b70;border-color:#c9dcfa}
+@media(max-width:700px){.tool-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.tool-tabs button{min-height:38px}.tool-record-head{flex-direction:column}}
+
+</style></head><body>
+<header><div style="display:flex;align-items:center;gap:13px"><button class="nav-toggle" onclick="toggleSidebar()" aria-label="Mostrar ou ocultar menu">☰ <span class="toggle-label">Menu</span></button><div class="brand"><div class="logo">K</div><div><b>KSTUDY • ENEM 2027 · V8.0</b><small>Academic Performance System</small></div></div></div><div class="header-right"><button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Alternar tema">☀ Modo claro</button><span class="pill">V8.0 · CICLO 2026—2027</span></div></header>
+<div class="shell"><aside aria-label="Navegação principal">
+<div class="navlabel">PAINEL</div>
+<button class="navbtn active" data-page="dashboard"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></span>Visão geral</button>
+<div class="navlabel">ACOMPANHAMENTO</div>
+<button class="navbtn" data-page="time"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><path d="M12 8v5l3.5 2M9 2h6M12 2v2"/></svg></span>Cronômetro e horas</button>
+<button class="navbtn" data-page="routine"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg></span>Rotina e planejamento</button>
+<div class="navlabel">APRENDIZAGEM</div>
+<button class="navbtn" data-page="study"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3H12v17H5.5A2.5 2.5 0 0 0 3 22zM21 5.5A2.5 2.5 0 0 0 18.5 3H12v17h6.5A2.5 2.5 0 0 1 21 22z"/></svg></span>Conteúdos</button>
+<button class="navbtn" data-page="reviews"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.4-3"/></svg></span>Revisões</button>
+<button class="navbtn" data-page="flashcards"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="14" height="16" rx="2"/><path d="M4 7v13a2 2 0 0 0 2 2h11M11 8h6M11 12h6"/></svg></span>Flashcards</button>
+<div class="navlabel">DESEMPENHO</div>
+<button class="navbtn" data-page="questions"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 1.5 1.5L12 8M14 10h2M8 15l1.5 1.5L12 14M14 16h2"/></svg></span>Banco de questões</button>
+<button class="navbtn" data-page="mocks"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5M8 10h8M8 14h8M8 18h5"/></svg></span>Simulados</button>
+<button class="navbtn" data-page="errors"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg></span>Erros e prioridades</button>
+<div class="navlabel">FERRAMENTAS</div><button class="navbtn" data-page="tools"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 4v6M8 14v6"/></svg></span>Ferramentas de estudo</button>
+<div class="navlabel">ASSISTENTE</div>
+<button class="navbtn" data-page="kstudy"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3Z"/><path d="M9 22h6M9 10h.01M15 10h.01M10 14c1.2 1 2.8 1 4 0M12 3V1"/></svg></span>Kstudy IA</button>
+<div class="sidefoot"><b style="color:#fff">Seu progresso começa aqui.</b><br>Seus dados ficam salvos neste navegador. Faça backups periódicos para proteger seu histórico.</div></aside>
+<main>
+<section class="page active" id="dashboard"><div class="topline"><div><div class="eyebrow">Seu centro de comando</div><h1>Vamos construir sua aprovação.</h1><p class="sub">Acompanhe estudo, retenção e desempenho em um só lugar.</p></div><button class="btn" onclick="go('study')">＋ Registrar estudo</button></div>
+<div class="highlight"><div><b>✦ Sistema de revisão inteligente ativado</b><p>Ao marcar um conteúdo como estudado, o hub agenda revisões pontuais e globais automaticamente.</p></div><span class="tag red">AUTO</span></div>
+<div class="grid kpis" style="grid-template-columns:repeat(5,minmax(0,1fr))"><div class="card accent-blue"><div class="klabel">HORAS ESTUDADAS</div><div class="knum" id="khours">0h</div><div class="knote">Cronômetro Kstudy</div></div><div class="card accent-red"><div class="klabel">QUESTÕES RESOLVIDAS</div><div class="knum" id="kq">0</div><div class="knote">blocos registrados</div></div><div class="card accent-yellow"><div class="klabel">APROVEITAMENTO</div><div class="knum" id="kr">—</div><div class="knote">acertos no banco de questões</div></div><div class="card accent-blue"><div class="klabel">CONTEÚDOS ESTUDADOS</div><div class="knum" id="kc">0</div><div class="knote">conteúdos concluídos</div></div><div class="card accent-green"><div class="klabel">REVISÕES PENDENTES</div><div class="knum" id="krev">0</div><div class="knote">pontuais + globais</div></div></div>
+<div class="grid cols2" style="margin-top:14px"><div class="card accent-blue"><h3>Próximas revisões</h3><div id="nextReviews"></div></div><div class="card accent-green"><h3>Domínio por área</h3><div id="areaStats"></div></div></div>
+<div class="grid cols2" style="margin-top:14px"><div class="card accent-yellow"><h3>Ritmo de estudos</h3><div id="studyStats" class="muted">Registre seus primeiros conteúdos para visualizar seu ritmo.</div></div><div class="card accent-red"><h3>Atalhos do hub</h3><div class="grid"><button class="btn ghost" onclick="openModal('study')">＋ Adicionar conteúdo estudado</button><button class="btn ghost" onclick="go('flashcards')">▤ Abrir meus flashcards</button><button class="btn ghost" onclick="openModal('question')">◎ Registrar bloco de questões</button></div></div></div>
+<div class="grid cols2" style="margin-top:14px">
+<div class="card accent-blue"><h3>Evolução de acertos</h3><p class="muted">Aproveitamento dos últimos blocos registrados</p><div class="chartbox"><canvas id="accuracyChart" aria-label="Gráfico de evolução de acertos"></canvas></div></div>
+<div class="card accent-green"><h3>Questões por área</h3><p class="muted">Distribuição do volume praticado</p><div class="chartbox"><canvas id="areaChart" aria-label="Gráfico de questões por área"></canvas></div></div>
+</div>
+<div class="card accent-blue" style="margin-top:14px"><h3>🏆 Ranking de matérias que você mais domina</h3><p class="muted">Calculado pelo percentual de acertos. O ranking considera matérias com pelo menos 5 questões registradas.</p><div id="masteryRanking"></div></div>
+</section>
+
+<section class="page" id="time"><div class="topline"><div><div class="eyebrow">Tempo de dedicação</div><h1>Cronômetro Kstudy</h1><p class="sub">Um contador próprio, sem sincronização ou dependência de outros aplicativos.</p></div><span class="tag blue">TIME TRACKER</span></div>
+<div class="grid cols2"><div class="card accent-blue"><div class="klabel">TEMPO TOTAL REGISTRADO</div><div class="knum" id="totalHours">0h 00min</div><div class="muted">Somente sessões iniciadas e finalizadas aqui.</div><div class="progress" style="margin-top:16px"><span id="hourProgress" style="width:0%"></span></div><p class="muted" id="goalText">Referência diária: 6 horas</p></div>
+<div class="card accent-blue timer-card"><h3>Seu cronômetro</h3><div class="knum" id="timerDisplay">00:00:00</div><div class="field"><label>Disciplina / matéria</label><input id="timerSubject" placeholder="Ex.: Física — Dinâmica"></div><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn" id="timerStart" onclick="startTimer()">Iniciar sessão</button><button class="btn ghost" onclick="stopTimer()">Finalizar e salvar</button></div><p class="muted" id="timerStatus">O tempo é contado neste navegador e salvo no histórico ao finalizar.</p></div></div>
+<div class="card accent-blue" style="margin-top:14px"><h3>Histórico de sessões</h3><div class="tablewrap"><table><thead><tr><th>Data</th><th>Origem</th><th>Matéria</th><th>Duração</th><th></th></tr></thead><tbody id="timeRows"></tbody></table></div></div>
+</section>
+<section class="page" id="kstudy"><div class="topline"><div><div class="eyebrow">Seu copiloto acadêmico</div><h1>Kstudy <span class="tag green">BETA</span></h1><p class="sub">Assistente de planejamento, revisão e análise de desempenho.</p></div><span class="tag blue">STUDY INTELLIGENCE</span></div>
+<div class="grid cols2"><div class="card accent-green"><h3>Converse com Kstudy</h3><div id="kchat" style="height:310px;overflow:auto;background:#090909;border:1px solid #292929;border-radius:12px;padding:13px;margin-bottom:12px"><div class="review"><span class="tag green">KSTUDY</span><p style="color:#e1e1e1;margin-top:8px">Olá! Sou o Kstudy. Posso ajudar a organizar seus estudos, interpretar seus indicadores e montar revisões. O modo atual funciona localmente com comandos guiados; respostas generativas avançadas exigem conexão a um serviço de IA.</p></div></div><div class="field"><label>Sua mensagem</label><textarea id="kInput" placeholder="Ex.: Como devo organizar minha revisão de Física?"></textarea></div><button class="btn" style="margin-top:10px" onclick="askKstudy()">Enviar para Kstudy</button></div>
+<div class="card accent-yellow"><h3>Comandos rápidos</h3><div class="grid"><button class="btn ghost" onclick="quickK('Analise meu desempenho atual e diga minhas prioridades.')">Analisar meu desempenho</button><button class="btn ghost" onclick="quickK('Monte meu plano de revisão para hoje.')">Planejar revisões de hoje</button><button class="btn ghost" onclick="quickK('Quais conteúdos ainda não estudei?')">Ver conteúdos pendentes</button><button class="btn ghost" onclick="quickK('Avalie meu tempo total de estudo.')">Analisar horas estudadas</button></div><p class="muted" style="margin-top:16px">Kstudy utiliza os dados registrados nesta plataforma. Não inventa resultados que ainda não foram cadastrados.</p></div></div></section>
+<section class="page" id="study"><div class="topline"><div><div class="eyebrow">Mapa de aprendizagem</div><h1>Conteúdos & estudos</h1><p class="sub">Adicione o que estudou ou acompanhe o programa completo.</p></div><button class="btn" onclick="openModal('study')">＋ Registrar conteúdo</button></div>
+<div class="grid cols2"><div class="card accent-red"><h3>Conteúdos do seu ciclo</h3><div class="field"><label>Filtrar área</label><select id="areaFilter" onchange="renderStudy()"><option value="">Todas</option><option>Linguagens</option><option>Humanas</option><option>Natureza</option><option>Matemática</option><option>Redação</option></select></div><div id="contentList" style="margin-top:10px"></div></div><div class="card accent-yellow"><h3>Registrar sessão de estudo</h3><p class="muted">Marque como estudado para criar a sequência automática de revisão e gerar os flashcards.</p><button class="btn" onclick="openModal('study')">Registrar conteúdo estudado</button><div style="margin-top:18px" id="studyHint" class="muted">A revisão espaçada será vinculada ao conteúdo e à data de estudo.</div></div></div></section>
+<section class="page" id="reviews"><div class="topline"><div><div class="eyebrow">Memória de longo prazo</div><h1>Central de revisões</h1><p class="sub">Revisões pontuais por conteúdo e revisões globais por área.</p></div><button class="btn ghost" onclick="generateGlobal()">＋ Gerar revisão global</button></div>
+<div class="grid cols2"><div class="card accent-blue"><h3>Revisões pontuais</h3><div id="pointReviews"></div></div><div class="card accent-green"><h3>Revisões globais</h3><div id="globalReviews"></div></div></div></section>
+<section class="page" id="flashcards"><div class="topline"><div><div class="eyebrow">Recuperação ativa</div><h1>Flashcards automáticos</h1><p class="sub">Cada conteúdo estudado gera cartões de pergunta para testar sua compreensão.</p></div><span class="tag green" id="flashCount">0 CARTÕES</span></div><div class="card accent-yellow"><div class="field" style="max-width:340px"><label>Filtrar por conteúdo</label><select id="flashFilter" onchange="renderFlashcards()"><option value="">Todos os cartões</option></select></div><div class="flashgrid" id="flashGrid" style="margin-top:15px"></div></div></section>
+<section class="page" id="questions"><div class="topline"><div><div class="eyebrow">Métricas de prática</div><h1>Banco de questões</h1><p class="sub">Percentuais, erros e evolução por assunto.</p></div><button class="btn" onclick="openModal('question')">＋ Registrar bloco</button></div><div class="card accent-red"><div class="tablewrap"><table><thead><tr><th>Data</th><th>Área / disciplina</th><th>Conteúdo</th><th>Questões</th><th>Acertos</th><th>Taxa</th><th></th></tr></thead><tbody id="questionRows"></tbody></table></div></div></section>
+<section class="page" id="mocks"><div class="topline"><div><div class="eyebrow">Condições reais de prova</div><h1>Simulados</h1><p class="sub">Registre as quatro áreas e acompanhe a evolução.</p></div><button class="btn" onclick="openModal('mock')">＋ Novo simulado</button></div><div class="card accent-blue"><div class="tablewrap"><table><thead><tr><th>Simulado</th><th>Data</th><th>LING</th><th>HUM</th><th>NAT</th><th>MAT</th><th>Total / 180</th><th>Redação</th><th></th></tr></thead><tbody id="mockRows"></tbody></table></div></div></section>
+<section class="page" id="errors"><div class="topline"><div><div class="eyebrow">Diagnóstico e correção</div><h1>Erros & prioridades</h1><p class="sub">Transforme erros recorrentes em tarefas específicas.</p></div><button class="btn" onclick="openModal('error')">＋ Registrar erro</button></div><div class="card accent-red"><div class="tablewrap"><table><thead><tr><th>Prioridade</th><th>Conteúdo</th><th>Causa</th><th>Correção</th><th>Status</th><th></th></tr></thead><tbody id="errorRows"></tbody></table></div></div></section>
+<section class="page" id="routine"><div class="topline"><div><div class="eyebrow">Consistência sem improviso</div><h1>Planejador de rotina</h1><p class="sub">Reorganize o dia quando o cronograma sair do planejado — sem tentar compensar tudo de uma vez.</p></div><button class="btn ghost" onclick="resetChecks()">Zerar checklist</button></div>
+<div class="grid cols2">
+<div class="card accent-green"><h3>1. Seu cronograma-base</h3><p class="muted">Cadastre as tarefas em ordem de importância. Uma por linha: matéria | duração em minutos | prioridade (alta, média ou baixa).</p><div class="field"><label>Cronograma planejado</label><textarea id="routineTasks" rows="7" placeholder="Matemática — questões | 90 | alta&#10;Natureza — conteúdo novo | 90 | alta&#10;Revisões pendentes | 60 | média&#10;Flashcards | 30 | baixa"></textarea></div><button class="btn" style="margin-top:10px" onclick="saveRoutineBase()">Salvar cronograma-base</button><p class="muted" id="routineSaved" style="margin-top:8px">O cronograma fica salvo neste navegador.</p></div>
+<div class="card accent-yellow"><h3>2. Reorganizar o dia</h3><p class="muted">Informe quanto tempo realmente sobrou. O planejador encaixa as tarefas sem ultrapassar esse limite.</p><div class="formgrid"><div class="field"><label>Tempo disponível (minutos)</label><input id="availableMinutes" type="number" min="15" step="15" value="240"></div><div class="field"><label>Horário de início</label><input id="routineStart" type="time" value="14:00"></div></div><button class="btn" style="margin-top:12px" onclick="replanDay()">Reorganizar meu dia</button><div id="replannedSchedule" style="margin-top:12px"><div class="empty">Seu novo cronograma aparecerá aqui.</div></div></div>
+</div>
+<div class="card checklist-panel" style="margin-top:14px">
+<div class="check-head"><div><div class="eyebrow">EXECUÇÃO E CONSISTÊNCIA</div><h3>3. Central de checklist</h3><p class="muted">Acompanhe o que foi feito hoje e visualize sua constância ao longo da semana.</p></div><div class="check-date" id="checkDate"></div></div>
+<div class="check-nav"><button type="button" onclick="shiftCheckDate(-1)">‹ Anterior</button><input type="date" id="checkDatePicker" aria-label="Selecionar data" onchange="selectCheckDate(this.value)"><button type="button" onclick="selectCheckDate(today())">Hoje</button><button type="button" onclick="shiftCheckDate(1)">Próximo ›</button></div>
+<div class="check-overview"><div class="check-ring-wrap"><div class="check-ring" id="checkRing"><div><b id="checkPercent">0%</b><small>concluído</small></div></div></div><div class="check-metrics"><div><b id="checkDone">0</b><span>tarefas concluídas</span></div><div><b id="checkRemaining">0</b><span>tarefas restantes</span></div><div><b id="checkStreak">0</b><span>dias ativos nesta semana</span></div></div></div>
+<div class="check-toolbar"><div class="field"><label>Adicionar tarefa à sua rotina</label><input id="newCheckTask" placeholder="Ex.: Corrigir 15 questões de Física" maxlength="90"></div><div class="field"><label>Categoria</label><select id="newCheckCategory"><option value="Estudo profundo">Estudo profundo</option><option value="Questões e correção">Questões e correção</option><option value="Revisão e memória">Revisão e memória</option><option value="Simulados e redação">Simulados e redação</option><option value="Organização">Organização</option><option value="Saúde e pausas">Saúde e pausas</option></select></div><div class="field"><label>Prioridade</label><select id="newCheckPriority"><option value="alta">Alta</option><option value="media" selected>Média</option><option value="baixa">Baixa</option></select></div><div class="field"><label>Duração estimada (min)</label><input id="newCheckMinutes" type="number" min="0" max="600" step="5" placeholder="Ex.: 45"></div><button class="btn check-add" onclick="addChecklistTask()">＋ Adicionar</button></div>
+<div class="check-template-row"><button type="button" onclick="addChecklistTemplate('study')">＋ Dia de estudos</button><button type="button" onclick="addChecklistTemplate('revision')">＋ Dia de revisões</button><button type="button" onclick="addChecklistTemplate('mock')">＋ Dia de simulado</button></div>
+<div class="check-filters" id="checkFilters"><button type="button" class="active" data-filter="all" onclick="setCheckFilter('all')">Todas</button><button type="button" data-filter="pending" onclick="setCheckFilter('pending')">Pendentes</button><button type="button" data-filter="done" onclick="setCheckFilter('done')">Concluídas</button><button type="button" data-filter="alta" onclick="setCheckFilter('alta')">Prioridade alta</button></div>
+<div id="checks" class="check-groups"></div>
+<div class="week-progress"><div class="week-title"><b>Consistência dos últimos 7 dias</b><span class="muted">tarefas concluídas por dia</span></div><div id="checkWeek" class="week-bars"></div></div>
+<div class="check-footer"><span class="muted">Cada data mantém seu próprio histórico. Consulte dias anteriores sem alterar os registros.</span><div class="check-export-row"><button type="button" onclick="toggleCompletedChecks()">Alternar conclusão em massa</button><button type="button" onclick="exportKstudyData()">Exportar backup completo</button><button type="button" onclick="document.getElementById('importKstudyFile').click()">Importar backup</button><input type="file" id="importKstudyFile" accept="application/json,.json" style="display:none" onchange="importKstudyData(event)"><button type="button" onclick="resetChecks()">Reiniciar esta data</button></div></div>
+</div>
+<div class="card accent-red" style="margin-top:14px"><h3>✦ Escrever estratégia de estudos</h3><p class="muted">Descreva sua estratégia livremente. O Kstudy transforma suas anotações em um quadro organizado para consulta.</p><div class="field"><label>Minha estratégia</label><textarea id="strategyInput" rows="5" placeholder="Ex.: Começar por 90 minutos de Matemática, corrigir os erros, fazer uma pausa e depois estudar Química..."></textarea></div><button class="btn" style="margin-top:10px" onclick="generateStrategyBoard()">Gerar quadro de estratégia</button><div id="strategyBoard"></div></div>
+
+</section>
+<section class="page" id="tools">
+ <div class="topline"><div><div class="eyebrow">Recursos complementares</div><h1>Ferramentas de estudo</h1><p class="sub">Acompanhe sua evolução, organize repertórios e registre dúvidas.</p></div><span class="tag blue">LOCAL · OFFLINE</span></div>
+ <div class="tools-intro"><b>Seu espaço de apoio acadêmico</b><p>Os registros ficam salvos neste navegador e não alteram seus conteúdos, questões, revisões ou simulados.</p></div>
+ <div class="tool-tabs" role="tablist" aria-label="Ferramentas">
+  <button class="active" type="button" data-tool-tab="essay">Redação</button><button type="button" data-tool-tab="repertoire">Repertórios</button><button type="button" data-tool-tab="doubts">Caderno de dúvidas</button><button type="button" data-tool-tab="calculator">Calculadora</button>
+ </div>
+ <div class="tool-panel active" id="tool-essay"><div class="grid cols2">
+  <div class="card"><h3>Registrar nota por competência</h3><p class="muted">Informe as pontuações e acompanhe a soma.</p><div class="formgrid">
+   <div class="field"><label>Competência 1 · Norma culta</label><input id="essayC1" type="number" min="0" max="200" step="40" value="160"></div><div class="field"><label>Competência 2 · Tema e repertório</label><input id="essayC2" type="number" min="0" max="200" step="40" value="160"></div>
+   <div class="field"><label>Competência 3 · Argumentação</label><input id="essayC3" type="number" min="0" max="200" step="40" value="160"></div><div class="field"><label>Competência 4 · Coesão</label><input id="essayC4" type="number" min="0" max="200" step="40" value="160"></div>
+   <div class="field"><label>Competência 5 · Intervenção</label><input id="essayC5" type="number" min="0" max="200" step="40" value="160"></div><div class="field"><label>Data</label><input id="essayDate" type="date"></div>
+   <div class="field full"><label>Tema (opcional)</label><input id="essayTheme" maxlength="180" placeholder="Tema da redação"></div></div>
+   <div class="tool-result"><span class="muted">Nota total</span><br><strong id="essayTotal">800 / 1000</strong><div class="progress" style="margin-top:9px"><span id="essayProgress" style="width:80%"></span></div></div>
+   <button class="btn" type="button" style="margin-top:12px" onclick="saveEssayScore()">Salvar resultado</button><p class="tool-note">A ferramenta soma as notas informadas; não corrige a redação. A escala usual do ENEM utiliza intervalos de 40 pontos.</p>
+  </div>
+  <div class="card"><h3>Histórico de redações</h3><div class="grid cols3" style="margin-bottom:12px"><div class="tool-stat"><small>Redações</small><strong id="essayCount">0</strong></div><div class="tool-stat"><small>Média</small><strong id="essayAverage">—</strong></div><div class="tool-stat"><small>Maior nota</small><strong id="essayBest">—</strong></div></div><div id="essayHistory"><div class="empty">Suas redações salvas aparecerão aqui.</div></div></div>
+ </div></div>
+ <div class="tool-panel" id="tool-repertoire"><div class="grid cols2">
+  <div class="card"><h3>Adicionar repertório</h3><div class="field"><label>Tema ou eixo</label><select id="repCategory"><option>Educação</option><option>Meio ambiente</option><option>Saúde</option><option>Tecnologia</option><option>Desigualdade social</option><option>Cultura</option><option>Política e cidadania</option><option>Trabalho</option><option>Outro</option></select></div>
+   <div class="field" style="margin-top:10px"><label>Repertório / obra / autor</label><input id="repName" maxlength="160" placeholder="Ex.: Constituição Federal de 1988"></div><div class="field" style="margin-top:10px"><label>Ideia central</label><textarea id="repIdea" maxlength="700" placeholder="Qual argumento esse repertório sustenta?"></textarea></div><div class="field" style="margin-top:10px"><label>Como aplicar na redação</label><textarea id="repUse" maxlength="700" placeholder="Relacione ao problema discutido."></textarea></div><button class="btn" type="button" style="margin-top:12px" onclick="saveRepertoire()">Salvar repertório</button>
+  </div><div class="card"><h3>Meu banco de repertórios</h3><div class="field" style="margin-bottom:10px"><label>Filtrar por tema</label><select id="repFilter" onchange="renderToolRecords()"><option value="">Todos os temas</option><option>Educação</option><option>Meio ambiente</option><option>Saúde</option><option>Tecnologia</option><option>Desigualdade social</option><option>Cultura</option><option>Política e cidadania</option><option>Trabalho</option><option>Outro</option></select></div><div id="repCount" class="muted"></div><div id="repertoireList"><div class="empty">Cadastre repertórios para construir seu banco pessoal.</div></div></div>
+ </div></div>
+ <div class="tool-panel" id="tool-doubts"><div class="grid cols2">
+  <div class="card"><h3>Registrar uma dúvida</h3><div class="field"><label>Área</label><select id="doubtArea"><option>Linguagens</option><option>Humanas</option><option>Natureza</option><option>Matemática</option><option>Redação</option></select></div><div class="field" style="margin-top:10px"><label>Disciplina / assunto</label><input id="doubtSubject" maxlength="100" placeholder="Ex.: Física — eletrodinâmica"></div><div class="field" style="margin-top:10px"><label>Minha dúvida</label><textarea id="doubtQuestion" maxlength="900" placeholder="O que você ainda não compreendeu?"></textarea></div><div class="field" style="margin-top:10px"><label>O que resolveu (opcional)</label><textarea id="doubtAnswer" maxlength="900" placeholder="Complete depois da revisão."></textarea></div><button class="btn" type="button" style="margin-top:12px" onclick="saveDoubt()">Salvar dúvida</button></div>
+  <div class="card"><h3>Fila de dúvidas <span class="tag yellow" id="doubtPending">0 pendentes</span></h3><div class="field" style="margin-bottom:10px"><label>Exibir</label><select id="doubtFilter" onchange="renderToolRecords()"><option value="all">Todas</option><option value="pending">Pendentes</option><option value="resolved">Resolvidas</option></select></div><div id="doubtList"><div class="empty">Nenhuma dúvida registrada.</div></div></div>
+ </div></div>
+ <div class="tool-panel" id="tool-calculator"><div class="grid cols2">
+  <div class="card"><h3>Calculadora de aproveitamento</h3><p class="muted">Calcule o percentual de acertos de um bloco de questões.</p><div class="field"><label>Quantidade de questões</label><input id="calcTotal" type="number" min="1" max="10000" step="1" placeholder="Ex.: 45"></div><div class="field" style="margin-top:10px"><label>Quantidade de acertos</label><input id="calcHits" type="number" min="0" max="10000" step="1" placeholder="Ex.: 32"></div><button class="btn" type="button" style="margin-top:12px" onclick="calculateAccuracy()">Calcular</button><div class="tool-result" id="accuracyResult" aria-live="polite"><span class="muted">Informe total e acertos.</span></div></div>
+  <div class="card"><h3>Referência para análise</h3><div class="tool-record"><b>Até 49%</b><p>Retome conceitos fundamentais e refaça questões comentadas.</p></div><div class="tool-record"><b>50% a 69%</b><p>Identifique padrões de erro e reforce conteúdos frágeis.</p></div><div class="tool-record"><b>70% a 84%</b><p>Consolide a aprendizagem com questões variadas.</p></div><div class="tool-record"><b>85% ou mais</b><p>Mantenha revisões periódicas e pratique questões contextualizadas.</p></div><p class="tool-note">Faixas organizacionais, não previsão de nota TRI ou aprovação.</p></div>
+ </div></div>
+</section>
+</main></div>
+<div class="modal" id="modal"><div class="modalbox"><div class="modalhead"><h3 id="modalTitle">Novo registro</h3><button class="close" onclick="closeModal()">Fechar ×</button></div><div id="modalBody"></div></div></div>
+<script>
+const KEY='enem2027-studyhub-v4';
+const areas=['Linguagens','Humanas','Natureza','Matemática','Redação'];
+const seed=[
+['Linguagens','Português','Interpretação de textos'],['Linguagens','Português','Gêneros textuais e funções da linguagem'],['Linguagens','Literatura','Modernismo brasileiro'],['Linguagens','Artes','Vanguardas artísticas e arte contemporânea'],['Linguagens','Inglês/Espanhol','Leitura e interpretação'],
+['Humanas','História','Brasil Colônia, escravidão e economia'],['Humanas','História','Império, abolição e República'],['Humanas','História','Era Vargas e ditadura militar'],['Humanas','História','Revoluções, guerras e Guerra Fria'],['Humanas','Geografia','Urbanização e população'],['Humanas','Geografia','Globalização, indústria e trabalho'],['Humanas','Geografia','Agropecuária, energia e meio ambiente'],['Humanas','Filosofia','Ética, política e conhecimento'],['Humanas','Sociologia','Cultura, cidadania e desigualdade'],
+['Natureza','Biologia','Ecologia e impactos ambientais'],['Natureza','Biologia','Genética e biotecnologia'],['Natureza','Biologia','Fisiologia humana'],['Natureza','Química','Estequiometria e mol'],['Natureza','Química','Soluções e concentração'],['Natureza','Química','Termoquímica, cinética e equilíbrio'],['Natureza','Química','Eletroquímica'],['Natureza','Química','Química orgânica'],['Natureza','Física','Cinemática e dinâmica'],['Natureza','Física','Trabalho, energia e potência'],['Natureza','Física','Termologia e gases'],['Natureza','Física','Eletricidade e circuitos'],['Natureza','Física','Ondulatória e óptica'],
+['Matemática','Matemática','Razão, proporção e porcentagem'],['Matemática','Matemática','Frações, potências e unidades'],['Matemática','Matemática','Funções e gráficos'],['Matemática','Matemática','Geometria plana e espacial'],['Matemática','Matemática','Estatística e gráficos'],['Matemática','Matemática','Probabilidade e contagem'],
+['Redação','Redação','Competências C1 a C5'],['Redação','Redação','Tese, argumentos e repertório'],['Redação','Redação','Proposta de intervenção']
+];
+let db=null;
+try{const saved=localStorage.getItem(KEY);db=saved?JSON.parse(saved):null}catch(error){console.warn('Kstudy: dados locais inválidos; iniciando estrutura segura.',error)}
+if(!db||typeof db!=='object'||Array.isArray(db))db={};
+if(!Array.isArray(db.contents))db.contents=seed.map((x,i)=>({id:'seed'+i,area:x[0],subject:x[1],name:x[2],status:'Não iniciado'}));
+['questions','mocks','reviews','flashcards','errors','checklistCustom','timeEntries'].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});
+if(!db.checks||typeof db.checks!=='object'||Array.isArray(db.checks))db.checks={};
+(function(){const legacy=Object.keys(db.checks).filter(k=>/^\d+$/.test(k));legacy.forEach(k=>{if(db.checks[k])db.checks[today()+'_base'+k]=true;delete db.checks[k]})})();
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(error){alert('Não foi possível salvar os dados neste navegador. Libere espaço ou exporte um backup assim que o armazenamento voltar a funcionar.')}renderAll()}
+db.timeEntries=db.timeEntries||[];
+function today(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function shift(d,n){let x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')}
+function pct(a,b){return b?Math.round(a/b*100):0}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.page===id));if(id==='flashcards')renderFlashcards()}
+document.querySelectorAll('.navbtn').forEach(b=>b.onclick=()=>go(b.dataset.page));
+function setTheme(name,el){document.documentElement.style.setProperty('--accent','#145bdb')}
+document.documentElement.style.setProperty('--accent','#145bdb');
+function modal(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modal').classList.add('show');let f=document.getElementById('entryForm');if(f){f.querySelectorAll('input[type=date]').forEach(x=>x.value=today());f.onsubmit=submitForm}}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function fld(label,name,type='text',opts=null,required=true){return `<div class="field"><label>${label}</label>${opts?`<select name="${name}" ${required?'required':''}>${opts.map(x=>`<option>${x}</option>`).join('')}</select>`:`<input name="${name}" type="${type}" ${required?'required':''}>`}</div>`}
+function openModal(type){
+let title='',body='';
+if(type==='study'){title='Registrar conteúdo estudado';body=`<form id="entryForm" class="formgrid">${fld('Área','area','',areas)}${fld('Disciplina','subject')}${fld('Conteúdo estudado','name')}${fld('Data do estudo','date','date')}<div class="field full"><label>O que você precisa lembrar? (opcional)</label><textarea name="notes" placeholder="Anote fórmulas, conceitos-chave ou pontos que confundiram."></textarea></div><div class="field full"><button class="btn">Salvar e gerar revisões + flashcards</button></div></form>`}
+if(type==='question'){title='Registrar bloco de questões';body=`<form id="entryForm" class="formgrid">${fld('Data','date','date')}${fld('Área','area','',areas)}${fld('Disciplina','subject')}${fld('Conteúdo','topic')}${fld('Total de questões','total','number')}${fld('Acertos','hits','number')}${fld('Dificuldade','difficulty','',['Fácil','Média','Difícil'])}<div class="field full"><button class="btn">Salvar bloco</button></div></form>`}
+if(type==='mock'){title='Registrar simulado';body=`<form id="entryForm" class="formgrid">${fld('Nome','name')}${fld('Data','date','date')}${fld('Linguagens (0–45)','ling','number')}${fld('Humanas (0–45)','hum','number')}${fld('Natureza (0–45)','nat','number')}${fld('Matemática (0–45)','mat','number')}${fld('Redação (0–1000)','essay','number',null,false)}<div class="field full"><button class="btn">Salvar simulado</button></div></form>`}
+if(type==='error'){title='Registrar erro prioritário';body=`<form id="entryForm" class="formgrid">${fld('Prioridade','priority','',['Urgente','Alta','Média','Baixa'])}${fld('Conteúdo','topic')}${fld('Causa','cause','',['Conteúdo','Interpretação','Cálculo','Atenção','Tempo','Estratégia'])}<div class="field full"><label>Como corrigir?</label><textarea name="action" required></textarea></div><div class="field full"><button class="btn">Salvar erro</button></div></form>`}
+modal(title,body);window.formType=type
+}
+function submitForm(e){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries()),t=window.formType;
+if(t==='study'){let c={...d,id:'c'+Date.now(),status:'Estudado'};db.contents.unshift(c);createReviews(c);createFlashcards(c)}
+if(t==='question'){d.total=+d.total;d.hits=+d.hits;if(d.total<1||d.hits<0||d.hits>d.total)return alert('Confira total e acertos.');db.questions.push(d)}
+if(t==='mock'){['ling','hum','nat','mat','essay'].forEach(k=>d[k]=d[k]===''?null:+d[k]);if(['ling','hum','nat','mat'].some(k=>d[k]<0||d[k]>45))return alert('Cada área deve ter entre 0 e 45.');db.mocks.push(d)}
+if(t==='error')db.errors.push({...d,status:'Aberto'});
+closeModal();persist()
+}
+function createReviews(c){let base=c.date||today();[1,7,30].forEach(n=>{let date=shift(base,n);if(!db.reviews.some(r=>r.source===c.id&&r.date===date))db.reviews.push({id:'r'+Date.now()+n,name:c.name,area:c.area,subject:c.subject,date,kind:'Pontual D+'+n,status:'Pendente',source:c.id})});[7,30].forEach(n=>{let date=shift(base,n);if(!db.reviews.some(r=>r.kind==='Global'&&r.area===c.area&&r.date===date))db.reviews.push({id:'g'+Date.now()+n,name:'Revisão global de '+c.area,date,area:c.area,subject:'Integração dos conteúdos estudados',kind:'Global',status:'Pendente'})})}
+function createFlashcards(c){let topic=c.name;let notes=c.notes?.trim();let templates=[
+['Qual é a definição central de '+topic+'?','Explique com suas próprias palavras e destaque os termos essenciais.'],
+['Quais são os principais elementos ou etapas de '+topic+'?','Liste os elementos/etapas e explique a função de cada um.'],
+['Como '+topic+' aparece em uma situação prática ou questão do ENEM?','Descreva uma aplicação, exemplo ou situação-problema e como reconhecê-la.'],
+['Que relação de causa e consequência é importante em '+topic+'?','Construa a sequência causal e indique o resultado esperado.'],
+['Qual confusão comum pode ocorrer em '+topic+'?','Compare conceitos próximos e explique como diferenciá-los.']
+];templates.forEach((x,i)=>db.flashcards.push({id:'f'+Date.now()+i,contentId:c.id,topic,area:c.area,question:x[0],answer:(i===0&&notes?'Pontos das suas anotações: '+notes+'\\n\\n':'')+x[1],revealed:false}))}
+function generateGlobal(){let studied=db.contents.filter(c=>c.status==='Estudado'||c.status==='Domínio');if(!studied.length)return alert('Estude ou registre ao menos um conteúdo antes de gerar uma revisão global.');let groups=[...new Set(studied.map(c=>c.area))];groups.forEach((a,i)=>{let date=shift(today(),7);if(!db.reviews.some(r=>r.kind==='Global'&&r.area===a&&r.date===date))db.reviews.push({id:'g'+Date.now()+i,name:'Revisão integrada de '+a,area:a,subject:'Todos os conteúdos estudados',date,kind:'Global',status:'Pendente'})});persist()}
+
+let timerStarted=null,timerTick=null;
+function totalMinutes(){return db.timeEntries.filter(x=>x.source==='Kstudy Timer').reduce((s,x)=>s+(+x.minutes||0),0)}
+function formatHours(m){return Math.floor(m/60)+'h '+String(m%60).padStart(2,'0')+'min'}
+function renderTime(){let total=totalMinutes();document.getElementById('totalHours').textContent=formatHours(total);document.getElementById('hourProgress').style.width=Math.min(100,total/360*100)+'%';let rows=db.timeEntries.map((x,i)=>({x,i})).filter(v=>v.x.source==='Kstudy Timer').reverse();document.getElementById('timeRows').innerHTML=rows.length?rows.map(({x,i})=>`<tr><td>${esc(x.date)}</td><td><span class="tag blue">Cronômetro Kstudy</span></td><td>${esc(x.subject)}</td><td>${formatHours(+x.minutes)}</td><td><button class="btn danger" onclick="deleteTime(${i})">×</button></td></tr>`).join(''):'<tr><td colspan="5" class="empty">Nenhuma sessão registrada pelo cronômetro ainda.</td></tr>'}
+function deleteTime(i){if(confirm('Excluir este registro de tempo?')){db.timeEntries.splice(i,1);persist()}}
+function startTimer(){if(timerStarted)return;timerStarted=Date.now();document.getElementById('timerStatus').textContent='Sessão em andamento…';timerTick=setInterval(()=>{let s=Math.floor((Date.now()-timerStarted)/1000);document.getElementById('timerDisplay').textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,'0')).join(':')},1000)}
+function stopTimer(){if(!timerStarted)return;let mins=Math.max(1,Math.round((Date.now()-timerStarted)/60000));db.timeEntries.push({date:today(),subject:document.getElementById('timerSubject').value||'Estudo geral',minutes:mins,source:'Kstudy Timer'});timerStarted=null;clearInterval(timerTick);document.getElementById('timerDisplay').textContent='00:00:00';document.getElementById('timerStatus').textContent='Sessão salva: '+mins+' minuto(s).';persist()}
+function addChat(who,msg){let box=document.getElementById('kchat');let el=document.createElement('div');el.className='review';el.style.marginBottom='9px';el.innerHTML='<span class="tag '+(who==='Kstudy'?'green':'blue')+'">'+who.toUpperCase()+'</span><p style="color:#e5e5e5;margin-top:8px;white-space:pre-wrap"></p>';el.querySelector('p').textContent=msg;box.appendChild(el);box.scrollTop=box.scrollHeight}
+function quickK(t){document.getElementById('kInput').value=t;askKstudy()}
+function askKstudy(){let q=document.getElementById('kInput').value.trim();if(!q)return;addChat('Você',q);document.getElementById('kInput').value='';let low=q.toLowerCase(),answer='';let studied=db.contents.filter(c=>c.status==='Estudado'||c.status==='Domínio'),pending=db.reviews.filter(r=>r.status==='Pendente'),mins=totalMinutes(),totalQ=db.questions.reduce((s,x)=>s+x.total,0),hits=db.questions.reduce((s,x)=>s+x.hits,0);
+if(low.includes('hora')||low.includes('tempo'))answer=`Seu tempo registrado é ${formatHours(mins)}. ${mins<360?'Ainda há espaço para construir uma rotina consistente. Use o cronômetro Kstudy para registrar suas sessões.':'Bom volume acumulado. Agora avalie também qualidade, retenção e correção de erros.'}`;
+else if(low.includes('pendente')||low.includes('não estudei')){let p=db.contents.filter(c=>c.status==='Não iniciado');answer=`Você tem ${p.length} conteúdos ainda não iniciados. Próximos exemplos: ${p.slice(0,8).map(c=>c.subject+' — '+c.name).join('; ')||'nenhum'}. Priorize os assuntos de maior incidência e os pré-requisitos dos temas em que erra.`}
+else if(low.includes('revis'))answer=`Você tem ${pending.length} revisões pendentes. ${pending.slice(0,6).map(r=>r.name+' ('+r.date+')').join('; ')||'Nenhuma revisão pendente no momento.'} Faça primeiro a revisão vencida e depois teste a memória sem consultar o material.`;
+else if(low.includes('desempenho')||low.includes('prioridade')){let rate=pct(hits,totalQ);answer=`Diagnóstico atual: ${studied.length} conteúdos estudados; ${totalQ} questões registradas; aproveitamento ${totalQ?rate+'%':'ainda sem dados'}; ${pending.length} revisões pendentes. Prioridade: revisar conteúdos estudados, resolver questões de aplicação e classificar cada erro por causa. ${rate&&rate<70?'Concentre-se em reconstruir os conceitos antes de aumentar o volume.':rate>=85?'Mantenha a exigência e aumente gradualmente a dificuldade.':'Registre mais blocos para obter um diagnóstico confiável.'}`}
+else answer='Minha orientação inicial: defina um objetivo concreto para a sessão, estude um conteúdo por vez, resolva questões sem consultar a teoria e registre os erros. Para uma análise específica, use os comandos rápidos ou pergunte sobre horas, revisões, desempenho ou conteúdos pendentes.';
+setTimeout(()=>addChat('Kstudy',answer),250)}
+
+function renderAll(){renderTime();renderDashboard();renderStudy();renderReviews();renderFlashcards();renderQuestions();renderMocks();renderErrors();renderChecks()}
+function renderDashboard(){let n=db.questions.reduce((s,q)=>s+q.total,0),h=db.questions.reduce((s,q)=>s+q.hits,0);document.getElementById('khours').textContent=formatHours(totalMinutes());document.getElementById('kq').textContent=n;document.getElementById('kr').textContent=n?pct(h,n)+'%':'—';document.getElementById('kc').textContent=db.contents.filter(c=>c.status==='Estudado'||c.status==='Domínio').length;document.getElementById('krev').textContent=db.reviews.filter(r=>r.status==='Pendente').length;
+let upcoming=db.reviews.filter(r=>r.status==='Pendente').sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('nextReviews').innerHTML=upcoming.length?upcoming.map(r=>`<div class="listitem"><span class="tag ${r.kind==='Global'?'green':'blue'}">${r.kind}</span><div class="grow"><b>${esc(r.name)}</b><div class="muted">${esc(r.area)} · ${esc(r.date)}</div></div></div>`).join(''):'<div class="empty">Suas revisões aparecerão aqui após registrar conteúdos.</div>';
+document.getElementById('areaStats').innerHTML=areas.map(a=>{let cs=db.contents.filter(c=>c.area===a),done=cs.filter(c=>c.status==='Estudado'||c.status==='Domínio').length;return `<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px"><b>${a}</b><span class="muted">${done}/${cs.length}</span></div><div class="progress"><span style="width:${pct(done,cs.length)}%"></span></div></div>`}).join('');
+let dates=[...new Set(db.contents.filter(c=>c.status==='Estudado').map(c=>c.date||today()))];document.getElementById('studyStats').textContent=dates.length?`${db.contents.filter(c=>c.status==='Estudado').length} conteúdos registrados em ${dates.length} dia(s) de estudo.`:'Registre seus primeiros conteúdos para visualizar seu ritmo.'}
+function renderStudy(){let f=document.getElementById('areaFilter')?.value||'',list=db.contents.filter(c=>!f||c.area===f);document.getElementById('contentList').innerHTML=list.length?list.map(c=>`<div class="listitem"><div class="grow"><b>${esc(c.name)}</b><div class="muted">${esc(c.area)} · ${esc(c.subject||'')}</div></div><select style="width:auto;max-width:130px" onchange="setStatus('${c.id}',this.value)">${['Não iniciado','Em andamento','Estudado','Domínio'].map(s=>`<option ${c.status===s?'selected':''}>${s}</option>`).join('')}</select></div>`).join(''):'<div class="empty">Nenhum conteúdo.</div>'}
+function setStatus(id,status){let c=db.contents.find(x=>x.id===id);if(!c)return;c.status=status;if(status==='Estudado'||status==='Domínio'){if(!db.reviews.some(r=>r.source===id))createReviews(c);if(!db.flashcards.some(f=>f.contentId===id))createFlashcards(c)}persist()}
+function renderReviews(){let point=db.reviews.filter(r=>r.kind!=='Global').sort((a,b)=>a.date.localeCompare(b.date)),global=db.reviews.filter(r=>r.kind==='Global').sort((a,b)=>a.date.localeCompare(b.date));function cards(arr){return arr.length?arr.map(r=>`<div class="review"><span class="tag ${r.kind==='Global'?'green':'blue'}">${esc(r.kind)}</span><h4>${esc(r.name)}</h4><p>${esc(r.area)} · ${esc(r.date)}</p><div style="display:flex;gap:7px;align-items:center;margin-top:10px"><select style="flex:1" onchange="reviewStatus('${r.id}',this.value)"><option ${r.status==='Pendente'?'selected':''}>Pendente</option><option ${r.status==='Concluída'?'selected':''}>Concluída</option><option ${r.status==='Adiada'?'selected':''}>Adiada</option></select><button class="btn danger" onclick="deleteItem('reviews','${r.id}')">×</button></div></div>`).join(''):'<div class="empty">Ainda não há revisões nesta categoria.</div>'}document.getElementById('pointReviews').innerHTML=cards(point);document.getElementById('globalReviews').innerHTML=cards(global)}
+function reviewStatus(id,s){let r=db.reviews.find(x=>x.id===id);if(r)r.status=s;persist()}
+function renderFlashcards(){let sel=document.getElementById('flashFilter'),old=sel.value,topics=[...new Set(db.flashcards.map(f=>f.topic))];sel.innerHTML='<option value="">Todos os cartões</option>'+topics.map(t=>`<option ${old===t?'selected':''}>${esc(t)}</option>`).join('');let cards=db.flashcards.filter(f=>!sel.value||f.topic===sel.value);document.getElementById('flashCount').textContent=db.flashcards.length+' CARTÕES';document.getElementById('flashGrid').innerHTML=cards.length?cards.map(f=>`<div class="flash"><div><span class="tag yellow">${esc(f.area)}</span><div class="q" style="margin-top:10px">${esc(f.question)}</div><div class="a" id="ans${f.id}" style="display:none">${esc(f.answer)}</div></div><button class="btn ghost" onclick="toggleAnswer('${f.id}',this)">Revelar resposta</button></div>`).join(''):'<div class="empty">Registre um conteúdo como estudado para gerar flashcards.</div>'}
+function toggleAnswer(id,button){let a=document.getElementById('ans'+id);if(!a)return;a.style.display=a.style.display==='none'?'block':'none';if(button)button.textContent=a.style.display==='none'?'Revelar resposta':'Ocultar resposta'}
+function renderQuestions(){document.getElementById('questionRows').innerHTML=db.questions.length?db.questions.map((q,i)=>`<tr><td>${esc(q.date)}</td><td>${esc(q.area)}<br><span class="muted">${esc(q.subject)}</span></td><td>${esc(q.topic)}</td><td>${q.total}</td><td>${q.hits}</td><td><span class="tag ${pct(q.hits,q.total)>=80?'green':pct(q.hits,q.total)<60?'red':'yellow'}">${pct(q.hits,q.total)}%</span></td><td><button class="btn danger" onclick="deleteAt('questions',${i})">×</button></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Nenhuma questão registrada.</td></tr>'}
+function renderMocks(){document.getElementById('mockRows').innerHTML=db.mocks.length?db.mocks.map((m,i)=>{let t=['ling','hum','nat','mat'].reduce((s,k)=>s+(m[k]||0),0);return `<tr><td>${esc(m.name)}</td><td>${esc(m.date)}</td><td>${m.ling}/45</td><td>${m.hum}/45</td><td>${m.nat}/45</td><td>${m.mat}/45</td><td><b>${t}/180</b> · ${pct(t,180)}%</td><td>${m.essay??'—'}</td><td><button class="btn danger" onclick="deleteAt('mocks',${i})">×</button></td></tr>`}).join(''):'<tr><td colspan="9" class="empty">Nenhum simulado registrado.</td></tr>'}
+function renderErrors(){document.getElementById('errorRows').innerHTML=db.errors.length?db.errors.map((e,i)=>`<tr><td><span class="tag red">${esc(e.priority)}</span></td><td>${esc(e.topic)}</td><td>${esc(e.cause)}</td><td>${esc(e.action)}</td><td><select onchange="db.errors[${i}].status=this.value;persist()"><option ${e.status==='Aberto'?'selected':''}>Aberto</option><option ${e.status==='Em estudo'?'selected':''}>Em estudo</option><option ${e.status==='Resolvido'?'selected':''}>Resolvido</option></select></td><td><button class="btn danger" onclick="deleteAt('errors',${i})">×</button></td></tr>`).join(''):'<tr><td colspan="6" class="empty">Nenhum erro cadastrado.</td></tr>'}
+const baseChecklist=[
+{id:'base0',name:'Estudar conteúdo novo',category:'Estudo profundo'},
+{id:'base1',name:'Resolver questões do conteúdo estudado',category:'Questões e correção'},
+{id:'base2',name:'Corrigir e classificar erros',category:'Questões e correção'},
+{id:'base3',name:'Fazer revisões pontuais',category:'Revisão e memória'},
+{id:'base4',name:'Fazer revisão global da semana',category:'Revisão e memória'},
+{id:'base5',name:'Revisar flashcards',category:'Revisão e memória'},
+{id:'base6',name:'Treinar Matemática',category:'Estudo profundo'},
+{id:'base7',name:'Treinar Natureza',category:'Estudo profundo'},
+{id:'base8',name:'Treinar Humanas e Linguagens',category:'Estudo profundo'},
+{id:'base9',name:'Produzir ou corrigir redação',category:'Simulados e redação'},
+{id:'base10',name:'Analisar desempenho semanal',category:'Organização'}
+];
+
+/* KSTUDY CHECKLIST 2.0 — histórico por data, prioridades, filtros e modelos */
+function checklistTasks(){
+ const custom=Array.isArray(db.checklistCustom)?db.checklistCustom:[];
+ return [...baseChecklist.map(t=>({...t,priority:t.priority||'media',minutes:Number(t.minutes)||0,custom:false})),...custom.map(t=>({...t,priority:t.priority||'media',minutes:Number(t.minutes)||0,custom:true}))];
+}
+let selectedCheckDate=today(),checkFilter='all';
+db.checklistCustom=(db.checklistCustom||[]).map(t=>({...t,priority:t.priority||'media',minutes:Number(t.minutes)||0}));
+function checkKey(id,date=selectedCheckDate){return date+'_'+id}
+function selectCheckDate(date){if(!date)return;selectedCheckDate=date;renderChecks()}
+function shiftCheckDate(delta){selectCheckDate(shift(selectedCheckDate,delta))}
+function setCheckFilter(filter){checkFilter=filter;document.querySelectorAll('#checkFilters button').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));renderChecks()}
+function renderChecks(){
+ const root=document.getElementById('checks');if(!root)return;
+ const all=checklistTasks(),done=all.filter(t=>!!db.checks[checkKey(t.id)]).length,total=all.length,rate=pct(done,total);
+ document.getElementById('checkDate').textContent=new Date(selectedCheckDate+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'});
+ const picker=document.getElementById('checkDatePicker');if(picker&&picker.value!==selectedCheckDate)picker.value=selectedCheckDate;
+ document.getElementById('checkPercent').textContent=rate+'%';document.getElementById('checkDone').textContent=done;document.getElementById('checkRemaining').textContent=total-done;
+ document.getElementById('checkRing').style.background=`conic-gradient(#2878ff ${rate*3.6}deg,#172944 ${rate*3.6}deg 360deg)`;
+ let activeDays=0;for(let n=0;n<7;n++){let d=shift(today(),-n);if(all.some(t=>db.checks[d+'_'+t.id]))activeDays++}
+ document.getElementById('checkStreak').textContent=activeDays;
+ const visible=all.filter(t=>{let checked=!!db.checks[checkKey(t.id)];return checkFilter==='all'||(checkFilter==='pending'&&!checked)||(checkFilter==='done'&&checked)||(checkFilter==='alta'&&(t.priority||'media')==='alta')});
+ const cats=[...new Set(visible.map(t=>t.category))];
+ root.innerHTML=cats.length?cats.map(cat=>{const items=visible.filter(t=>t.category===cat),catDone=items.filter(t=>db.checks[checkKey(t.id)]).length;
+ return `<section class="check-group" data-cat="${esc(cat)}"><div class="check-group-head"><b>${esc(cat)}</b><span>${catDone}/${items.length} concluídas</span></div>${items.map(t=>{
+ const checked=!!db.checks[checkKey(t.id)],priority=t.priority||'media',mins=Number(t.minutes)||0;
+ return `<label class="check-task ${checked?'done':''}"><input type="checkbox" ${checked?'checked':''} onchange="toggleChecklist('${t.id}',this.checked)"><span class="check-task-name">${esc(t.name)}</span><span class="check-meta"><span class="check-priority ${priority}">${priority==='alta'?'Alta':priority==='baixa'?'Baixa':'Média'}</span>${mins?`<span class="check-minutes">${mins} min</span>`:''}</span>${t.custom?`<button type="button" class="check-delete" title="Remover tarefa" onclick="event.preventDefault();event.stopPropagation();removeChecklistTask('${t.id}')">×</button>`:''}</label>`
+ }).join('')}</section>`}).join(''):'<div class="check-empty">Nenhuma tarefa neste filtro. Ajuste o filtro ou adicione uma tarefa.</div>';
+ const days=Array.from({length:7},(_,i)=>shift(today(),i-6));
+ document.getElementById('checkWeek').innerHTML=days.map(d=>{const count=all.filter(t=>db.checks[d+'_'+t.id]).length,percent=pct(count,total);
+ return `<div class="week-day"><div class="week-bar-track"><div class="week-bar-fill" style="height:${percent}%"></div></div><b>${new Date(d+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'short'}).replace('.','')}</b><small>${count}/${total}</small></div>`}).join('');
+}
+function toggleChecklist(id,checked){
+ const before=checklistTasks().filter(t=>db.checks[checkKey(t.id)]).length;db.checks[checkKey(id)]=checked;
+ const after=checklistTasks().filter(t=>db.checks[checkKey(t.id)]).length;persist();
+ if(checked&&after>before&&after===checklistTasks().length&&selectedCheckDate===today()&&typeof confetti==='function')confetti({particleCount:90,spread:65,origin:{y:.72},colors:['#145bdb','#6da5ff','#ffffff']});
+}
+function addChecklistTask(){
+ const input=document.getElementById('newCheckTask'),name=input.value.trim(),category=document.getElementById('newCheckCategory').value;
+ const priority=document.getElementById('newCheckPriority')?.value||'media',minutes=Math.max(0,Math.min(600,Number(document.getElementById('newCheckMinutes')?.value)||0));
+ if(!name)return alert('Escreva o nome da tarefa.');
+ db.checklistCustom.push({id:'custom'+Date.now(),name,category,priority,minutes,custom:true});input.value='';document.getElementById('newCheckMinutes').value='';persist();
+}
+function addChecklistTemplate(type){
+ const templates={
+ study:[['Estudo profundo','Estudar conteúdo novo','alta',90],['Questões e correção','Resolver questões do conteúdo','alta',60],['Questões e correção','Corrigir e classificar erros','alta',30],['Revisão e memória','Revisar flashcards','media',25],['Organização','Planejar o próximo bloco','baixa',10]],
+ revision:[['Revisão e memória','Revisões pontuais','alta',60],['Revisão e memória','Revisão global da área','alta',60],['Questões e correção','Questões de recuperação ativa','media',40],['Organização','Registrar dificuldades e prioridades','baixa',15]],
+ mock:[['Simulados e redação','Realizar simulado em condições de prova','alta',180],['Questões e correção','Corrigir o simulado','alta',90],['Questões e correção','Classificar erros por causa','alta',30],['Organização','Definir prioridades de recuperação','media',20]]};
+ let added=0;(templates[type]||[]).forEach(([category,name,priority,minutes])=>{if(!checklistTasks().some(t=>t.name===name&&t.category===category)){db.checklistCustom.push({id:'custom'+Date.now()+'_'+added++,name,category,priority,minutes,custom:true})}});
+ persist();alert(added?added+' tarefa(s) adicionada(s) ao checklist.':'Esse modelo já está cadastrado.');
+}
+function toggleCompletedChecks(){const all=checklistTasks(),allDone=all.length&&all.every(t=>db.checks[checkKey(t.id)]);all.forEach(t=>db.checks[checkKey(t.id)]=!allDone);persist()}
+function resetChecks(){if(confirm('Reiniciar o checklist desta data? O histórico dos outros dias será preservado.')){checklistTasks().forEach(t=>delete db.checks[checkKey(t.id)]);persist()}}
+function exportKstudyData(){
+ const payload={app:'Kstudy ENEM 2027',version:3,exportedAt:new Date().toISOString(),data:db,tools:toolData},blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='kstudy-backup-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function importKstudyData(event){
+ const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();
+ reader.onload=()=>{try{const parsed=JSON.parse(reader.result),incoming=parsed.data||parsed;if(!incoming||!Array.isArray(incoming.contents)||!incoming.checks)throw new Error('Arquivo incompatível.');
+ if(!confirm('Importar este backup substituirá os dados atuais deste navegador. Deseja continuar?'))return;
+ const merged={...incoming};['contents','questions','mocks','reviews','flashcards','errors','timeEntries','checklistCustom'].forEach(k=>merged[k]=Array.isArray(incoming[k])?incoming[k]:[]);merged.checks=incoming.checks||{};localStorage.setItem(KEY,JSON.stringify(merged));if(parsed.tools&&typeof parsed.tools==='object'){const td={essays:Array.isArray(parsed.tools.essays)?parsed.tools.essays:[],repertoires:Array.isArray(parsed.tools.repertoires)?parsed.tools.repertoires:[],doubts:Array.isArray(parsed.tools.doubts)?parsed.tools.doubts:[]};localStorage.setItem('kstudy-tools-v1',JSON.stringify(td))}location.reload();
+ }catch(err){alert('Não foi possível importar: '+err.message)}finally{event.target.value=''}};reader.readAsText(file);
+}
+
+function deleteAt(a,i){if(confirm('Excluir este registro?')){db[a].splice(i,1);persist()}}
+function deleteItem(a,id){if(confirm('Excluir esta revisão?')){db[a]=db[a].filter(x=>x.id!==id);persist()}}
+
+/* Recursos adicionais Kstudy */
+function toggleSidebar(){document.body.classList.toggle('nav-collapsed');localStorage.setItem('kstudy-nav-collapsed',document.body.classList.contains('nav-collapsed')?'1':'0')}
+(function(){if(localStorage.getItem('kstudy-nav-collapsed')==='1')document.body.classList.add('nav-collapsed')})();
+const ROUTINE_KEY='kstudy-routine-base';
+function saveRoutineBase(){const v=document.getElementById('routineTasks').value.trim();localStorage.setItem(ROUTINE_KEY,v);document.getElementById('routineSaved').textContent='Cronograma-base salvo ✓';}
+(function(){const el=document.getElementById('routineTasks');if(el)el.value=localStorage.getItem(ROUTINE_KEY)||''})();
+function parseRoutine(){return (document.getElementById('routineTasks').value||'').split('\n').map(line=>line.trim()).filter(Boolean).map(line=>{let p=line.split('|').map(x=>x.trim());return {name:p[0]||'Estudo',minutes:Math.max(0,parseInt(p[1],10)||0),priority:(p[2]||'média').toLowerCase()}}).filter(x=>x.minutes>0)}
+function replanDay(){let tasks=parseRoutine(),remaining=parseInt(document.getElementById('availableMinutes').value,10)||0,start=document.getElementById('routineStart').value||'14:00';if(!tasks.length)return alert('Cadastre tarefas no cronograma-base usando: matéria | minutos | prioridade.');if(remaining<1)return alert('Informe o tempo disponível.');let rank={alta:0,média:1,media:1,baixa:2};tasks.sort((a,b)=>(rank[a.priority]??1)-(rank[b.priority]??1));let [hh,mm]=start.split(':').map(Number),cursor=hh*60+mm,html='',used=0;tasks.forEach(t=>{if(remaining<=0)return;let dur=Math.min(t.minutes,remaining),end=cursor+dur,fmt=n=>String(Math.floor(n/60)%24).padStart(2,'0')+':'+String(n%60).padStart(2,'0');html+=`<div class="plan-slot"><span class="plan-time">${fmt(cursor)}–${fmt(end)}</span><div><b>${esc(t.name)}</b><div class="muted">${dur} min de ${t.minutes} min planejados</div></div><span class="tag ${t.priority==='alta'?'red':t.priority==='baixa'?'blue':'yellow'}">${esc(t.priority)}</span></div>`;cursor=end;remaining-=dur;used+=dur});html+=`<p class="muted" style="margin-top:10px">Plano reorganizado: ${used} min alocados.${remaining>0?' Ainda restam '+remaining+' min livres.':' O tempo disponível foi distribuído.'} Prioridades altas foram preservadas primeiro.</p>`;document.getElementById('replannedSchedule').innerHTML=html}
+function generateStrategyBoard(){let raw=document.getElementById('strategyInput').value.trim();if(!raw)return alert('Escreva sua estratégia antes de gerar o quadro.');let lines=raw.split(/\n+/).map(x=>x.trim()).filter(Boolean),groups=[{title:'Objetivo central',items:[]},{title:'Etapas de execução',items:[]},{title:'Revisão e consolidação',items:[]},{title:'Atenção e ajustes',items:[]}];lines.forEach((line,i)=>{let low=line.toLowerCase(),g=(/objetivo|meta|foco/.test(low)?0:/revis|flashcard|corrig|erro/.test(low)?2:/pausa|ajust|priorid|se sobrar|descans/.test(low)?3:1);groups[g].items.push(line)});let cards=groups.filter(g=>g.items.length).map(g=>`<div class="strategy-item"><b>${g.title}</b><p>${esc(g.items.join('\n'))}</p></div>`).join('');document.getElementById('strategyBoard').innerHTML=`<div class="strategy-board">${cards}</div><button class="btn ghost" style="margin-top:10px" onclick="copyStrategyBoard()">Copiar estratégia</button>`;window.generatedStrategy=groups.filter(g=>g.items.length).map(g=>g.title+'\n'+g.items.map(x=>'• '+x).join('\n')).join('\n\n')}
+function copyStrategyBoard(){if(window.generatedStrategy)navigator.clipboard?.writeText(window.generatedStrategy).then(()=>alert('Estratégia copiada.')).catch(()=>alert('Não foi possível copiar automaticamente neste navegador.'))}
+let kstudyCharts={};
+function drawLineChart(canvasId,values,labels){let c=document.getElementById(canvasId);if(!c)return;if(window.Chart){if(kstudyCharts.line){kstudyCharts.line.data.labels=labels;kstudyCharts.line.data.datasets[0].data=values;kstudyCharts.line.update();return}kstudyCharts.line=new Chart(c,{type:'line',data:{labels,datasets:[{label:'Aproveitamento',data:values,borderColor:'#4d8cff',backgroundColor:'#145bdb22',fill:true,tension:.32,pointRadius:3,pointBackgroundColor:'#8db8ff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{grid:{display:false},ticks:{color:'#8fa5c7',font:{size:10}}},y:{min:0,max:100,ticks:{stepSize:25,color:'#8fa5c7',callback:v=>v+'%'},grid:{color:'#1e2b40'}}}}});return}let ctx=c.getContext('2d'),w=c.clientWidth,h=c.clientHeight,dpr=window.devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);let pad={l:30,r:12,t:15,b:30},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;ctx.strokeStyle='#343946';ctx.fillStyle='#a0a5b2';ctx.font='10px system-ui';for(let i=0;i<=4;i++){let y=pad.t+ch*i/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillText((100-i*25)+'%',2,y+3)}if(!values.length){ctx.fillText('Registre questões para ver sua evolução.',pad.l+8,h/2);return}let pts=values.map((v,i)=>({x:pad.l+(values.length===1?cw/2:cw*i/(values.length-1)),y:pad.t+ch*(1-v/100)}));ctx.strokeStyle='#4d8cff';ctx.lineWidth=2.5;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();pts.forEach((p,i)=>{ctx.fillStyle='#8db8ff';ctx.beginPath();ctx.arc(p.x,p.y,3.5,0,Math.PI*2);ctx.fill();if(labels[i]&&values.length<=8){ctx.fillStyle='#a0a5b2';ctx.fillText(labels[i],p.x-14,h-8)}})}
+function drawAreaChart(){let c=document.getElementById('areaChart');if(!c)return;let vals=areas.map(a=>({name:a,n:db.questions.filter(q=>q.area===a).reduce((s,q)=>s+q.total,0)})),colors=['#d84b62','#a889ef','#23a879','#d7a62a','#347be6'];if(window.Chart){if(kstudyCharts.area){kstudyCharts.area.data.datasets[0].data=vals.map(x=>x.n);kstudyCharts.area.update();return}kstudyCharts.area=new Chart(c,{type:'bar',data:{labels:vals.map(x=>x.name),datasets:[{data:vals.map(x=>x.n),backgroundColor:colors,borderRadius:5,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#1e2b40'},ticks:{color:'#8fa5c7',precision:0}},y:{grid:{display:false},ticks:{color:'#c4d4ec',font:{size:10}}}}}});return}let ctx=c.getContext('2d'),w=c.clientWidth,h=c.clientHeight,dpr=devicePixelRatio||1;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);let max=Math.max(1,...vals.map(x=>x.n));vals.forEach((v,i)=>{let y=8+i*42,bw=(w-115)*v.n/max;ctx.fillStyle='#a0a5b2';ctx.font='10px system-ui';ctx.fillText(v.name,0,y+13);ctx.fillStyle='#303440';ctx.fillRect(78,y,w-105,13);ctx.fillStyle=colors[i];ctx.fillRect(78,y,bw,13);ctx.fillStyle='#e8eaf0';ctx.fillText(String(v.n),Math.min(w-24,84+bw),y+12)})}
+function renderMastery(){let el=document.getElementById('masteryRanking');if(!el)return;let groups={};db.questions.forEach(q=>{let key=q.subject||q.topic||'Outros';groups[key]??={total:0,hits:0};groups[key].total+=q.total;groups[key].hits+=q.hits});let arr=Object.entries(groups).filter(([k,v])=>v.total>=5).map(([name,v])=>({name,total:v.total,rate:pct(v.hits,v.total)})).sort((a,b)=>b.rate-a.rate||b.total-a.total).slice(0,8);el.innerHTML=arr.length?arr.map((x,i)=>`<div class="mastery-row"><b>${i+1}. ${esc(x.name)}</b><div class="mastery-track"><span style="width:${x.rate}%"></span></div><strong>${x.rate}%</strong></div>`).join(''):'<div class="empty">Registre blocos de questões por disciplina. O ranking aparecerá quando houver pelo menos 5 questões por matéria.</div>'}
+function renderDashboard(){let n=db.questions.reduce((s,q)=>s+q.total,0),h=db.questions.reduce((s,q)=>s+q.hits,0);document.getElementById('khours').textContent=formatHours(totalMinutes());document.getElementById('kq').textContent=n;document.getElementById('kr').textContent=n?pct(h,n)+'%':'—';document.getElementById('kc').textContent=db.contents.filter(c=>c.status==='Estudado'||c.status==='Domínio').length;document.getElementById('krev').textContent=db.reviews.filter(r=>r.status==='Pendente').length;let upcoming=db.reviews.filter(r=>r.status==='Pendente').sort((a,b)=>a.date.localeCompare(b.date)).slice(0,4);document.getElementById('nextReviews').innerHTML=upcoming.length?upcoming.map(r=>`<div class="listitem"><span class="tag ${r.kind==='Global'?'green':'blue'}">${r.kind}</span><div class="grow"><b>${esc(r.name)}</b><div class="muted">${esc(r.area)} · ${esc(r.date)}</div></div></div>`).join(''):'<div class="empty">Suas revisões aparecerão aqui após registrar conteúdos.</div>';document.getElementById('areaStats').innerHTML=areas.map(a=>{let cs=db.contents.filter(c=>c.area===a),done=cs.filter(c=>c.status==='Estudado'||c.status==='Domínio').length;return `<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px"><b>${a}</b><span class="muted">${done}/${cs.length}</span></div><div class="progress"><span style="width:${pct(done,cs.length)}%"></span></div></div>`}).join('');let dates=[...new Set(db.contents.filter(c=>c.status==='Estudado').map(c=>c.date||today()))];document.getElementById('studyStats').textContent=dates.length?`${db.contents.filter(c=>c.status==='Estudado').length} conteúdos registrados em ${dates.length} dia(s) de estudo.`:'Registre seus primeiros conteúdos para visualizar seu ritmo.';let last=db.questions.slice(-8),rates=last.map(q=>pct(q.hits,q.total)),labels=last.map(q=>q.date.slice(5));drawLineChart('accuracyChart',rates,labels);drawAreaChart();renderMastery()}
+
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();go('kstudy');document.getElementById('kInput')?.focus()}if(e.key==='Escape')closeModal()});
+renderAll();window.addEventListener('resize',()=>{if(!window.Chart){drawLineChart('accuracyChart',db.questions.slice(-8).map(q=>pct(q.hits,q.total)),db.questions.slice(-8).map(q=>q.date.slice(5)));drawAreaChart()}});
+
+function applyTheme(theme){document.body.dataset.theme=theme;localStorage.setItem('kstudy-theme',theme);let b=document.getElementById('themeToggle');if(b)b.textContent=theme==='light'?'Modo escuro':'Modo claro'}
+function toggleTheme(){applyTheme(document.body.dataset.theme==='light'?'dark':'light')}
+(function(){applyTheme(localStorage.getItem('kstudy-theme')||'dark')})();
+
+
+
+/* Ferramentas adicionais — dados isolados dos módulos originais */
+const TOOLS_KEY='kstudy-tools-v1';
+function loadToolData(){try{const v=JSON.parse(localStorage.getItem(TOOLS_KEY)||'{}');return {essays:Array.isArray(v.essays)?v.essays:[],repertoires:Array.isArray(v.repertoires)?v.repertoires:[],doubts:Array.isArray(v.doubts)?v.doubts:[]}}catch(e){return {essays:[],repertoires:[],doubts:[]}}}
+let toolData=loadToolData();
+function persistToolData(){try{localStorage.setItem(TOOLS_KEY,JSON.stringify(toolData));return true}catch(e){alert('Não foi possível salvar. O armazenamento pode estar cheio ou indisponível; exporte um backup e tente novamente.');return false}}
+function toolId(){return 't'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function toolText(id){return document.getElementById(id)?.value?.trim()||''}
+function switchToolTab(name){document.querySelectorAll('[data-tool-tab]').forEach(b=>b.classList.toggle('active',b.dataset.toolTab===name));document.querySelectorAll('.tool-panel').forEach(p=>p.classList.toggle('active',p.id==='tool-'+name))}
+document.querySelectorAll('[data-tool-tab]').forEach(b=>b.addEventListener('click',()=>switchToolTab(b.dataset.toolTab)));
+function calcEssayTotal(){let sum=0,valid=true;for(let i=1;i<=5;i++){const el=document.getElementById('essayC'+i),v=Number(el.value);if(el.value===''||!Number.isInteger(v)||v<0||v>200||v%40!==0){valid=false;el.setCustomValidity('Use valores de 0 a 200 em intervalos de 40 pontos.')}else{el.setCustomValidity('');sum+=v}}document.getElementById('essayTotal').textContent=(valid?sum:'—')+' / 1000';document.getElementById('essayProgress').style.width=(valid?sum/10:0)+'%';return valid?sum:null}
+for(let i=1;i<=5;i++)document.getElementById('essayC'+i)?.addEventListener('input',calcEssayTotal);
+function saveEssayScore(){const total=calcEssayTotal();if(total===null){alert('Confira as cinco competências. Use valores inteiros de 0 a 200, em intervalos de 40 pontos.');return}const scores=Array.from({length:5},(_,i)=>Number(document.getElementById('essayC'+(i+1)).value));toolData.essays.unshift({id:toolId(),date:toolText('essayDate')||today(),theme:toolText('essayTheme'),scores,total});if(persistToolData()){document.getElementById('essayTheme').value='';renderToolRecords();alert('Resultado salvo.')}} 
+function saveRepertoire(){const category=toolText('repCategory'),name=toolText('repName'),idea=toolText('repIdea'),use=toolText('repUse');if(!name||!idea){alert('Preencha o repertório e sua ideia central.');return}toolData.repertoires.unshift({id:toolId(),category,name,idea,use,created:today()});if(persistToolData()){['repName','repIdea','repUse'].forEach(id=>document.getElementById(id).value='');renderToolRecords()}}
+function saveDoubt(){const area=toolText('doubtArea'),subject=toolText('doubtSubject'),question=toolText('doubtQuestion'),answer=toolText('doubtAnswer');if(!subject||!question){alert('Informe o assunto e descreva sua dúvida.');return}toolData.doubts.unshift({id:toolId(),area,subject,question,answer,resolved:!!answer,created:today()});if(persistToolData()){['doubtSubject','doubtQuestion','doubtAnswer'].forEach(id=>document.getElementById(id).value='');renderToolRecords()}}
+function deleteToolRecord(type,id){if(!['essays','repertoires','doubts'].includes(type)||!confirm('Excluir este registro?'))return;toolData[type]=toolData[type].filter(x=>x.id!==id);if(persistToolData())renderToolRecords()}
+function saveDoubtResolution(id){const d=toolData.doubts.find(x=>x.id===id);if(!d)return;const field=document.getElementById('doubt-answer-'+id);if(!field)return;d.answer=field.value.trim();if(persistToolData()){renderToolRecords();alert('Resolução salva.')}}
+function toggleDoubtResolved(id){const d=toolData.doubts.find(x=>x.id===id);if(!d)return;d.resolved=!d.resolved;if(persistToolData())renderToolRecords()}
+function renderToolRecords(){
+ const es=toolData.essays,avg=es.length?Math.round(es.reduce((a,x)=>a+x.total,0)/es.length):null;
+ document.getElementById('essayCount').textContent=es.length;document.getElementById('essayAverage').textContent=avg===null?'—':avg;document.getElementById('essayBest').textContent=es.length?Math.max(...es.map(x=>x.total)):'—';
+ document.getElementById('essayHistory').innerHTML=es.length?es.map(x=>`<div class="tool-record"><div class="tool-record-head"><div><b>${esc(x.total)} / 1000</b><div class="muted">${esc(x.date)}${x.theme?' · '+esc(x.theme):''}</div></div><button class="tool-delete" type="button" onclick="deleteToolRecord('essays','${esc(x.id)}')">Excluir</button></div><p>${x.scores.map((v,i)=>'C'+(i+1)+': '+esc(v)).join(' · ')}</p></div>`).join(''):'<div class="empty">Suas redações salvas aparecerão aqui.</div>';
+ const rf=toolText('repFilter'),reps=toolData.repertoires.filter(x=>!rf||x.category===rf);document.getElementById('repCount').textContent=toolData.repertoires.length+' itens';
+ document.getElementById('repertoireList').innerHTML=reps.length?reps.map(x=>`<div class="tool-record"><div class="tool-record-head"><div><span class="tag blue">${esc(x.category)}</span><h4 style="margin:7px 0 0">${esc(x.name)}</h4></div><button class="tool-delete" type="button" onclick="deleteToolRecord('repertoires','${esc(x.id)}')">Excluir</button></div><p><b>Ideia central:</b> ${esc(x.idea)}</p>${x.use?`<p><b>Aplicação:</b> ${esc(x.use)}</p>`:''}</div>`).join(''):'<div class="empty">Nenhum repertório encontrado para este filtro.</div>';
+ const df=toolText('doubtFilter')||'all',ds=toolData.doubts.filter(x=>df==='all'||(df==='resolved'?x.resolved:!x.resolved));document.getElementById('doubtPending').textContent=toolData.doubts.filter(x=>!x.resolved).length+' pendentes';
+ document.getElementById('doubtList').innerHTML=ds.length?ds.map(x=>`<div class="tool-record"><div class="tool-record-head"><div><span class="tag ${x.resolved?'green':'yellow'}">${x.resolved?'Resolvida':'Pendente'}</span><h4 style="margin:7px 0 0">${esc(x.subject)}</h4><div class="muted">${esc(x.area)} · ${esc(x.created)}</div></div><button class="tool-delete" type="button" onclick="deleteToolRecord('doubts','${esc(x.id)}')">Excluir</button></div><p><b>Dúvida:</b> ${esc(x.question)}</p><div class="field" style="margin-top:10px"><label for="doubt-answer-${esc(x.id)}">Sua resolução / explicação</label><textarea id="doubt-answer-${esc(x.id)}" rows="3" maxlength="900" placeholder="Registre aqui o que esclareceu sua dúvida...">${esc(x.answer||'')}</textarea></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button class="btn ghost" type="button" onclick="saveDoubtResolution('${esc(x.id)}')">Salvar resolução</button><button class="btn ghost" type="button" onclick="toggleDoubtResolved('${esc(x.id)}')">${x.resolved?'Reabrir dúvida':'Marcar como resolvida'}</button></div></div>`).join(''):'<div class="empty">Nenhuma dúvida nesta lista.</div>';
+}
+function calculateAccuracy(){const total=Number(toolText('calcTotal')),hits=Number(toolText('calcHits')),box=document.getElementById('accuracyResult');if(!Number.isInteger(total)||!Number.isInteger(hits)||total<1||total>10000||hits<0||hits>total){box.innerHTML='<b>Confira os valores</b><p class="muted">O total deve ser maior que zero e os acertos não podem ultrapassar o total.</p>';return}const rate=Math.round(hits/total*1000)/10;box.innerHTML=`<span class="muted">Seu aproveitamento</span><br><strong>${rate.toLocaleString('pt-BR')}%</strong><p class="muted">${hits} acertos · ${total-hits} erros · ${total} questões</p><div class="progress"><span style="width:${rate}%"></span></div>`}
+(function initTools(){const d=document.getElementById('essayDate');if(d)d.value=today();calcEssayTotal();renderToolRecords()})();
+
+</script></body></html>
